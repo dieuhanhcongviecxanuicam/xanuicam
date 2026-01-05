@@ -1,0 +1,109 @@
+# Root .gitignore for ubndxanuicam_internet
+
+# Node
+node_modules/
+
+# Build artifacts
+frontend/build/
+backend/build/
+
+# Environment files
+.env
+.env.*
+backend/.env
+backend/.env.*
+frontend/.env*
+
+# Logs and runtime files
+logs/
+*.log
+backend_*.log
+server_run*.log
+
+# Uploads and user content
+uploads/
+
+# Database dumps / backups
+*.sql
+*.backup
+
+# Temporary and test artifacts
+tmp/
+TEST/
+
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Misc
+node-debug.log
+.cache/
+dist/
+
+# Sensitive keys and certificates
+*.pem
+*.key
+*.p12
+*.jks
+
+# Private SSH keys
+.ssh/
+
+# Certificates and PKI
+certs/
+private/
+
+# Cloudflare origin certificate
+cloudflare-origin.pem
+
+# Cloudflared credentials and config
+.cloudflared/
+.cloudflared/*
+
+# API keys, tokens, secrets
+*.secret
+*.token
+secrets.*
+**/secrets.*
+**/*credentials*
+**/*credential*
+
+# Environment and CI
+.env.local
+.env.production
+.env.test
+*.crt
+*.pem.key
+
+# Misc sensitive files
+key.pem
+origin.pem
+private.key
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
+
+# Additional environment patterns
+.env.*.local
+config.json
+credentials.xml
+
+# Additional IDE / editor files
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Third-party libraries / build outputs
+bin/
+obj/
+vendor/
+
+# More log patterns
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
