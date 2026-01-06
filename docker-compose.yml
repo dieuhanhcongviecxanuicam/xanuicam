@@ -1,0 +1,41 @@
+version: '3.8'
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    env_file:
+      - ./backend/.env
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+    networks:
+      - appnet
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    networks:
+      - appnet
+
+  cloudflared:
+    image: cloudflare/cloudflared:2024.11.0
+    # Mount your credentials and config from host; do NOT check credentials into git.
+    volumes:
+      - /etc/cloudflared:/etc/cloudflared:ro
+      - ./my-tunnel-config.json:/home/nonroot/.cloudflared/credentials.json:ro
+    # Run tunnel by specifying credentials file and tunnel ID directly.
+    # This avoids potential argument parsing issues and ensures the container
+    # uses the provided credentials mounted from the host.
+    command: tunnel run --credentials-file /home/nonroot/.cloudflared/credentials.json 03d94abc-9b35-4c56-a37c-e123810b412e
+    restart: unless-stopped
+    networks:
+      - appnet
+
+networks:
+  appnet:
+    driver: bridge
