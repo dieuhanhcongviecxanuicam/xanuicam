@@ -1,0 +1,68 @@
+name: E2E Dashboard Export
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  e2e-export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install root dependencies (puppeteer helper)
+        run: npm ci
+
+      - name: Install backend and frontend dependencies
+        run: |
+          npm ci --prefix backend
+          npm ci --prefix frontend
+
+      - name: Build frontend
+        run: npm run build --prefix frontend
+
+      - name: Start backend
+        run: |
+          nohup npm run start --prefix backend > backend.log 2>&1 &
+          sleep 1
+
+      - name: Serve frontend build
+        run: |
+          nohup npx serve -s frontend/build -l 3000 > frontend.log 2>&1 &
+          sleep 1
+
+      - name: Wait for services
+        run: |
+          echo "Waiting for backend and frontend..."
+          for i in {1..60}; do
+            if curl -sSf http://localhost:5000/api > /dev/null 2>&1 && curl -sSf http://localhost:3000 > /dev/null 2>&1; then
+              echo ok; break;
+            fi
+            sleep 2
+          done
+
+      - name: Run Puppeteer E2E export test
+        env:
+          FRONTEND_BASE: 'http://localhost:3000'
+          E2E_USER: ${{ secrets.E2E_USER || 'admin' }}
+          E2E_PASS: ${{ secrets.E2E_PASS || 'password' }}
+        run: node backend/scripts/e2e_puppeteer_export_dashboard.js
+
+      - name: Upload logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-export-logs
+          path: |
+            backend.log
+            frontend.log
+            ./backend/tmp/*.log
