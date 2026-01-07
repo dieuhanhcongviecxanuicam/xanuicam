@@ -1,0 +1,13 @@
+{
+  "name": "docx-converter",
+  "version": "1.0.0",
+  "description": "Small conversion helper service that runs LibreOffice inside Docker to convert DOCX->PDF for development",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "body-parser": "^1.20.2"
+  }
+}
