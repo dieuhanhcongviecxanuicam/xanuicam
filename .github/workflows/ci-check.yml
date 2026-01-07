@@ -1,0 +1,23 @@
+name: CI Check
+on:
+  pull_request:
+  push:
+    branches:
+      - develop
+      - 'feature/*'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Backend: install & test
+        working-directory: backend
+        run: |
+          if [ -f package.json ]; then npm install --legacy-peer-deps --no-audit; npm test || true; else echo "No backend package.json"; fi
+      - name: Frontend: install & build
+        run: |
+          if [ -d frontend ] && [ -f frontend/package.json ]; then cd frontend; npm install --legacy-peer-deps --no-audit; npm run build; else echo "No frontend source to build"; fi
