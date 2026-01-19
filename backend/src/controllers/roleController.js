@@ -69,10 +69,13 @@ exports.createRole = async (req, res) => {
         const newRoleId = roleRes.rows[0].id;
 
         if (permissions && permissions.length > 0) {
-            const insertPermissionsQuery = 'INSERT INTO role_permissions (role_id, permission_id) VALUES ' +
-                permissions.map((_, i) => `($1, $${i + 2})`).join(', ');
-            
-            await client.query(insertPermissionsQuery, [newRoleId, ...permissions]);
+            // Deduplicate permission ids to avoid unique constraint violations
+            const permsToInsert = Array.from(new Set(permissions.map(p => Number(p))));
+            if (permsToInsert.length > 0) {
+                const insertPermissionsQuery = 'INSERT INTO role_permissions (role_id, permission_id) VALUES ' +
+                    permsToInsert.map((_, i) => `($1, $${i + 2})`).join(', ');
+                await client.query(insertPermissionsQuery, [newRoleId, ...permsToInsert]);
+            }
         }
 
         await logActivity(client, {
