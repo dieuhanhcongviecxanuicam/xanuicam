@@ -85,6 +85,21 @@ const maintenanceMiddleware = require('./src/middlewares/maintenanceMiddleware')
 
 const app = express();
 
+// Temporary request-logging middleware for debugging Cloudflare / CDN routing.
+// Enable by setting REQUEST_LOGGING=true in the backend `.env` (disabled by default).
+if (process.env.REQUEST_LOGGING === 'true') {
+  app.use((req, res, next) => {
+    try {
+      const cfIp = req.headers['cf-connecting-ip'] || req.headers['x-forwarded-for'] || req.ip;
+      const cfRay = req.headers['cf-ray'] || '';
+      console.log(`[REQ] ${new Date().toISOString()} ip=${cfIp} method=${req.method} url=${req.originalUrl} cf-ray=${cfRay}`);
+    } catch (e) {
+      console.log('Error in request-logging middleware', e);
+    }
+    next();
+  });
+}
+
 // Default port if none provided via environment. Tests may set `process.env.PORT`
 // to `0` to bind to an ephemeral port.
 const PORT = process.env.PORT || 5000;
@@ -204,18 +219,33 @@ app.get('/health', (req, res) => {
 
 // Serve a no-content response for favicon requests to avoid 404 noise in browsers
 // Serve a simple favicon (SVG) to avoid 404 noise
+// Serve a versioned favicon path to allow easy cache-busting when pushing a new
+// favicon. We expose `/favicon-v2.ico` for the asset and make `/favicon.ico`
+// redirect to it with `Cache-Control: no-cache` so clients and edges revalidate.
 app.get('/favicon.ico', (req, res) => {
+  // Force a redirect to the versioned favicon to guarantee CDN/edges
+  // request the new, versioned asset. Keep response no-cache so
+  // clients and intermediaries will revalidate the redirect.
   try {
-    // 16x16 favicon (mono) encoded in base64 (small fallback icon)
-    const icoBase64 =
-      'AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' +
-      'AAAA////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' +
-      'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' +
-      'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
-    const buf = Buffer.from(icoBase64, 'base64');
-    res.setHeader('Content-Type', 'image/x-icon');
-    res.setHeader('Cache-Control', 'public, max-age=86400');
-    return res.status(200).send(buf);
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    return res.redirect(302, '/favicon-v2.ico');
+  } catch (e) {
+    return res.status(204).end();
+  }
+});
+
+// Serve the versioned favicon file if present. This is intentionally a new
+// path so the CDN/edges will request it freshly when referenced.
+app.get('/favicon-v2.ico', (req, res) => {
+  try {
+    const file = path.resolve(__dirname, '../frontend/build/favicon-v2.ico');
+    if (fs.existsSync(file)) {
+      res.setHeader('Content-Type', 'image/x-icon');
+      // Allow caching for the asset itself; the URL is versioned so it's safe.
+      res.setHeader('Cache-Control', 'public, max-age=86400');
+      return res.sendFile(file);
+    }
+    return res.status(404).end();
   } catch (e) {
     return res.status(204).end();
   }
@@ -235,11 +265,29 @@ app.get('/favicon.ico', (req, res) => {
   if (serveFrontend) {
     if (fs.existsSync(indexFile)) {
       console.log('Serving frontend build from', buildPath);
-      app.use(express.static(buildPath));
+      // Serve static files with explicit safe headers to avoid MIME/sniffing issues
+      app.use(express.static(buildPath, {
+        setHeaders: (res, filePath) => {
+          try {
+            const ext = path.extname(filePath).toLowerCase();
+            if (ext === '.js') res.setHeader('Content-Type', 'application/javascript; charset=UTF-8');
+            else if (ext === '.css') res.setHeader('Content-Type', 'text/css; charset=UTF-8');
+            else if (ext === '.json') res.setHeader('Content-Type', 'application/json; charset=UTF-8');
+            else if (ext === '.wasm') res.setHeader('Content-Type', 'application/wasm');
+            else if (ext === '.svg') res.setHeader('Content-Type', 'image/svg+xml');
+            // prevent content sniffing
+            res.setHeader('X-Content-Type-Options', 'nosniff');
+            // allow caching for static assets
+            res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+          } catch (e) {
+            // ignore header-setting errors
+          }
+        }
+      }));
 
-      // Serve index.html for any GET path that doesn't start with /api or /auth
+      // Serve index.html for any GET path that doesn't start with /api, /auth or /static
       // so single-page-app client routes are handled by the React router.
-      app.get(/^\/(?!api\/|auth\/).*/, (req, res) => {
+      app.get(/^\/(?!api\/|auth\/|static\/).*/, (req, res) => {
         res.sendFile(indexFile);
       });
     } else {
