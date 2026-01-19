@@ -1,0 +1,47 @@
+name: Deploy to Server via SSH
+
+on:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build frontend
+        run: npm ci --prefix frontend --legacy-peer-deps && npm --prefix frontend run build
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-build
+          path: frontend/build
+
+      - name: Deploy to server via SSH
+        uses: appleboy/scp-action@v0.1.9
+        with:
+          host: ${{ secrets.PROD_HOST }}
+          username: ${{ secrets.PROD_USER }}
+          key: ${{ secrets.PROD_SSH_KEY }}
+          port: ${{ secrets.PROD_SSH_PORT || '22' }}
+          source: "frontend/build/**"
+          target: ${{ secrets.PROD_DEPLOY_PATH }}
+
+      - name: Restart backend service via SSH
+        uses: appleboy/ssh-action@v0.1.9
+        with:
+          host: ${{ secrets.PROD_HOST }}
+          username: ${{ secrets.PROD_USER }}
+          key: ${{ secrets.PROD_SSH_KEY }}
+          port: ${{ secrets.PROD_SSH_PORT || '22' }}
+          script: |
+            set -e
+            if pm2 describe ubnd-backend > /dev/null 2>&1; then
+              pm2 restart ubnd-backend
+            else
+              cd ${{ secrets.PROD_DEPLOY_PATH }} && npm --prefix backend run prod:start
+            fi
