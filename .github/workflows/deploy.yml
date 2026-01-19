@@ -1,24 +1,37 @@
 name: Deploy to Production
+
 on:
   push:
     branches: [ main ]
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Deploy via SSH
-        uses: appleboy/ssh-action@v0.1.9
+        uses: appleboy/ssh-action@v0.1.8
         with:
-          host: \\${{ secrets.PROD_HOST }}
-          username: \\${{ secrets.PROD_USER }}
-          key: \\${{ secrets.PROD_SSH_KEY }}
-          port: \\${{ secrets.PROD_SSH_PORT }}
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          port: ${{ secrets.DEPLOY_PORT }}
           script: |
             set -e
-            cd /root/ubndxanuicam_deploy
-            git fetch --all --prune
+            cd ${{ secrets.DEPLOY_PATH }} || exit 1
+            # Ensure the server has the repo cloned and configured to pull from origin
+            git fetch --all
             git reset --hard origin/main
-            if [ -d backend ] && [ -f backend/package.json ]; then npm --prefix backend install --legacy-peer-deps --no-audit; fi
-            if [ -d frontend ] && [ -f frontend/package.json ]; then npm --prefix frontend install --legacy-peer-deps --no-audit; npm --prefix frontend run build; fi
-            pm2 restart ubnd-backend || pm2 start backend/ecosystem.config.js
+            npm ci --production
+            # Example restart command; adapt to your process manager (pm2/systemd)
+            if command -v pm2 >/dev/null 2>&1; then
+              pm2 reload ecosystem.config.js --env production || pm2 restart all || true
+            else
+              echo "Please restart your node process manually or configure PM2/systemd"
+            fi
+
+      - name: Notify deploy (optional)
+        if: always()
+        run: echo "Deploy job finished"
