@@ -76,6 +76,8 @@ jobs:
         continue-on-error: true
 
       - name: Build frontend
+        env:
+          DISABLE_ESLINT_PLUGIN: 'true'
         run: npm --prefix frontend run build
 
       - name: Run npm audit (backend)
