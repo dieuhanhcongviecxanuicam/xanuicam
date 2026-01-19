@@ -66,10 +66,28 @@ jobs:
           if [ -f package.json ]; then npm ci --no-audit || true; fi
 
       - name: Install backend deps
-        run: npm ci --prefix backend --legacy-peer-deps
+        run: |
+          if [ -f backend/package.json ]; then
+            if [ -f backend/package-lock.json ]; then
+              npm ci --prefix backend --legacy-peer-deps
+            else
+              npm install --prefix backend --legacy-peer-deps
+            fi
+          else
+            echo "No backend/package.json, skipping backend install"
+          fi
 
       - name: Install frontend deps
-        run: npm ci --prefix frontend --legacy-peer-deps
+        run: |
+          if [ -f frontend/package.json ]; then
+            if [ -f frontend/package-lock.json ]; then
+              npm ci --prefix frontend --legacy-peer-deps
+            else
+              npm install --prefix frontend --legacy-peer-deps
+            fi
+          else
+            echo "No frontend/package.json, skipping frontend install"
+          fi
 
       - name: Run backend tests
         run: npm --prefix backend test
@@ -78,7 +96,12 @@ jobs:
       - name: Build frontend
         env:
           DISABLE_ESLINT_PLUGIN: 'true'
-        run: npm --prefix frontend run build
+        run: |
+          if [ -f frontend/package.json ]; then
+            npm --prefix frontend run build
+          else
+            echo "No frontend to build"
+          fi
 
       - name: Run npm audit (backend)
         run: |
