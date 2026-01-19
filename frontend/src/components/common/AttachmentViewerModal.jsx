@@ -17,9 +17,11 @@ const AttachmentViewerModal = ({ attachment, onClose }) => {
   const safeAttachment = attachment || { file_path: '', file_name: '' };
   const rawPath = String(safeAttachment.file_path || '');
   const fileUrl = /^(https?:)?\/\//i.test(rawPath) ? rawPath : `${BACKEND_URL}/${rawPath.replace(/^\/+/, '')}`;
-  const isImage = /\.(jpg|jpeg|png|gif|bmp|svg|webp)$/i.test(safeAttachment.file_name || '');
-  const isPdf = /\.pdf$/i.test(safeAttachment.file_name || '') || /\.pdf$/i.test(fileUrl);
-  const isDocx = /\.docx$/i.test(safeAttachment.file_name || '');
+  const fileName = String(safeAttachment.file_name || '');
+  const fileNameLower = fileName.toLowerCase();
+  const isImage = /\.(jpg|jpeg|png|gif|bmp|svg|webp)$/i.test(fileName);
+  const isPdf = \/\.pdf$/i.test(fileName) || \/\.pdf$/i.test(fileUrl);
+  const isDocx = \/\.docx$/i.test(fileName);
 
   useEffect(() => {
     setDocxHtml(null);
@@ -38,7 +40,7 @@ const AttachmentViewerModal = ({ attachment, onClose }) => {
           if (rawResp.ok) {
             const contentTypeRaw = rawResp.headers && rawResp.headers.get ? (rawResp.headers.get('content-type') || '') : '';
             // If content looks like a docx (or file name ends with .docx), convert it client-side
-            if (contentTypeRaw.includes('application/vnd.openxmlformats-officedocument.wordprocessingml.document') || safeAttachment.file_name.toLowerCase().endsWith('.docx')) {
+            if (contentTypeRaw.includes('application/vnd.openxmlformats-officedocument.wordprocessingml.document') || fileNameLower.endsWith('.docx')) {
               const arrayBuffer = await rawResp.arrayBuffer();
               const result = await mammoth.convertToHtml({ arrayBuffer });
               if (aborted) return;
@@ -160,20 +162,20 @@ const AttachmentViewerModal = ({ attachment, onClose }) => {
     <ModalWrapper isOpen={!!attachment} onClose={onClose} maxWidth="max-w-6xl" coverHeader={true} className="p-0">
       <div className="bg-white rounded-lg shadow-xl w-full h-full max-h-[90vh] flex flex-col relative overflow-hidden">
         <div className="flex justify-between items-center p-4 border-b bg-slate-50">
-          <h3 className="font-semibold text-slate-800 truncate pr-4">{decodeURIComponent(String(safeAttachment.file_name || 'Tệp đính kèm'))}</h3>
+          <h3 className="font-semibold text-slate-800 truncate pr-4">{decodeURIComponent(String(fileName || 'Tệp đính kèm'))}</h3>
           <SmallButton variant="secondary" onClick={onClose} className="p-2 rounded-full">Đóng</SmallButton>
         </div>
 
         <div className="flex-grow p-2 overflow-auto flex items-center justify-center bg-slate-200">
           {isImage ? (
-            <img src={fileUrl} alt={safeAttachment.file_name} className="max-w-full max-h-full object-contain" />
+            <img src={fileUrl} alt={fileName} className="max-w-full max-h-full object-contain" />
           ) : isPdf ? (
             loading && !pdfObjectUrl ? (
               <div className="flex items-center justify-center py-20"><Spinner /></div>
-            ) : pdfObjectUrl ? (
-              <iframe src={pdfObjectUrl} title={safeAttachment.file_name} className="w-full h-full" style={{ height: '80vh', border: 'none' }} />
-            ) : (
-              <iframe src={fileUrl} title={safeAttachment.file_name} className="w-full h-full" style={{ height: '80vh', border: 'none' }} />
+              ) : pdfObjectUrl ? (
+              <iframe src={pdfObjectUrl} title={fileName} className="w-full h-full" style={{ height: '80vh', border: 'none' }} />
+              ) : (
+              <iframe src={fileUrl} title={fileName} className="w-full h-full" style={{ height: '80vh', border: 'none' }} />
             )
           ) : isDocx ? (
             <div className="w-full h-full overflow-auto p-2 bg-white rounded">
@@ -193,7 +195,7 @@ const AttachmentViewerModal = ({ attachment, onClose }) => {
                         </div>
                       )}
                       {/* Use an iframe with srcdoc to render converted HTML in isolation and preserve styles */}
-                      <iframe title={safeAttachment.file_name} srcDoc={docxHtml} className="w-full h-full" style={{ height: '80vh', border: 'none' }} />
+                      <iframe title={fileName} srcDoc={docxHtml} className="w-full h-full" style={{ height: '80vh', border: 'none' }} />
                     </div>
               ) : (
                 <div className="text-center">

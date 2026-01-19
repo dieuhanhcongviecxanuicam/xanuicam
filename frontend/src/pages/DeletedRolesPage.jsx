@@ -12,7 +12,7 @@ const DeletedRolesPage = () => {
   const [loading, setLoading] = useState(true);
   const [notification, setNotification] = useState({ message: '', type: '' });
   const [confirmRestoreId, setConfirmRestoreId] = useState(null);
-  const [confirmPermanentId, setConfirmPermanentId] = useState(null);
+  const [, setConfirmPermanentId] = useState(null);
 
   useEffect(() => {
     const fetch = async () => {
