@@ -6,7 +6,7 @@ import RoleModal from '../components/roles/RoleModal';
 import { Link } from 'react-router-dom';
 import DeleteConfirmationModal from '../components/common/DeleteConfirmationModal';
 import Notification from '../components/common/Notification';
-import { useNavigate } from 'react-router-dom';
+
 
 const RolesPage = () => {
     const [roles, setRoles] = useState([]);
@@ -33,7 +33,7 @@ const RolesPage = () => {
         fetchRoles();
     }, [fetchRoles]);
     
-    const navigate = useNavigate();
+    
 
     const handleOpenCreateModal = () => {
         setSelectedRole(null);
