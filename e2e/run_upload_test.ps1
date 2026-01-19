@@ -1,0 +1,3 @@
+$env:TOKEN = 'eyJhIjoiMDk4Y2M3NDEzY2FmNDRjODllNWM4MzdlMTgyYzBiYmMiLCJ0IjoiMDNkOTRhYmMtOWIzNS00YzU2LWEzN2MtZTEyMzgxMGI0MTJlIiwicyI6Ik56TTJPRGMyTTJNdE1ERTBaaTAwT1Roa0xUaGpObVV0WkRZNU9UWmhNakZpTUdFMCJ9'
+$env:URL = 'http://localhost:5000/api/room-bookings'
+node e:\ubndxanuicam_deploy\e2e\upload_smoke_test.js

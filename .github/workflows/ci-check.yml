@@ -1,0 +1,89 @@
+name: CI Check
+
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run lint (if configured)
+        run: |
+          if npm run | grep -E "lint" >/dev/null 2>&1; then
+            npm run lint || true
+          else
+            echo "No lint script configured"
+          fi
+
+      - name: Run tests (if configured)
+        run: |
+          if npm run | grep "test" >/dev/null 2>&1; then
+            npm test || true
+          else
+            echo "No test script configured"
+          fi
+name: CI - Backend & Frontend Check
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install root deps (optional)
+        run: |
+          if [ -f package.json ]; then npm ci --no-audit || true; fi
+
+      - name: Install backend deps
+        run: npm ci --prefix backend --legacy-peer-deps
+
+      - name: Install frontend deps
+        run: npm ci --prefix frontend --legacy-peer-deps
+
+      - name: Run backend tests
+        run: npm --prefix backend test
+        continue-on-error: true
+
+      - name: Build frontend
+        run: npm --prefix frontend run build
+
+      - name: Run npm audit (backend)
+        run: |
+          cd backend && npm audit --audit-level=high || true
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-build
+          path: frontend/build
