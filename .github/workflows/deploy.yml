@@ -12,13 +12,22 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Deploy via SSH
-        uses: appleboy/ssh-action@v0.1.8
-        with:
-          host: ${{ secrets.DEPLOY_HOST }}
-          username: ${{ secrets.DEPLOY_USER }}
-          key: ${{ secrets.DEPLOY_SSH_KEY }}
-          port: ${{ secrets.DEPLOY_PORT }}
-          script: |
+        - name: Sanitize deploy port
+          run: |
+            p='${{ secrets.DEPLOY_PORT }}'
+            p="${p//\"/}"
+            p="${p//\\/}"
+            if ! printf '%s' "$p" | grep -E '^[0-9]+$' >/dev/null; then p=22; fi
+            echo "SAFE_DEPLOY_PORT=$p" >> $GITHUB_ENV
+
+        - name: Deploy via SSH
+          uses: appleboy/ssh-action@v0.1.8
+          with:
+            host: ${{ secrets.DEPLOY_HOST }}
+            username: ${{ secrets.DEPLOY_USER }}
+            key: ${{ secrets.DEPLOY_SSH_KEY }}
+            port: ${{ env.SAFE_DEPLOY_PORT }}
+            script: |
             set -e
             cd ${{ secrets.DEPLOY_PATH }} || exit 1
             # Ensure the server has the repo cloned and configured to pull from origin
