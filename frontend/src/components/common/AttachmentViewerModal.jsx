@@ -114,7 +114,7 @@ const AttachmentViewerModal = ({ attachment, onClose }) => {
     })();
 
     return () => { aborted = true; };
-  }, [attachment, fileUrl, isDocx, rawPath]);
+  }, [attachment, fileUrl, isDocx, rawPath, fileNameLower]);
 
   useEffect(() => {
     let revoked = false;
