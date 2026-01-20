@@ -1,0 +1,6 @@
+* [33m197f262[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mtmp/merge-develop-into-main[m[33m)[m ci(workflow): use Node.js 20 in CI matrix
+* [33mf0ee609[m[33m ([m[1;31morigin/tmp/merge-develop-into-main[m[33m)[m release(frontend): update social preview, OG size, and include recent frontend fixes
+* [33m2c1b1d6[m ci: allow frontend build to run despite ESLint warnings in CI (DISABLE_ESLINT_PLUGIN=true)
+* [33mab470e9[m ci: trigger PR #4 checks
+*   [33me50390a[m Merge origin/develop into main (resolve conflicts by taking develop versions)
+[32m|[m[33m\[m  

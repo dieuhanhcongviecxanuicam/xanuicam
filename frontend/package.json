@@ -1,0 +1,77 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@babel/parser": "^7.28.5",
+    "@fingerprintjs/fingerprintjs": "^4.0.1",
+    "@headlessui/react": "^2.2.7",
+    "@testing-library/jest-dom": "^6.8.0",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "ajv": "^8.12.0",
+    "axios": "^1.13.2",
+    "chart.js": "^4.5.1",
+    "date-fns": "^4.1.0",
+    "file-saver": "^2.0.5",
+    "framer-motion": "^10.12.16",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.5.28",
+    "jwt-decode": "^4.0.0",
+    "leaflet": "^1.9.4",
+    "lodash": "^4.17.21",
+    "lucide-react": "^0.543.0",
+    "mammoth": "^1.4.23",
+    "puppeteer": "^24.32.0",
+    "react": "^18.2.0",
+    "react-chartjs-2": "^5.3.1",
+    "react-dom": "^18.2.0",
+    "react-leaflet": "^4.2.1",
+    "react-router-dom": "^7.8.2",
+    "react-scripts": "5.0.1",
+    "speakeasy": "^2.0.0",
+    "web-vitals": "^5.1.0",
+    "xlsx": "^0.18.5"
+  },
+  "scripts": {
+    "start": "cross-env NODE_OPTIONS=--no-deprecation react-scripts start",
+    "dev": "cross-env NODE_OPTIONS=--no-deprecation react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "e2e": "node scripts/e2e_computer_configs.js",
+    "eject": "react-scripts eject"
+  },
+  "proxy": "http://localhost:5000",
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.13",
+    "@testing-library/dom": "^10.4.1",
+    "autoprefixer": "^10.4.21",
+    "cross-env": "^7.0.3",
+    "jsdom-testing-mocks": "^1.16.0",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.17",
+    "webpack-dev-server": "^4.15.1"
+  },
+  "overrides": {
+    "webpack-dev-server": "^4.15.1",
+    "whatwg-fetch": "^3.6.2"
+  }
+}
