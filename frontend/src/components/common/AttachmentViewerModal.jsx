@@ -20,8 +20,8 @@ const AttachmentViewerModal = ({ attachment, onClose }) => {
   const fileName = String(safeAttachment.file_name || '');
   const fileNameLower = fileName.toLowerCase();
   const isImage = /\.(jpg|jpeg|png|gif|bmp|svg|webp)$/i.test(fileName);
-  const isPdf = \/\.pdf$/i.test(fileName) || \/\.pdf$/i.test(fileUrl);
-  const isDocx = \/\.docx$/i.test(fileName);
+  const isPdf = /\.pdf$/i.test(fileName) || /\.pdf$/i.test(fileUrl);
+  const isDocx = /\.docx$/i.test(fileName);
 
   useEffect(() => {
     setDocxHtml(null);
