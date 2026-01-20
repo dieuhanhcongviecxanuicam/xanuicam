@@ -1,0 +1,72 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    env_file:
+      - ./backend/.env
+    environment:
+      - SERVE_FRONTEND=true
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+    networks:
+      - appnet
+
+  postgres:
+    image: postgres:15
+    # Credentials are read via environment substitution. Create a root .env
+    # file (not committed) with DB_USER, DB_PASSWORD, DB_DATABASE to populate
+    # these values, or export them in the shell before running compose.
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_DATABASE}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - appnet
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    networks:
+      - appnet
+
+  cloudflared:
+    image: cloudflare/cloudflared:2024.11.0
+    # Mount your credentials and config from host; do NOT check credentials into git.
+    volumes:
+      - /etc/cloudflared:/etc/cloudflared:ro
+      - ./my-tunnel-config.json:/home/nonroot/.cloudflared/credentials.json:ro
+    # Run tunnel by specifying credentials file and tunnel ID directly.
+    # This avoids potential argument parsing issues and ensures the container
+    # uses the provided credentials mounted from the host.
+    # Run tunnel using the provided credentials file and explicit config file
+    # to ensure local ingress rules in /etc/cloudflared/config.yml are applied.
+    # Run the tunnel and proxy all incoming requests to the backend service.
+    # Using `--url` forces cloudflared to use this origin instead of cloud-managed
+    # ingress config which can otherwise override local files.
+    command:
+      - "tunnel"
+      - "run"
+      - "--credentials-file"
+      - "/home/nonroot/.cloudflared/credentials.json"
+      - "--url"
+      - "http://backend:5000"
+      - "03d94abc-9b35-4c56-a37c-e123810b412e"
+    restart: unless-stopped
+    networks:
+      - appnet
+
+networks:
+  appnet:
+    driver: bridge
+volumes:
+  postgres-data:
+    driver: local

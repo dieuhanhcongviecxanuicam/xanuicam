@@ -102,6 +102,11 @@ cloudflare-origin.pem
 .secrets/*
 my-tunnel-config.json
 
+# Temporary local deploy keys (do NOT commit)
+gh_deploy_key
+gh_deploy_key.pub
+gh_deploy_key.pub.pub
+
 # Ignore local DNS upsert helper (may be used with tokens)
 e2e/upsert_two_records.js
 e2e/upsert*.js
@@ -183,4 +188,4 @@ vendor/
 # More log patterns
 npm-debug.log*
 yarn-debug.log*
-yarn-error.log*
+yarn-error.log*backend.tgz
