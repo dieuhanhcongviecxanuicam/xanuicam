@@ -7,7 +7,7 @@ import AuthContext from '../context/AuthContext';
 import api from '../api/axios';
 import { Lock, User } from 'lucide-react';
 import { computeFingerprint } from '../utils/fingerprint';
-import logo from '../assets/images/logo.png'; // **CHANGE**: Import logo directly
+// Use public logo-thumbnail.png for login and header to ensure availability in production
 import bgLogin from '../assets/images/background-login-HCC.png';
 import bgSubmerged from '../assets/images/background-login.png';
 import '../styles/loginBackground.css';
@@ -277,8 +277,7 @@ const LoginPage = () => {
       </div>
       <div className="w-full max-w-sm p-8 space-y-8 bg-white rounded-xl shadow-lg z-10 login-card">
         <div className="text-center">
-          {/* **CHANGE**: Use the imported logo variable */}
-          <img src={logo} alt="Logo UBND xã Núi Cấm" className="w-20 h-20 mx-auto mb-4" />
+          <img src="/logo-thumbnail.png" alt="Logo UBND xã Núi Cấm" className="w-20 h-20 mx-auto mb-4 object-contain" />
           <p className="text-2xl font-extrabold text-red-600 text-shadow-lg mb-1">UBND XÃ NÚI CẤM</p>
           <h1 className="text-1g font-semibold text-blue-600 text-shadow-md uppercase tracking-wide">HỆ THỐNG ĐIỀU HÀNH CÔNG VIỆC</h1>
         </div>
