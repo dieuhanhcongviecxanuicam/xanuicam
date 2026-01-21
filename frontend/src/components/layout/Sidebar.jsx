@@ -5,6 +5,7 @@ import React, { useContext } from 'react';
 import AuthContext from '../../context/AuthContext';
 import NavItems from './NavItems';
 import zaloQR from '../../assets/images/zalo-qr.jpg';
+import logoImg from '../../assets/images/logo.png';
 
 const Sidebar = ({ isSidebarOpen, setSidebarOpen }) => {
   const { user } = useContext(AuthContext);
@@ -16,7 +17,7 @@ const Sidebar = ({ isSidebarOpen, setSidebarOpen }) => {
       <aside className={`fixed top-0 left-0 z-40 h-screen bg-white shadow-md transition-all duration-300 ease-in-out md:relative md:translate-x-0 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} flex flex-col`} style={{ width: 288 }}>
         <div className="flex items-center justify-between h-16 border-b flex-shrink-0 px-4">
           <div className="flex items-center">
-            <img src="/logo-thumbnail.png" alt="Logo" className="h-10 w-10 object-contain" />
+            <img src={logoImg} alt="Logo" className="h-10 w-10 object-contain" />
             <span className="ml-3 text-lg font-bold text-slate-800">UBND xã Núi Cấm</span>
           </div>
         </div>
