@@ -3,7 +3,7 @@
     "axios": "^1.13.2",
     "bcryptjs": "^3.0.3",
     "concurrently": "^9.2.1",
-    "cross-env": "^7.0.3",
+    "cross-env": "^10.1.0",
     "dotenv": "^17.2.3",
     "minimist": "^1.2.8",
     "pg": "^8.17.2",
