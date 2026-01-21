@@ -161,6 +161,32 @@ try {
 } catch (e) {
   console.warn('sanitizeMiddleware not available, continuing without it.');
 }
+
+// Serve frontend build early to allow static assets and index.html to be
+// returned without running global auth/maintenance middleware which may
+// depend on the database. This helps the app remain responsive when the DB
+// is temporarily unreachable (useful during maintenance and deploys).
+try {
+  const earlyBuildPath = path.resolve(__dirname, '../frontend/build');
+  const earlyIndex = path.join(earlyBuildPath, 'index.html');
+  const serveFrontendEarly = (process.env.NODE_ENV === 'production') || (process.env.SERVE_FRONTEND === 'true');
+  if (serveFrontendEarly && fs.existsSync(earlyIndex)) {
+    console.log('Serving frontend build (early) from', earlyBuildPath);
+    app.use(express.static(earlyBuildPath, {
+      setHeaders: (res, filePath) => {
+        try {
+          res.setHeader('X-Content-Type-Options', 'nosniff');
+          res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+        } catch (e) {}
+      }
+    }));
+    app.get(/^\/(?!api\/|auth\/|static\/).*/, (req, res) => {
+      res.sendFile(earlyIndex);
+    });
+  }
+} catch (e) {
+  console.warn('Early frontend serve registration failed:', e && (e.stack || e));
+}
 // Serve uploads with safe download headers to reduce content-sniffing risks.
 app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
   setHeaders: (res, filePath) => {
