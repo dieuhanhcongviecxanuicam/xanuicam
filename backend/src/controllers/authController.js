@@ -651,6 +651,20 @@ exports.mfaInfo = async (req, res) => {
             console.warn('Could not query session columns (continuing):', ee && ee.message ? ee.message : ee);
         }
 
+        // Discover which columns exist on audit_logs so geo lookup is safe
+        let auditSelect = 'country, city, created_at';
+        try {
+            const auditColsRes = await pool.query("SELECT column_name FROM information_schema.columns WHERE table_name = 'audit_logs' AND table_schema = current_schema()");
+            const auditCols = new Set(auditColsRes.rows.map(r => r.column_name));
+            const auditParts = ['country', 'city'];
+            if (auditCols.has('latitude')) auditParts.push('latitude');
+            if (auditCols.has('longitude')) auditParts.push('longitude');
+            auditParts.push('created_at');
+            auditSelect = auditParts.join(', ');
+        } catch (ee) {
+            console.warn('Could not query audit_logs columns (continuing):', ee && ee.message ? ee.message : ee);
+        }
+
         // user MFA flags
         const u = await pool.query('SELECT mfa_enabled, mfa_secret_encrypted FROM users WHERE id = $1', [id]);
         if (u.rows.length === 0) return res.status(404).json({ message: 'Không tìm thấy người dùng.' });
@@ -699,8 +713,13 @@ exports.mfaInfo = async (req, res) => {
                 if (s.device_geo_json) geo = typeof s.device_geo_json === 'string' ? JSON.parse(s.device_geo_json) : s.device_geo_json;
             } catch (e) { geo = null; }
             if (!geo) {
-                const geoRes = await pool.query('SELECT country, city, latitude, longitude, created_at FROM audit_logs WHERE session_id = $1 ORDER BY created_at DESC LIMIT 1', [s.session_id]);
-                geo = geoRes.rows[0] || null;
+                try {
+                    const geoRes = await pool.query(`SELECT ${auditSelect} FROM audit_logs WHERE session_id = $1 ORDER BY created_at DESC LIMIT 1`, [s.session_id]);
+                    geo = geoRes.rows[0] || null;
+                } catch (geoErr) {
+                    console.warn('Could not query audit_logs for geo (continuing):', geoErr && geoErr.message ? geoErr.message : geoErr);
+                    geo = null;
+                }
             }
 
             const isCurrent = req.user && req.user.sid === s.session_id;

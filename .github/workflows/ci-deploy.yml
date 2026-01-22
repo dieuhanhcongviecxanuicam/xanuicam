@@ -1,0 +1,87 @@
+name: CI Deploy — Build, Push, and Remote Deploy
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - ci/deploy-workflow
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    env:
+      DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+      SSH_USER: ${{ secrets.SSH_USER }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Build frontend
+        working-directory: frontend
+        run: |
+          npm ci --silent
+          npm run build
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push backend image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/xanuicam-backend:latest
+            ghcr.io/${{ github.repository_owner }}/xanuicam-backend:${{ github.sha }}
+
+      - name: Upload frontend build to remote server (SCP)
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          source: "frontend/build/*"
+          target: ${{ secrets.DEPLOY_PATH }}/frontend_build
+
+      - name: Remote deploy (restart services)
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            set -euo pipefail
+            mkdir -p "${{ secrets.DEPLOY_PATH }}" || true
+            # move uploaded build into place (backup previous)
+            if [ -d "${{ secrets.DEPLOY_PATH }}/frontend" ]; then
+              rm -rf "${{ secrets.DEPLOY_PATH }}/frontend.bak" || true
+              mv "${{ secrets.DEPLOY_PATH }}/frontend" "${{ secrets.DEPLOY_PATH }}/frontend.bak" || true
+            fi
+            mv "${{ secrets.DEPLOY_PATH }}/frontend_build" "${{ secrets.DEPLOY_PATH }}/frontend" || true
+
+            # If using docker-compose on the server, pull new image and restart
+            if [ "${{ secrets.USE_DOCKER_COMPOSE }}" = "true" ]; then
+              cd "${{ secrets.DEPLOY_PATH }}"
+              docker compose pull || true
+              docker compose up -d --no-deps --build backend || true
+            else
+              # fallback: restart pm2 process name `ubnd-backend` (or start if missing)
+              if command -v pm2 >/dev/null 2>&1; then
+                pm2 restart ubnd-backend || pm2 start ecosystem.config.js --env production || true
+              fi
+            fi

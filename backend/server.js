@@ -6,6 +6,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const path = require('path');
 const fs = require('fs');
+const compression = require('compression');
 const dotenv = require('dotenv');
 const crypto = require('crypto');
 // Load .env from the backend directory explicitly so envs are consistent
@@ -85,6 +86,13 @@ const { verifyTokenOptional } = require('./src/middlewares/authMiddleware');
 const maintenanceMiddleware = require('./src/middlewares/maintenanceMiddleware');
 
 const app = express();
+
+// Enable gzip compression for responses to improve transfer sizes for text assets
+try {
+  app.use(compression());
+} catch (e) {
+  console.warn('compression middleware not available or failed to initialize');
+}
 
 // Use Helmet to set safe HTTP headers. Content-Security-Policy is enabled
 // in report-only mode initially so we can monitor violations without
