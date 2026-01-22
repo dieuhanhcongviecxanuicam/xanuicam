@@ -18,6 +18,19 @@ const deleteFile = (filePath) => {
 
 async function pruneDeletedDepartments(retentionDays = DEFAULT_RETENTION_DAYS) {
   try {
+    // Defensive check: ensure the optional 'avatar' column exists before selecting it.
+    try {
+      const colCheck = await pool.query("SELECT count(*) AS cnt FROM information_schema.columns WHERE table_name = $1 AND column_name = $2", ['deleted_departments', 'avatar']);
+      const hasAvatar = parseInt(colCheck.rows[0].cnt, 10) > 0;
+      if (!hasAvatar) {
+        // If the column doesn't exist, avoid running the main query which would error.
+        return console.warn('[deletedDepartmentsPruner] Skipping prune: optional column "avatar" not present.');
+      }
+    } catch (colErr) {
+      console.error('[deletedDepartmentsPruner] Could not verify columns, aborting prune:', colErr && colErr.message ? colErr.message : colErr);
+      return;
+    }
+
     const res = await pool.query("SELECT id, avatar FROM deleted_departments WHERE deleted_at <= NOW() - ($1::interval)", [`${retentionDays} days`]);
     const rows = res.rows;
     if (!rows || rows.length === 0) return console.log('[deletedDepartmentsPruner] No old deleted departments to purge.');

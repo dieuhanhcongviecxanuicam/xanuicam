@@ -53,6 +53,7 @@
     "ua-parser-js": "^1.0.37"
     ,
     "exceljs": "^4.3.0",
+    "compression": "^1.7.4",
     "date-fns": "^2.30.0"
   },
   "devDependencies": {
