@@ -90,10 +90,16 @@ const CreateUserModal = ({ isOpen, onClose, onUserCreated }) => {
             // Some backends may auto-assign the newly created user as the
             // department manager when department_id is provided. If the new
             // user was not marked as a leader, clear any accidental assignment.
-            try {
-                const deptId = formData.department_id;
-                const newUserId = created && (created.id || created.user_id || created.data && created.data.id) ? (created.id || created.user_id || (created.data && created.data.id)) : null;
-                if (deptId && newUserId && !formData.is_leader) {
+                try {
+                    const deptId = formData.department_id;
+                    // determine new user id safely to avoid mixed-operator lint errors
+                    let newUserId = null;
+                    if (created) {
+                        if (created.id) newUserId = created.id;
+                        else if (created.user_id) newUserId = created.user_id;
+                        else if (created.data && created.data.id) newUserId = created.data.id;
+                    }
+                    if (deptId && newUserId && !formData.is_leader) {
                     try {
                         const dept = await apiService.getDepartmentById(deptId);
                         if (dept && (String(dept.manager_id) === String(newUserId))) {
