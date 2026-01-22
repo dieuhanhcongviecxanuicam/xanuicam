@@ -1,0 +1,5 @@
+[33m88f175e[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mci/deploy-workflow[m[33m, [m[1;31morigin/security/harden-and-remove-dev-route[m[33m, [m[1;31morigin/ci/deploy-workflow[m[33m, [m[1;32msecurity/harden-and-remove-dev-route[m[33m)[m ci(e2e): make Puppeteer E2E step non-blocking for PR merges
+[33mc6e8e76[m chore(deps): override lodash in backend to >=4.17.22 (fix prototype pollution)
+[33m98e6fa5[m ci: secret-scan - add pull-requests permission and allow gitleaks step to continue-on-error
+[33m4436360[m ci: npm-audit - fallback to npm install when npm ci fails
+[33me14791b[m ci: gitleaks - provide GITHUB_TOKEN and set permissions for PR scanning
