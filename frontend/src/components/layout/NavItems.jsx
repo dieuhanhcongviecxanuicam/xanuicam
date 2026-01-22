@@ -98,10 +98,10 @@ const NavItems = ({ isCollapsed, onNavClick, horizontal }) => {
         )}
 
         <p className="px-4 pt-4 pb-1 text-xs font-semibold text-slate-400 uppercase">TIỆN ÍCH</p>
-        <NavLink to="/handbook" className={navLinkClass} onClick={onNavClick}>
-          <Tooltip text={isCollapsed ? 'Cẩm nang' : null}>
+        <NavLink to="/data-repo" className={navLinkClass} onClick={onNavClick}>
+          <Tooltip text={isCollapsed ? 'Kho dữ liệu số' : null}>
             <BookOpen className={`w-5 h-5 ${isCollapsed ? '' : 'mr-3'}`} />
-            <span className={`${isCollapsed ? 'hidden' : 'ml-3'}`}>Cẩm nang</span>
+            <span className={`${isCollapsed ? 'hidden' : 'ml-3'}`}>Kho dữ liệu số</span>
           </Tooltip>
         </NavLink>
         <NavLink to="/media" className={navLinkClass} onClick={onNavClick}>
@@ -196,7 +196,7 @@ const NavItems = ({ isCollapsed, onNavClick, horizontal }) => {
     {
       title: 'TIỆN ÍCH',
       items: [
-        { to: '/handbook', label: 'Cẩm nang', Icon: BookOpen },
+        { to: '/data-repo', label: 'Kho dữ liệu số', Icon: BookOpen },
         { to: '/media', label: 'Thông tin truyền thông', Icon: Megaphone },
         { to: '/schedule', label: 'Lịch làm việc', Icon: Calendar },
         { to: '/meetings', label: 'Họp & Hội nghị', Icon: Users2 },

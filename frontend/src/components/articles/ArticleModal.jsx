@@ -6,6 +6,7 @@ import apiService from '../../services/apiService';
 import { UploadCloud, FileText, Trash2 } from 'lucide-react';
 import Spinner from '../common/Spinner';
 import ModalWrapper from '../common/ModalWrapper';
+import { useNavigate } from 'react-router-dom';
 
 const ArticleModal = ({ isOpen, onClose, onSuccess, category, articleId }) => {
     const [title, setTitle] = useState('');
@@ -18,6 +19,7 @@ const ArticleModal = ({ isOpen, onClose, onSuccess, category, articleId }) => {
     const [error, setError] = useState('');
 
     const isEditMode = articleId != null;
+    const navigate = useNavigate();
 
     // SỬA LỖI: Tách logic xử lý khi modal mở/đóng và khi chỉnh sửa
     useEffect(() => {
@@ -101,7 +103,7 @@ const ArticleModal = ({ isOpen, onClose, onSuccess, category, articleId }) => {
         <ModalWrapper isOpen={isOpen} onClose={onClose} maxWidth="max-w-3xl">
             <div className="p-6 w-full flex flex-col max-h-[90vh]">
                 <h2 className="text-xl font-bold mb-6">
-                    {isEditMode ? 'Chỉnh sửa bài viết' : `Đăng bài mới vào mục "${category === 'handbook' ? 'Cẩm nang' : 'Truyền thông'}"`}
+                    {isEditMode ? 'Chỉnh sửa bài viết' : `Đăng bài mới vào mục "${category === 'handbook' ? 'Kho dữ liệu số' : 'Truyền thông'}"`}
                 </h2>
                 <form onSubmit={handleSubmit} className="flex-grow flex flex-col overflow-hidden">
                     {loading && !title ? <Spinner /> : (
@@ -109,11 +111,11 @@ const ArticleModal = ({ isOpen, onClose, onSuccess, category, articleId }) => {
                             {error && <p className="text-red-500 text-sm bg-red-50 p-3 rounded-lg">{error}</p>}
                             <div>
                                 <label className="block text-sm font-medium text-slate-700">Tiêu đề</label>
-                                <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required className="mt-1 input-style" />
+                                <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required className="mt-1" />
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-slate-700">Nội dung</label>
-                                <textarea value={content} onChange={(e) => setContent(e.target.value)} required rows="10" className="mt-1 input-style" />
+                                <textarea value={content} onChange={(e) => setContent(e.target.value)} required rows="10" className="mt-1" />
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-slate-700">Tệp đính kèm</label>
@@ -149,11 +151,29 @@ const ArticleModal = ({ isOpen, onClose, onSuccess, category, articleId }) => {
                             )}
                         </div>
                     )}
-                    <div className="flex justify-end space-x-3 pt-4 border-t mt-6 flex-shrink-0">
-                        <button type="button" onClick={onClose} className="btn-secondary">Hủy</button>
-                        <button type="submit" disabled={loading} className="btn-primary">
-                            {loading ? 'Đang lưu...' : isEditMode ? 'Lưu thay đổi' : 'Đăng bài'}
-                        </button>
+                    <div className="flex justify-between items-center pt-4 border-t mt-6 flex-shrink-0">
+                        <div>
+                            {isEditMode && (
+                                <button type="button" onClick={async ()=>{
+                                    if (!window.confirm('Bạn có chắc muốn xóa bài viết này?')) return;
+                                    try {
+                                        await apiService.deleteArticle(articleId);
+                                        // navigate to deleted list and notify parent
+                                        onSuccess && onSuccess();
+                                        onClose && onClose();
+                                        navigate('/data-repo/deleted');
+                                    } catch (err) {
+                                        alert((err && err.message) || 'Xóa thất bại');
+                                    }
+                                }} className="btn-danger">Xóa bài viết</button>
+                            )}
+                        </div>
+                        <div className="flex justify-end space-x-3">
+                            <button type="button" onClick={onClose} className="btn-secondary">Hủy</button>
+                            <button type="submit" disabled={loading} className="btn-primary">
+                                {loading ? 'Đang lưu...' : isEditMode ? 'Lưu thay đổi' : 'Đăng bài'}
+                            </button>
+                        </div>
                     </div>
                 </form>
             </div>

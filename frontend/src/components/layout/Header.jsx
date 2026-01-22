@@ -17,6 +17,8 @@ const Header = ({ setSidebarOpen }) => {
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [loadingNotifs, setLoadingNotifs] = useState(true);
+  const [broadcast, setBroadcast] = useState(null);
+  const [showBroadcast, setShowBroadcast] = useState(false);
   const BACKEND_URL = process.env.REACT_APP_API_BASE_URL.replace('/api', '');
 
   const fetchNotifications = useCallback(async () => {
@@ -38,6 +40,49 @@ const Header = ({ setSidebarOpen }) => {
         return () => clearInterval(interval);
       }
   }, [user, fetchNotifications]);
+
+  // Fetch public broadcast notification and show modal when active
+  useEffect(() => {
+    let mounted = true;
+        const checkBroadcast = async () => {
+      try {
+        const res = await apiService.getPublicBroadcastNotification();
+        if (!mounted || !res) return;
+        const data = res;
+        if (!data || !data.enabled) return;
+        const now = Date.now();
+        const start = data.start_time ? new Date(data.start_time).getTime() : null;
+        const end = data.end_time ? new Date(data.end_time).getTime() : null;
+        const within = (!start || now >= start) && (!end || now <= end);
+        if (!within) return;
+        const dismissKey = `broadcast_dismissed_${data.id || 'system'}`;
+        const raw = localStorage.getItem(dismissKey);
+        if (raw) {
+          try {
+            const obj = JSON.parse(raw);
+            const now2 = Date.now();
+            const currentId = data.id || 'system';
+            const fetchedUpdated = data.updated_at || data.updatedAt || null;
+            // If stored matches current broadcast id and is not expired and updatedAt matches, skip showing
+            if (obj && obj.id === currentId && obj.expiresAt && now2 < obj.expiresAt) {
+              if (!obj.updatedAt || !fetchedUpdated || obj.updatedAt === fetchedUpdated) {
+                return;
+              }
+            }
+          } catch (e) {
+            // ignore malformed value
+          }
+        }
+        setBroadcast(data);
+        setShowBroadcast(true);
+      } catch (e) {
+        // ignore
+      }
+    };
+    checkBroadcast();
+    // no interval; only fetch on mount
+    return () => { mounted = false; };
+  }, []);
 
   
 
@@ -72,6 +117,7 @@ const Header = ({ setSidebarOpen }) => {
   };
 
   return (
+    <>
     <header className="relative z-20 bg-white shadow-sm">
       <div className="flex items-center justify-between px-4 sm:px-6 lg:px-8 h-16">
         <button onClick={() => setSidebarOpen(true)} className="md:hidden text-slate-500">
@@ -144,6 +190,56 @@ const Header = ({ setSidebarOpen }) => {
       </div>
       
     </header>
+    {showBroadcast && broadcast && (
+      <div className="fixed inset-0 z-50 flex items-center justify-center">
+      <div
+        className="absolute inset-0 bg-black opacity-40"
+        onClick={() => {
+          try {
+            const id = broadcast.id || 'system';
+            // Temporary dismissal: 1 hour from now
+            const expiresAt = Date.now() + 1 * 60 * 60 * 1000;
+            const updatedAt = broadcast.updated_at || broadcast.updatedAt || null;
+            localStorage.setItem(`broadcast_dismissed_${id}`, JSON.stringify({ id, expiresAt, updatedAt }));
+          } catch (e) {
+            localStorage.setItem(`broadcast_dismissed_${broadcast.id || 'system'}`, '1');
+          }
+          setShowBroadcast(false);
+        }}
+      />
+        <div className="bg-white rounded-lg shadow-xl max-w-xl w-full mx-4 z-60 p-6 relative">
+          <button
+            onClick={() => {
+              try {
+                const id = broadcast.id || 'system';
+                const expiresAt = broadcast.end_time ? new Date(broadcast.end_time).getTime() : (Date.now() + 24 * 60 * 60 * 1000);
+                localStorage.setItem(`broadcast_dismissed_${id}`, JSON.stringify({ id, expiresAt }));
+              } catch (e) {
+                // fallback
+                localStorage.setItem(`broadcast_dismissed_${broadcast.id || 'system'}`, '1');
+              }
+              setShowBroadcast(false);
+            }}
+            aria-label="Close broadcast"
+            className="absolute top-3 right-3 inline-flex items-center justify-center w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            <span aria-hidden>✕</span>
+          </button>
+          {broadcast.title && <h3 className="text-lg font-bold mb-2">{broadcast.title}</h3>}
+          {broadcast.sub_title && <div className="text-sm text-slate-600 mb-3">{broadcast.sub_title}</div>}
+          {broadcast.message && <div className="text-sm text-slate-700 mb-4">{broadcast.message}</div>}
+          {broadcast.start_time || broadcast.end_time ? (
+            <div className="text-xs text-slate-500 bg-yellow-50 border border-yellow-100 p-2 rounded">
+              <strong>Thời gian:</strong>{' '}
+              {broadcast.start_time ? new Date(broadcast.start_time).toLocaleString() : '—'}
+              {' '}→{' '}
+              {broadcast.end_time ? new Date(broadcast.end_time).toLocaleString() : '—'}
+            </div>
+          ) : null}
+        </div>
+      </div>
+    )}
+    </>
   );
 };
 
