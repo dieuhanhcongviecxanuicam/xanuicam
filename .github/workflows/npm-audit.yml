@@ -1,0 +1,40 @@
+name: npm audit
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          set -e
+          cd backend
+          npm ci
+          cd ../frontend
+          npm ci
+
+      - name: Run npm audit (backend)
+        run: |
+          set -e || true
+          cd backend
+          npm audit --audit-level=moderate --json > backend_audit.json || true
+          cat backend_audit.json
+
+      - name: Run npm audit (frontend)
+        run: |
+          set -e || true
+          cd frontend
+          npm audit --audit-level=moderate --json > frontend_audit.json || true
+          cat frontend_audit.json

@@ -7,11 +7,17 @@ const maintenanceMiddleware = async (req, res, next) => {
         // the whole site when background DB-dependent workers fail.
         if (req.method === 'GET') {
             const p = req.path || req.url || '/';
-            if (p === '/' || p === '/index.html' || p.startsWith('/static/') || p.startsWith('/favicon') || p.startsWith('/manifest') || p.startsWith('/console-warning.js')) {
+            // Allow quick health checks and static assets to avoid blocking when DB is down
+            if (p === '/' || p === '/health' || p === '/index.html' || p.startsWith('/static/') || p.startsWith('/favicon') || p.startsWith('/manifest') || p.startsWith('/console-warning.js')) {
                 return next();
             }
             // also allow common asset extensions
             if (p.match(/\.(js|css|png|jpg|jpeg|svg|ico|json|txt)$/i)) return next();
+        }
+        // Allow dev-only quick endpoints to bypass DB checks when explicitly enabled
+        if (process.env.QUICK_EXPORT_DEV === '1') {
+            const p2 = req.path || req.url || '/';
+            if (p2.startsWith('/dev/')) return next();
         }
         // Try once, if transient DB error occurs retry once after a short delay
         let settingsRes;
