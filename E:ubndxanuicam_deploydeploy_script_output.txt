@@ -1,0 +1,1 @@
+hell.exe -NoProfile -ExecutionPolicy Bypass -File E:\\ubndxanuicam_deploy\\scripts\\deploy_frontend_and_restart_backend.ps1
