@@ -63,7 +63,7 @@
     ]
   },
   "devDependencies": {
-    "source-map-explorer": "^2.8.0",
+    "source-map-explorer": "^2.5.3",
     "@tailwindcss/postcss": "^4.1.13",
     "@testing-library/dom": "^10.4.1",
     "autoprefixer": "^10.4.21",
