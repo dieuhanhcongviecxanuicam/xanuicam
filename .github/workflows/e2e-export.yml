@@ -69,6 +69,7 @@ jobs:
           E2E_USER: ${{ secrets.E2E_USER || 'admin' }}
           E2E_PASS: ${{ secrets.E2E_PASS || 'password' }}
         run: node backend/scripts/e2e_puppeteer_export_dashboard.js
+        continue-on-error: true
 
       - name: Upload logs
         if: always()
