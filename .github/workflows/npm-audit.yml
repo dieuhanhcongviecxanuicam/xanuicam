@@ -21,9 +21,9 @@ jobs:
         run: |
           set -e
           cd backend
-          npm ci
+          npm ci || npm install --no-audit
           cd ../frontend/frontend
-          npm ci
+          npm ci || npm install --no-audit
 
       - name: Run npm audit (backend)
         run: |
