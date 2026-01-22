@@ -136,6 +136,28 @@ const EditUserModal = ({ isOpen, onClose, onUserUpdated, userId }) => {
             const resp = await apiService.updateUser(userId, payload);
             console.debug('EditUserModal: updateUser response', resp);
 
+            // Workaround: some backend setups may automatically set a department's
+            // manager to a user when that user's `department_id` is changed.
+            // If the current edit did not mark the user as a leader, clear any
+            // accidental assignment of this user as the department manager.
+            try {
+                const deptId = payload.get && payload.get('department_id') ? payload.get('department_id') : (toSend && toSend.department_id);
+                if (deptId && !toSend.is_leader) {
+                    try {
+                        const dept = await apiService.getDepartmentById(deptId);
+                        if (dept && (String(dept.manager_id) === String(userId))) {
+                            const f = new FormData();
+                            // explicitly clear manager_id
+                            f.append('manager_id', '');
+                            await apiService.updateDepartment(dept.id, f);
+                        }
+                    } catch (e) {
+                        // Don't fail the whole flow for department-fix errors
+                        console.debug('EditUserModal: failed to sanitize department manager after user update', e);
+                    }
+                }
+            } catch (e) {}
+
             onUserUpdated();
             onClose();
 
