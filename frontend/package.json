@@ -36,6 +36,7 @@
     "start": "cross-env NODE_OPTIONS=--no-deprecation react-scripts start",
     "dev": "cross-env NODE_OPTIONS=--no-deprecation react-scripts start",
     "build": "react-scripts build",
+    "analyze": "npx source-map-explorer build/static/js/*.js || true",
     "test": "react-scripts test",
     "e2e": "node scripts/e2e_computer_configs.js",
     "eject": "react-scripts eject"
@@ -60,6 +61,7 @@
     ]
   },
   "devDependencies": {
+    "source-map-explorer": "^2.8.0",
     "@tailwindcss/postcss": "^4.1.13",
     "@testing-library/dom": "^10.4.1",
     "autoprefixer": "^10.4.21",
