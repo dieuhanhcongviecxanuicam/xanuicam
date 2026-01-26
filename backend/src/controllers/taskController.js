@@ -130,6 +130,7 @@ exports.updateTaskStatus = async (req, res) => {
         const isAssignee = task.assignee_id === userId;
         const isCreator = task.creator_id === userId;
         const canApprove = permissions.includes('approve_task');
+        const canEditDelete = permissions.includes('edit_delete_task');
         let logAction = 'Cập nhật trạng thái';
         let logDetails = `${fullName} đã cập nhật trạng thái thành "${status}"`;
         let notificationMessage = '';
@@ -137,7 +138,9 @@ exports.updateTaskStatus = async (req, res) => {
 
         const canPerformAction = 
             (['Tiếp nhận', 'Đang thực hiện', 'Chờ duyệt'].includes(status) && isAssignee) ||
-            (['Yêu cầu làm lại', 'Hoàn thành'].includes(status) && (isCreator || canApprove));
+            (['Yêu cầu làm lại', 'Hoàn thành'].includes(status) && (isCreator || canApprove)) ||
+            // Allow cancelling a task when user is the creator or has edit/delete permission
+            (status === 'Đã hủy' && (isCreator || canEditDelete));
 
         if (!canPerformAction) {
             await client.query('ROLLBACK');
@@ -158,6 +161,12 @@ exports.updateTaskStatus = async (req, res) => {
         } else if (status === 'Tiếp nhận') {
             notificationMessage = `${fullName} đã tiếp nhận công việc "${task.title}".`;
             notificationRecipientId = task.creator_id;
+        } else if (status === 'Đã hủy') {
+            logAction = 'Hủy công việc';
+            logDetails = details || `${fullName} đã hủy công việc.`;
+            notificationMessage = `Công việc "${task.title}" đã bị hủy.`;
+            // notify the assignee if someone else cancelled it
+            notificationRecipientId = task.assignee_id;
         } else if (status === 'Chờ duyệt') {
             notificationMessage = `${fullName} đã báo cáo hoàn thành công việc "${task.title}".`;
             notificationRecipientId = task.creator_id;
