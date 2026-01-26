@@ -30,12 +30,15 @@
     "react-router-dom": "^7.8.2",
     "react-scripts": "5.0.1",
     "speakeasy": "^2.0.0",
-    "web-vitals": "^5.1.0"
+    "web-vitals": "^5.1.0",
+    "@sentry/react": "^7.28.0",
+    "@sentry/tracing": "^7.28.0"
   },
   "scripts": {
     "start": "cross-env NODE_OPTIONS=--no-deprecation react-scripts start",
     "dev": "cross-env NODE_OPTIONS=--no-deprecation react-scripts start",
     "build": "react-scripts build",
+    "analyze": "npx source-map-explorer build/static/js/*.js || true",
     "test": "react-scripts test",
     "e2e": "node scripts/e2e_computer_configs.js",
     "eject": "react-scripts eject"
@@ -60,6 +63,7 @@
     ]
   },
   "devDependencies": {
+    "source-map-explorer": "^2.5.3",
     "@tailwindcss/postcss": "^4.1.13",
     "@testing-library/dom": "^10.4.1",
     "autoprefixer": "^10.4.21",
