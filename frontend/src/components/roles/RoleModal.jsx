@@ -14,7 +14,7 @@ const RoleModal = ({ isOpen, onClose, onSuccess, roleId }) => {
     const [allPermissions, setAllPermissions] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-    const [totalRoles, setTotalRoles] = useState(null);
+    const [, setTotalRoles] = useState(null);
     const [disableSave, setDisableSave] = useState(false);
 
     const isEditMode = roleId != null;

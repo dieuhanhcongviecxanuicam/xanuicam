@@ -38,11 +38,6 @@ const ArticleDetailModal = ({ articleId, onClose, onEdit }) => {
 
     return (
         <>
-            <AttachmentViewerModal
-                attachment={selectedAttachment}
-                onClose={() => setSelectedAttachment(null)}
-            />
-
             <ModalWrapper isOpen={!!articleId} onClose={onClose} maxWidth="max-w-3xl" className="max-h-[90vh] p-0">
                 <div className="bg-white rounded-lg shadow-xl w-full max-h-[90vh] flex flex-col">
                     <div className="flex justify-between items-center p-4 border-b">
@@ -109,7 +104,12 @@ const ArticleDetailModal = ({ articleId, onClose, onEdit }) => {
                         )}
                     </div>
                 </div>
-            </ModalWrapper>
+                </ModalWrapper>
+
+                <AttachmentViewerModal
+                    attachment={selectedAttachment}
+                    onClose={() => setSelectedAttachment(null)}
+                />
         </>
     );
 };

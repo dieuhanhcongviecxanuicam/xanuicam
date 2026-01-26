@@ -86,7 +86,33 @@ const CreateUserModal = ({ isOpen, onClose, onUserCreated }) => {
         });
 
         try {
-            await apiService.createUser(payload);
+            const created = await apiService.createUser(payload);
+            // Some backends may auto-assign the newly created user as the
+            // department manager when department_id is provided. If the new
+            // user was not marked as a leader, clear any accidental assignment.
+                try {
+                    const deptId = formData.department_id;
+                    // determine new user id safely to avoid mixed-operator lint errors
+                    let newUserId = null;
+                    if (created) {
+                        if (created.id) newUserId = created.id;
+                        else if (created.user_id) newUserId = created.user_id;
+                        else if (created.data && created.data.id) newUserId = created.data.id;
+                    }
+                    if (deptId && newUserId && !formData.is_leader) {
+                    try {
+                        const dept = await apiService.getDepartmentById(deptId);
+                        if (dept && (String(dept.manager_id) === String(newUserId))) {
+                            const f = new FormData();
+                            f.append('manager_id', '');
+                            await apiService.updateDepartment(dept.id, f);
+                        }
+                    } catch (e) {
+                        console.debug('CreateUserModal: failed to sanitize department manager after create', e);
+                    }
+                }
+            } catch (e) {}
+
             // Wait for parent to refresh list; parent `onUserCreated` returns a promise
             if (onUserCreated && typeof onUserCreated === 'function') {
                 try { await onUserCreated(); } catch (e) { /* continue even if refresh failed */ }
