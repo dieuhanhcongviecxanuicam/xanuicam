@@ -22,17 +22,17 @@ exports.getSystemSettings = async (req, res) => {
 
 // Cập nhật chế độ bảo trì
 exports.updateMaintenanceMode = async (req, res) => {
-    const { enabled, title, message } = req.body;
+    const { enabled, title, message, start_time, end_time, whitelist = [], main_title, sub_title, detailed_message } = req.body;
     const { id: actorId, fullName: actorName } = req.user;
     const client = await pool.connect();
 
-    if (typeof enabled !== 'boolean' || !title || !message) {
+    if (typeof enabled !== 'boolean') {
         return res.status(400).json({ message: 'Dữ liệu không hợp lệ.' });
     }
 
     try {
         await client.query('BEGIN');
-        const value = { enabled, title, message };
+        const value = { enabled, title, message, start_time: start_time || null, end_time: end_time || null, whitelist: Array.isArray(whitelist)? whitelist.slice(0,3): [], main_title: main_title || null, sub_title: sub_title || null, detailed_message: detailed_message || null };
         const query = `
             UPDATE system_settings 
             SET value = $1, updated_at = NOW() 
@@ -54,6 +54,46 @@ exports.updateMaintenanceMode = async (req, res) => {
     } catch (error) {
         await client.query('ROLLBACK');
         console.error("Lỗi khi cập nhật chế độ bảo trì:", error);
+        res.status(500).json({ message: 'Lỗi máy chủ nội bộ' });
+    } finally {
+        client.release();
+    }
+};
+
+// Cập nhật / gửi thông báo broadcast
+exports.updateBroadcastNotification = async (req, res) => {
+    const { enabled, title, message, start_time, end_time } = req.body;
+    const { id: actorId, fullName: actorName } = req.user;
+    const client = await pool.connect();
+
+    if (typeof enabled !== 'boolean') return res.status(400).json({ message: 'Dữ liệu không hợp lệ.' });
+
+    try {
+        await client.query('BEGIN');
+        const value = { enabled, title: title || null, message: message || null, start_time: start_time || null, end_time: end_time || null };
+        const query = `
+            UPDATE system_settings
+            SET value = $1, updated_at = NOW()
+            WHERE key = 'broadcast_notification'
+            RETURNING id, value, updated_at;
+        `;
+        const { rows } = await client.query(query, [JSON.stringify(value)]);
+
+        await logActivity(client, {
+            userId: actorId,
+            module: 'Hệ thống',
+            action: 'Gửi thông báo',
+            details: `${actorName} đã ${enabled? 'bật/đặt' : 'tắt'} thông báo hệ thống.`
+        });
+
+        await client.query('COMMIT');
+        // Return structured object including id and updated_at for clients
+        const out = rows[0] || {};
+        const parsed = out.value || { enabled: false };
+        res.json(Object.assign({}, parsed, { id: out.id, updated_at: out.updated_at }));
+    } catch (error) {
+        await client.query('ROLLBACK');
+        console.error('Lỗi khi cập nhật broadcast notification:', error);
         res.status(500).json({ message: 'Lỗi máy chủ nội bộ' });
     } finally {
         client.release();
@@ -103,6 +143,21 @@ exports.deleteUserUpdateActions = async (req, res) => {
         res.json({ message: 'Đã xóa bản ghi user_update_actions theo điều kiện.', rowCount: r.rowCount });
     } catch (error) {
         console.error('Error deleteUserUpdateActions:', error);
+        res.status(500).json({ message: 'Lỗi máy chủ nội bộ' });
+    }
+};
+
+// Public: return broadcast notification (no auth) so public-facing pages can show notification modal
+exports.getPublicBroadcastNotification = async (req, res) => {
+    try {
+        const { rows } = await pool.query("SELECT id, value, updated_at FROM system_settings WHERE key = 'broadcast_notification'");
+        if (!rows[0]) return res.json({ enabled: false });
+        const row = rows[0];
+        const val = row.value || { enabled: false };
+        // include id and updated_at so frontend can track dismissals per version
+        res.json(Object.assign({}, val, { id: row.id, updated_at: row.updated_at }));
+    } catch (error) {
+        console.error('Error getPublicBroadcastNotification:', error);
         res.status(500).json({ message: 'Lỗi máy chủ nội bộ' });
     }
 };

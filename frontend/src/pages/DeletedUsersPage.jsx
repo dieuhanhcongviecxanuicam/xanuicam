@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import apiService from '../services/apiService';
 import useAuth from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
-import { formatDistanceToNowStrict, format } from 'date-fns';
+import { format } from 'date-fns';
 
 const RETENTION_DAYS = 7;
 

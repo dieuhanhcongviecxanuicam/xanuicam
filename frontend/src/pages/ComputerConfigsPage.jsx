@@ -3,7 +3,6 @@ import useAuth from '../hooks/useAuth';
 import api from '../api/axios';
 import QuickConfigModal from '../components/computer-configs/QuickConfigModal';
 import AdminExportLogs from '../components/AdminExportLogs';
-import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
@@ -250,18 +249,14 @@ const ComputerConfigsPage = () => {
 
   const exportExcel = async (user) => {
     try {
-      let cfg = prefetchCache[user.id];
-      if (!cfg) {
-        const r = await api.get(`/computer-configs/user/${user.id}`);
-        cfg = r.data && (r.data.config || r.data) ? (r.data.config || r.data) : {};
+      // Use server-side export to avoid client-side SheetJS vulnerabilities.
+      const body = { userIds: [user.id], format: 'xlsx' };
+      const out = await api.exportPost('/computer-configs/export', body, {});
+      if (out && out.blob) {
+        downloadBlob(out.blob, out.filename || `xanuicam_computer_${formatTimestamp(new Date()).datetime}.xlsx`);
+      } else {
+        if (api && api.showToast) api.showToast('Lỗi khi xuất Excel', 'error'); else alert('Lỗi khi xuất Excel');
       }
-      const ts = formatTimestamp(new Date());
-      const rows = Object.entries(cfg).map(([k, v]) => ({ Field: k, Value: v }));
-      const ws = XLSX.utils.json_to_sheet(rows, { header: ['Field', 'Value'] });
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, ts.sheetName.substring(0, 31));
-      const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-      saveAs(new Blob([wbout], { type: 'application/octet-stream' }), `xanuicam_computer_${ts.datetime}.xlsx`);
     } catch (e) {
       console.error('exportExcel', e);
       if (api && api.showToast) api.showToast('Lỗi khi xuất Excel', 'error'); else alert('Lỗi khi xuất Excel');

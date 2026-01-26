@@ -10,7 +10,7 @@ const settingsMenu = [
 ];
 
 const SettingsPage = () => {
-    const [reduced, setReduced] = useState(() => {
+    const [reduced] = useState(() => {
         try { return localStorage.getItem('reducedDecorations') === 'true'; } catch (e) { return false; }
     });
 
