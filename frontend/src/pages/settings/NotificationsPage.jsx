@@ -50,7 +50,7 @@ const NotificationsPage = () => {
 
     const savePrefs = async (newPrefs) => {
         setPrefs(newPrefs);
-        try { const resp = await apiService.updateNotificationPrefs({ email: newPrefs.email, inApp: newPrefs.inApp, push: newPrefs.push }); setNotice({ message: 'Cài đặt thông báo đã được lưu.', type: 'success' }); } catch (e) {
+        try { await apiService.updateNotificationPrefs({ email: newPrefs.email, inApp: newPrefs.inApp, push: newPrefs.push }); setNotice({ message: 'Cài đặt thông báo đã được lưu.', type: 'success' }); } catch (e) {
             // fallback: persist locally if backend fails
             try { localStorage.setItem(channelKey(user.id), JSON.stringify(newPrefs)); } catch (ee) {}
             setNotice({ message: 'Không thể lưu lên server, đã lưu cục bộ.', type: 'warning' });
