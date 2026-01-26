@@ -17,6 +17,9 @@ COPY backend/ .
 # Expose port used by backend (default 5000)
 EXPOSE 5000
 
-# Start the server
-ENTRYPOINT ["node"]
-CMD ["backend/server.js"]
+# Add entrypoint that waits for DB, then execs the original CMD
+COPY backend/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh", "node"]
+CMD ["server.js"]

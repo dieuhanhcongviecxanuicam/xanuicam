@@ -16,6 +16,22 @@ try {
   dotenv.config();
 }
 
+// Optional Sentry initialization for error reporting. Set SENTRY_DSN in the
+// environment or repository secrets to enable. This is best-effort and will
+// not crash the app if Sentry is unavailable.
+if (process.env.SENTRY_DSN) {
+  try {
+    const Sentry = require('@sentry/node');
+    Sentry.init({ dsn: process.env.SENTRY_DSN, tracesSampleRate: 0.1 });
+    console.log('Sentry initialized');
+    // Attach Sentry request handler early
+    app && app.use && app.use(Sentry.Handlers.requestHandler && Sentry.Handlers.requestHandler());
+    // We'll capture errors later with the error handler registration.
+  } catch (e) {
+    console.warn('Failed to initialize Sentry:', e && (e.message || e));
+  }
+}
+
 // Ensure critical secrets exist at runtime; if missing, generate temporary values
 if (!process.env.JWT_SECRET) {
   console.warn('JWT_SECRET not set — generating temporary runtime secret (not for production).');
@@ -83,6 +99,14 @@ const apiRoutes = require('./src/routes');
 // --- Nạp các middleware ---
 const { verifyTokenOptional } = require('./src/middlewares/authMiddleware');
 const maintenanceMiddleware = require('./src/middlewares/maintenanceMiddleware');
+// Optional cache middleware (uses REDIS_URL) - best-effort
+try {
+  const { cacheMiddleware } = require('./src/middlewares/cacheMiddleware');
+  // attach to app.locals for route authors to use programmatically
+  app.locals.cacheMiddleware = cacheMiddleware;
+} catch (e) {
+  // ignore if middleware not present or failed to load
+}
 
 const app = express();
 
