@@ -57,7 +57,7 @@
     ,"@sentry/node": "^7.28.0"
   },
   "devDependencies": {
-    "jest": "^29.6.1",
+    "jest": "^30.2.0",
     "supertest": "6.3.3",
     "nodemon": "^3.1.4"
   }
