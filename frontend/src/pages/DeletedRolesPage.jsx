@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import apiService from '../services/apiService';
 import Spinner from '../components/common/Spinner';
-import { formatDistanceToNowStrict } from 'date-fns';
+// removed unused import: formatDistanceToNowStrict
 import Notification from '../components/common/Notification';
 import DeleteConfirmationModal from '../components/common/DeleteConfirmationModal';
 
@@ -12,8 +12,6 @@ const DeletedRolesPage = () => {
   const [loading, setLoading] = useState(true);
   const [notification, setNotification] = useState({ message: '', type: '' });
   const [confirmRestoreId, setConfirmRestoreId] = useState(null);
-  const [confirmPermanentId, setConfirmPermanentId] = useState(null);
-
   useEffect(() => {
     const fetch = async () => {
       setLoading(true);
@@ -43,19 +41,7 @@ const DeletedRolesPage = () => {
     }
   };
 
-  const handlePermanent = async (id) => {
-    try {
-      await apiService.permanentlyDeleteRole(id);
-      apiService.logEvent({ action: 'role.permanently_deleted', resource_type: 'role', resource_id: id }).catch(()=>{});
-      setItems(current => current.filter(i => i.id !== id));
-      setNotification({ message: 'Vai trò đã bị xóa vĩnh viễn.', type: 'success' });
-    } catch (e) {
-      const msg = typeof e === 'string' ? e : (e && (e.message || e.error)) || 'Xóa vĩnh viễn thất bại.';
-      setNotification({ message: msg, type: 'error' });
-    } finally {
-      setConfirmPermanentId(null);
-    }
-  };
+  
 
   const renderRemaining = (deletedAt) => {
     if (!deletedAt) return '';

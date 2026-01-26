@@ -13,7 +13,17 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Build frontend
-        run: npm ci --prefix frontend --legacy-peer-deps && npm --prefix frontend run build
+        run: |
+          if [ -f frontend/package.json ]; then
+            if [ -f frontend/package-lock.json ]; then
+              npm ci --prefix frontend --legacy-peer-deps
+            else
+              npm install --prefix frontend --legacy-peer-deps
+            fi
+            npm --prefix frontend run build
+          else
+            echo "No frontend/package.json, skipping frontend build"
+          fi
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
@@ -21,13 +31,21 @@ jobs:
           name: frontend-build
           path: frontend/build
 
+      - name: Sanitize prod port
+        run: |
+          p='${{ secrets.PROD_SSH_PORT }}'
+          p="${p//\"/}"
+          p="${p//\\/}"
+          if ! printf '%s' "$p" | grep -E '^[0-9]+$' >/dev/null; then p=22; fi
+          echo "SAFE_PROD_PORT=$p" >> $GITHUB_ENV
+
       - name: Deploy to server via SSH
         uses: appleboy/scp-action@v0.1.9
         with:
           host: ${{ secrets.PROD_HOST }}
           username: ${{ secrets.PROD_USER }}
           key: ${{ secrets.PROD_SSH_KEY }}
-          port: ${{ secrets.PROD_SSH_PORT || '22' }}
+          port: ${{ env.SAFE_PROD_PORT }}
           source: "frontend/build/**"
           target: ${{ secrets.PROD_DEPLOY_PATH }}
 
@@ -37,7 +55,7 @@ jobs:
           host: ${{ secrets.PROD_HOST }}
           username: ${{ secrets.PROD_USER }}
           key: ${{ secrets.PROD_SSH_KEY }}
-          port: ${{ secrets.PROD_SSH_PORT || '22' }}
+          port: ${{ env.SAFE_PROD_PORT }}
           script: |
             set -e
             if pm2 describe ubnd-backend > /dev/null 2>&1; then
