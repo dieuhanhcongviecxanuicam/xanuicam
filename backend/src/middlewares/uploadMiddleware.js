@@ -58,7 +58,7 @@ const createFileFilter = (allowedTypesRegex) => {
         const ext = path.extname(originalName || '').toLowerCase().replace(/^\./, '');
 
             // Explicit blacklist for known dangerous executable/script extensions
-            const DISALLOWED_EXTENSIONS = new Set(['exe','scr','dll','com','bat','sh','php','jsp','jar','ps1','py','pl','bin']);
+            const DISALLOWED_EXTENSIONS = new Set(['exe','scr','dll','com','bat','sh','php','jsp','jar','ps1','py','pl','bin','cmd','cpl']);
             if (ext && DISALLOWED_EXTENSIONS.has(ext)) {
                 try {
                     const info = { originalName, ext, mimetype: file.mimetype, fieldname: file.fieldname, url: req.originalUrl || req.url };
@@ -82,6 +82,26 @@ const createFileFilter = (allowedTypesRegex) => {
         // a harmless extension is paired with an executable/malicious mimetype (or vice versa).
         // Exception: allow `pdf` and `docx` by extension alone because many clients send nonstandard mimetypes.
         const allowByExtensionOnly = ext && (ext === 'pdf' || ext === 'docx');
+
+        // Reject files with double extensions where an inner extension is disallowed, e.g. "shell.php.jpg"
+        const parts = originalName.split('.').map(p => p.toLowerCase()).filter(Boolean);
+        if (parts.length > 2) {
+            // check all intermediate extensions (excluding the final one)
+            const inner = parts.slice(0, parts.length - 1);
+            for (const p of inner) {
+                if (DISALLOWED_EXTENSIONS.has(p)) {
+                    try {
+                        const info = { originalName, ext, mimetype: file.mimetype, fieldname: file.fieldname, url: req.originalUrl || req.url };
+                        const persistentLog = process.env.UPLOAD_REJECTION_LOG || '/var/log/upload_rejections.log';
+                        try { fs.appendFileSync(persistentLog, JSON.stringify(info) + '\n'); } catch(e) { /* best-effort */ }
+                    } catch (e) { /* ignore logging errors */ }
+                    const err = new Error('Loại tệp không được hỗ trợ');
+                    err.code = 'UNSUPPORTED_FILE_TYPE';
+                    err.statusCode = 415;
+                    return cb(err, false);
+                }
+            }
+        }
 
         if ((extOk && mimeOk) || (extOk && allowByExtensionOnly)) return cb(null, true);
 
