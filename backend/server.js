@@ -3,6 +3,7 @@
 
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet');
 const path = require('path');
 const fs = require('fs');
 const dotenv = require('dotenv');
@@ -13,6 +14,22 @@ try {
   dotenv.config({ path: envPath });
 } catch (e) {
   dotenv.config();
+}
+
+// Optional Sentry initialization for error reporting. Set SENTRY_DSN in the
+// environment or repository secrets to enable. This is best-effort and will
+// not crash the app if Sentry is unavailable.
+if (process.env.SENTRY_DSN) {
+  try {
+    const Sentry = require('@sentry/node');
+    Sentry.init({ dsn: process.env.SENTRY_DSN, tracesSampleRate: 0.1 });
+    console.log('Sentry initialized');
+    // Attach Sentry request handler early
+    app && app.use && app.use(Sentry.Handlers.requestHandler && Sentry.Handlers.requestHandler());
+    // We'll capture errors later with the error handler registration.
+  } catch (e) {
+    console.warn('Failed to initialize Sentry:', e && (e.message || e));
+  }
 }
 
 // Ensure critical secrets exist at runtime; if missing, generate temporary values
@@ -82,8 +99,52 @@ const apiRoutes = require('./src/routes');
 // --- Nạp các middleware ---
 const { verifyTokenOptional } = require('./src/middlewares/authMiddleware');
 const maintenanceMiddleware = require('./src/middlewares/maintenanceMiddleware');
+// Optional cache middleware (uses REDIS_URL) - best-effort
+try {
+  const { cacheMiddleware } = require('./src/middlewares/cacheMiddleware');
+  // attach to app.locals for route authors to use programmatically
+  app.locals.cacheMiddleware = cacheMiddleware;
+} catch (e) {
+  // ignore if middleware not present or failed to load
+}
 
 const app = express();
+
+// Use Helmet to set safe HTTP headers. Content-Security-Policy is enabled
+// in report-only mode initially so we can monitor violations without
+// breaking existing clients; adjust to enforce mode after verification.
+try {
+  app.use(helmet());
+  app.use(helmet.contentSecurityPolicy({
+    useDefaults: true,
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      imgSrc: ["'self'", 'data:', 'https:'],
+      connectSrc: ["'self'", 'https:'],
+      fontSrc: ["'self'", 'https:', 'data:'],
+      objectSrc: ["'none'"],
+      baseUri: ["'self'"],
+      frameAncestors: ["'none'"],
+    },
+    reportOnly: true
+  }));
+  // Endpoint for CSP reports (report-only mode)
+  app.post('/csp-report', express.json({ type: ['application/csp-report', 'application/json'] }), (req, res) => {
+    try {
+      // Append CSP reports to a newline-delimited JSON file for later review
+      const reportsDir = path.join(__dirname, 'logs');
+      try { if (!fs.existsSync(reportsDir)) fs.mkdirSync(reportsDir, { recursive: true }); } catch (e) {}
+      const out = { ts: new Date().toISOString(), report: req.body };
+      try { fs.appendFileSync(path.join(reportsDir, 'csp_reports.jsonl'), JSON.stringify(out) + '\n'); } catch (e) { /* best-effort */ }
+      console.warn('CSP report received');
+    } catch (e) {}
+    return res.status(204).end();
+  });
+} catch (e) {
+  console.warn('Helmet not available or failed to initialize:', e && e.message);
+}
 
 // Temporary request-logging middleware for debugging Cloudflare / CDN routing.
 // Enable by setting REQUEST_LOGGING=true in the backend `.env` (disabled by default).
@@ -161,6 +222,66 @@ try {
 } catch (e) {
   console.warn('sanitizeMiddleware not available, continuing without it.');
 }
+
+// Detailed request/body logging when REQUEST_LOGGING=true
+// This logs headers and the parsed JSON body but redacts sensitive fields.
+if (process.env.REQUEST_LOGGING === 'true') {
+  app.use((req, res, next) => {
+    try {
+      const now = new Date().toISOString();
+      const hdrs = Object.assign({}, req.headers || {});
+      if (hdrs.authorization) hdrs.authorization = '[REDACTED]';
+      // shallow clone body and redact common sensitive fields
+      let body = undefined;
+      try {
+        body = req.body && typeof req.body === 'object' ? JSON.parse(JSON.stringify(req.body)) : req.body;
+        if (body && typeof body === 'object') {
+          if ('password' in body) body.password = '[REDACTED]';
+          if ('pass' in body) body.pass = '[REDACTED]';
+          if ('mfa' in body) body.mfa = '[REDACTED]';
+        }
+      } catch (e) { body = '[unserializable]'; }
+
+      const ip = req.headers['x-forwarded-for']?.split(',')[0].trim() || req.ip || req.connection?.remoteAddress || '';
+      console.log(`[REQ-DETAIL] ${now} ${req.method} ${req.originalUrl} ip=${ip} headers=${JSON.stringify(hdrs)} body=${body === undefined ? '' : (typeof body === 'string' ? body : JSON.stringify(body))}`);
+    } catch (e) {
+      console.log('Error in detailed request logging', e && (e.stack || e));
+    }
+    next();
+  });
+}
+
+// Serve frontend build early to allow static assets and index.html to be
+// returned without running global auth/maintenance middleware which may
+// depend on the database. This helps the app remain responsive when the DB
+// is temporarily unreachable (useful during maintenance and deploys).
+try {
+  const earlyBuildPath = path.resolve(__dirname, '../frontend/build');
+  const earlyIndex = path.join(earlyBuildPath, 'index.html');
+  const serveFrontendEarly = (process.env.NODE_ENV === 'production') || (process.env.SERVE_FRONTEND === 'true');
+  if (serveFrontendEarly && fs.existsSync(earlyIndex)) {
+    console.log('Serving frontend build (early) from', earlyBuildPath);
+    app.use(express.static(earlyBuildPath, {
+      setHeaders: (res, filePath) => {
+        try {
+          res.setHeader('X-Content-Type-Options', 'nosniff');
+          res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+        } catch (e) {}
+      }
+    }));
+    app.get(/^\/(?!api\/|auth\/|static\/).*/, (req, res) => {
+      try {
+        // Ensure clients and CDN will revalidate the SPA index when it changes
+        res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+        res.setHeader('Pragma', 'no-cache');
+        res.setHeader('Expires', '0');
+      } catch (e) {}
+      res.sendFile(earlyIndex);
+    });
+  }
+} catch (e) {
+  console.warn('Early frontend serve registration failed:', e && (e.stack || e));
+}
 // Serve uploads with safe download headers to reduce content-sniffing risks.
 app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
   setHeaders: (res, filePath) => {
@@ -191,6 +312,35 @@ app.use(maintenanceMiddleware);
 
 // --- Khai báo tuyến đường API chính ---
 app.use('/api', apiRoutes); // Tất cả các route API sẽ bắt đầu bằng /api
+
+// Error-logging middleware (captures error + request context) when
+// REQUEST_LOGGING=true. Placed after routes so it can observe route errors.
+if (process.env.REQUEST_LOGGING === 'true') {
+  app.use((err, req, res, next) => {
+    try {
+      const ctx = {
+        ts: new Date().toISOString(),
+        method: req.method,
+        url: req.originalUrl,
+        ip: req.headers['x-forwarded-for']?.split(',')[0].trim() || req.ip || req.connection?.remoteAddress || '',
+        headers: Object.assign({}, req.headers || {})
+      };
+      if (ctx.headers && ctx.headers.authorization) ctx.headers.authorization = '[REDACTED]';
+      // attempt to include body but avoid crashing
+      try { ctx.body = req.body && typeof req.body === 'object' ? JSON.parse(JSON.stringify(req.body)) : req.body; } catch (e) { ctx.body = '[unserializable]'; }
+      console.error('[REQ-ERROR]', JSON.stringify(ctx), err && (err.stack || err));
+    } catch (e) {
+      console.error('Error while logging request error:', e && (e.stack || e));
+    }
+    // forward to the next error handler
+    next(err);
+  });
+}
+
+// Development-only quick-export endpoint to test XLSX generation without DB.
+// Enabled by setting QUICK_EXPORT_DEV=1 in the environment. This is temporary
+// and intended for local smoke-tests only; it will be ignored in normal runs.
+// QUICK_EXPORT_DEV route removed for production readiness.
 
 // --- Backwards compatibility: accept some endpoints without the /api prefix ---
 // Historically some clients called /auth/login directly — provide alias routes so
@@ -288,6 +438,12 @@ app.get('/favicon-v2.ico', (req, res) => {
       // Serve index.html for any GET path that doesn't start with /api, /auth or /static
       // so single-page-app client routes are handled by the React router.
       app.get(/^\/(?!api\/|auth\/|static\/).*/, (req, res) => {
+        try {
+          // Ensure clients and CDN revalidate the SPA index rather than caching it
+          res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+          res.setHeader('Pragma', 'no-cache');
+          res.setHeader('Expires', '0');
+        } catch (e) {}
         res.sendFile(indexFile);
       });
     } else {

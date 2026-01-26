@@ -1,0 +1,20 @@
+name: Semgrep Scan
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  semgrep:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Semgrep
+        uses: returntocorp/semgrep-action@v1
+        with:
+          config: 'p/ci'
+          format: 'json'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

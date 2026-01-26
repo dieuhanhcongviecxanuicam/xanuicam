@@ -98,6 +98,11 @@ const apiService = {
     createArticle: (formData) => api.post('/articles', formData, { headers: { 'Content-Type': 'multipart/form-data' } }).then(handleResponse).catch(handleError),
     updateArticle: (id, formData) => api.put(`/articles/${id}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } }).then(handleResponse).catch(handleError),
     deleteArticle: (id) => api.delete(`/articles/${id}`).then(handleResponse).catch(handleError),
+    // Deleted articles & attachments
+    getDeletedArticles: (params) => api.get('/articles/deleted', { params }).then(handleResponse).catch(handleError),
+    restoreDeletedArticle: (id) => api.post(`/articles/deleted/${id}/restore`).then(handleResponse).catch(handleError),
+    getDeletedArticleAttachments: (params) => api.get('/articles/deleted-attachments', { params }).then(handleResponse).catch(handleError),
+    restoreDeletedArticleAttachment: (id) => api.post(`/articles/deleted-attachments/${id}/restore`).then(handleResponse).catch(handleError),
 
     // Meetings & Room Bookings
     getMeetings: (params) => api.get('/meetings', { params }).then(handleResponse).catch(handleError),
@@ -175,6 +180,9 @@ const apiService = {
     // System, Audit, Notifications
     getSystemSettings: () => api.get('/system/settings').then(handleResponse).catch(handleError),
     updateMaintenanceMode: (maintenanceData) => api.put('/system/settings/maintenance', maintenanceData).then(handleResponse).catch(handleError),
+    updateBroadcastNotification: (notificationData) => api.put('/system/settings/notification', notificationData).then(handleResponse).catch(handleError),
+    // Public broadcast notification (no auth required)
+    getPublicBroadcastNotification: () => api.get('/system/notification').then(handleResponse).catch(handleError),
     getAuditLogs: (params) => api.get('/audit-logs', { params }).then(handleResponse).catch(handleError),
     // Log an audit/event entry (frontend helper)
     logEvent: (body) => api.post('/audit-logs', body).then(handleResponse).catch(handleError),

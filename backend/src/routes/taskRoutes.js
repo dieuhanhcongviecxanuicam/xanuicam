@@ -7,6 +7,10 @@ const taskController = require('../controllers/taskController');
 const { verifyToken, hasPermission, hasAnyPermission } = require('../middlewares/authMiddleware');
 const { validateTaskCreation, validate } = require('../middlewares/validationMiddleware');
 const { attachmentUpload } = require('../middlewares/uploadMiddleware');
+const rateLimit = require('express-rate-limit');
+
+// Task attachment limiter: 10 uploads per minute per IP
+const taskAttachmentLimiter = rateLimit({ windowMs: 60 * 1000, max: 10, standardHeaders: true, legacyHeaders: false });
 
 router.use(verifyToken);
 
@@ -31,6 +35,6 @@ router.post('/export', hasAnyPermission(['view_reports','export_tasks']), taskCo
 router.get('/:id/comments', taskController.getTaskComments);
 router.post('/:id/comments', taskController.addTaskComment);
 router.get('/:id/attachments', taskController.getTaskAttachments);
-router.post('/:id/attachments', attachmentUpload.single('file'), taskController.addTaskAttachment);
+router.post('/:id/attachments', taskAttachmentLimiter, attachmentUpload.single('file'), taskController.addTaskAttachment);
 
 module.exports = router;

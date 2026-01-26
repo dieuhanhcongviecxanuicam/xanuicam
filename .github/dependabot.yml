@@ -3,15 +3,30 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "daily"
-    open-pull-requests-limit: 5
+      interval: "weekly"
   - package-ecosystem: "npm"
     directory: "/backend"
     schedule:
-      interval: "daily"
-    open-pull-requests-limit: 5
+      interval: "weekly"
   - package-ecosystem: "npm"
     directory: "/frontend"
     schedule:
-      interval: "daily"
-    open-pull-requests-limit: 5
+      interval: "weekly"
+    open-pull-requests-limit: 10
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+  - package-ecosystem: "npm"
+    directory: "/frontend"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+  - package-ecosystem: "npm"
+    directory: "/backend"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
