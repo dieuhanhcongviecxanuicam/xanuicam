@@ -98,6 +98,24 @@ exports.getByUser = async (req, res) => {
 // Export configs for given users (body: { userIds: [1,2], format: 'xlsx'|'pdf' })
 exports.exportConfigs = async (req, res) => {
   const { userIds = [], format = 'xlsx', filters = {} } = req.body || {};
+  // Input validation and size limits to avoid abuse
+  const allowedFormats = new Set(['xlsx', 'pdf']);
+  if (!allowedFormats.has(String(format))) return res.status(400).json({ message: 'Unsupported format' });
+  if (!Array.isArray(userIds)) return res.status(400).json({ message: 'userIds must be an array' });
+  if (userIds.length > 1000) return res.status(400).json({ message: 'Too many userIds (max 1000)' });
+  // ensure all ids are integers
+  for (let i = 0; i < userIds.length; i++) {
+    const v = userIds[i];
+    if (!Number.isInteger(v) && !(typeof v === 'string' && /^\d+$/.test(v))) {
+      return res.status(400).json({ message: 'userIds must be integers' });
+    }
+    userIds[i] = parseInt(v, 10);
+  }
+  // sanitize filters
+  if (filters && typeof filters === 'object') {
+    if (filters.departmentId && !/^\d+$/.test(String(filters.departmentId))) return res.status(400).json({ message: 'Invalid departmentId' });
+    if (filters.search && String(filters.search).length > 200) return res.status(400).json({ message: 'Search too long' });
+  }
   try {
     let rows;
     if (userIds && Array.isArray(userIds) && userIds.length > 0) {

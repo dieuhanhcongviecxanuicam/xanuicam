@@ -23,9 +23,10 @@ import RolesPage from './pages/RolesPage';
 // --- NEW & UPDATED PAGES ---
 import SettingsPage from './pages/SettingsPage';
 import AdminSettingsPage from './pages/AdminSettingsPage';
-import HandbookPage from './pages/HandbookPage';
+import DataRepoPage from './pages/DataRepoPage';
 import MediaPage from './pages/MediaPage';
 import MaintenancePage from './pages/MaintenancePage';
+import OffMaintenancePage from './pages/OffMaintenance';
 import AccessDeniedPage from './pages/AccessDeniedPage';
 import SchedulePage from './pages/SchedulePage';
 import FeedbackPage from './pages/FeedbackPage';
@@ -37,6 +38,8 @@ import DeletedRoomAttachmentsPage from './pages/DeletedRoomAttachmentsPage';
 import DeletedRoomBookingsPage from './pages/DeletedRoomBookingsPage';
 import DeletedCalendarAttachments from './pages/DeletedCalendarAttachments';
 import DeletedCalendarEvents from './pages/DeletedCalendarEvents';
+import DeletedDataRepoPage from './pages/DeletedDataRepoPage';
+import DeletedDataRepoAttachmentsPage from './pages/DeletedDataRepoAttachmentsPage';
 import DeletedUsersPage from './pages/DeletedUsersPage';
 import DeletedTasksPage from './pages/DeletedTasksPage';
 import DeletedRolesPage from './pages/DeletedRolesPage';
@@ -61,6 +64,7 @@ function App() {
       {/* ============================================= */}
       <Route path="/login" element={<LoginPage />} />
       <Route path="/maintenance" element={<MaintenancePage />} />
+      <Route path="/off-maintenance" element={<OffMaintenancePage />} />
       <Route path="/access-denied" element={<AccessDeniedPage />} />
 
       {/* Dashboard mounted at root */}
@@ -97,7 +101,9 @@ function App() {
         </Route>
 
         {/* Các trang Tiện ích */}
-        <Route path="handbook" element={<HandbookPage />} />
+        <Route path="data-repo" element={<DataRepoPage />} />
+        <Route path="data-repo/deleted" element={<PrivateRoute requiredPermissions={['article_management']}><DeletedDataRepoPage /></PrivateRoute>} />
+        <Route path="data-repo/deleted-attachments" element={<PrivateRoute requiredPermissions={['article_management']}><DeletedDataRepoAttachmentsPage /></PrivateRoute>} />
         <Route path="media" element={<MediaPage />} />
         <Route path="schedule" element={<SchedulePage />} />
         <Route path="meetings" element={<MeetingsPage />} /> 

@@ -57,12 +57,16 @@ const handleResponse = async (resp) => {
         }
       }
     }
-    if (resp.status === 503) {
-      if (typeof window !== 'undefined' && window.location.pathname !== '/maintenance') window.location.href = '/maintenance';
-    }
+    // read text early so we can extract maintenance payload if present
     const txt = await resp.text().catch(() => '');
     let parsed = null;
     try { parsed = txt ? JSON.parse(txt) : null; } catch (e) { parsed = null; }
+    if (resp.status === 503) {
+      if (typeof window !== 'undefined') {
+        try { localStorage.setItem('maintenance_payload', JSON.stringify(parsed || { message: txt })); } catch (e) { /* ignore storage errors */ }
+        if (window.location.pathname !== '/maintenance') window.location.href = '/maintenance';
+      }
+    }
     const err = new Error((parsed && (parsed.message || parsed.error)) || txt || `HTTP ${resp.status}`);
     err.response = { status: resp.status, data: parsed || (txt ? { message: txt } : null), headers: resp.headers };
     return Promise.reject(err);

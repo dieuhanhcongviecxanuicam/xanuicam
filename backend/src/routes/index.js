@@ -28,6 +28,7 @@ const computerConfigRoutes = safeRequire('./computerConfigRoutes');
 const calendarRoutes = safeRequire('./calendarRoutes');
 const roomBookingRoutes = safeRequire('./roomBookingRoutes');
 const approvalRoutes = safeRequire('./approvalRoutes');
+const cacheTestRoutes = safeRequire('./cacheTestRoute');
 const devRoutes = safeRequire('./devRoutes');
 
 // Định nghĩa một mảng chứa tất cả các routes và tiền tố API của chúng
@@ -48,6 +49,7 @@ const apiRoutes = [
     { path: '/calendar', route: calendarRoutes },
     { path: '/room-bookings', route: roomBookingRoutes },
     { path: '/approvals', route: approvalRoutes },
+    { path: '/cache-test', route: cacheTestRoutes },
 ];
 
 apiRoutes.forEach(item => {
