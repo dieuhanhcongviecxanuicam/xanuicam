@@ -5,9 +5,17 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
+// Startup marker to help identify deployed middleware version at runtime
+try {
+    console.error('[uploadMiddleware] LOADED v3.0');
+} catch (e) {
+    // ignore
+}
+
 // --- Cấu hình các loại tệp được phép ---
 const ALLOWED_IMAGE_TYPES = /jpeg|jpg|png|gif|webp/;
-const ALLOWED_ATTACHMENT_TYPES = /jpeg|jpg|png|pdf|doc|docx|xls|xlsx|txt/;
+// Allow common office and archive formats as attachments as well
+const ALLOWED_ATTACHMENT_TYPES = /jpeg|jpg|png|pdf|doc|docx|xls|xlsx|txt|csv|ppt|pptx|rtf|odt|zip|rar|7z/;
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
 // Meeting documents: allow only pdf and docx. Max policy: pdf up to 50MB, docx up to 20MB (server-side will enforce docx limit)
 const ALLOWED_MEETING_DOCS = /pdf|docx/;
@@ -43,23 +51,97 @@ const createDiskStorage = (subfolder) => {
  * @returns {Function}
  */
 const createFileFilter = (allowedTypesRegex) => {
+    // Additional mimetype tokens to accept for common office/archive formats
+    const extraMimeTokens = ['officedocument', 'vnd.ms-excel', 'vnd.ms-powerpoint', 'openxmlformats', 'zip', 'vnd.oasis.opendocument', 'msword', 'pdf'];
     return (req, file, cb) => {
         const originalName = Buffer.from(file.originalname || '', 'latin1').toString('utf8');
         const ext = path.extname(originalName || '').toLowerCase().replace(/^\./, '');
 
-        // Primary check: allow if extension matches allowed list
-        const extOk = ext && allowedTypesRegex.test(ext);
+            // Explicit blacklist for known dangerous executable/script extensions
+            const DISALLOWED_EXTENSIONS = new Set(['exe','scr','dll','com','bat','sh','php','jsp','jar','ps1','py','pl','bin']);
+            if (ext && DISALLOWED_EXTENSIONS.has(ext)) {
+                try {
+                    const info = { originalName, ext, mimetype: file.mimetype, fieldname: file.fieldname, url: req.originalUrl || req.url };
+                    const persistentLog = process.env.UPLOAD_REJECTION_LOG || '/var/log/upload_rejections.log';
+                    try { fs.appendFileSync(persistentLog, JSON.stringify(info) + '\n'); } catch(e) { /* best-effort */ }
+                } catch (e) { /* ignore logging errors */ }
+                const err = new Error('Loại tệp không được hỗ trợ');
+                err.code = 'UNSUPPORTED_FILE_TYPE';
+                err.statusCode = 415;
+                return cb(err, false);
+            }
 
-        // Secondary check: allow if mimetype contains a known token (covers images/pdf)
-        const mimeOk = file.mimetype && allowedTypesRegex.test(file.mimetype);
+        // Primary check: extension matches allowed list
+        const extOk = !!(ext && allowedTypesRegex.test(ext));
 
-        // Accept if either extension OR mimetype looks valid (previously required both)
-        if (extOk || mimeOk) return cb(null, true);
+        // Secondary check: mimetype contains a known token OR matches regex
+        const mimetype = (file.mimetype || '').toLowerCase();
+        const mimeOk = !!(mimetype && (allowedTypesRegex.test(mimetype) || extraMimeTokens.some(t => mimetype.includes(t))));
 
-        // Fallback: accept generic binary uploads when extension missing but context allows attachments
-        if (!ext && file.mimetype === 'application/octet-stream') return cb(null, true);
+        // STRONGER POLICY: require both extension and mimetype to look valid, to avoid cases where
+        // a harmless extension is paired with an executable/malicious mimetype (or vice versa).
+        // Exception: allow `pdf` and `docx` by extension alone because many clients send nonstandard mimetypes.
+        const allowByExtensionOnly = ext && (ext === 'pdf' || ext === 'docx');
 
-        cb(new Error('Lỗi: Loại tệp không được hỗ trợ!'), false);
+        if ((extOk && mimeOk) || (extOk && allowByExtensionOnly)) return cb(null, true);
+
+        // IMPORTANT: do NOT accept arbitrary extensions — only allow explicitly allowed types.
+        // Previous fallback that accepted any short alpha-numeric extension was too permissive
+        // and allowed executables like .exe through. We intentionally reject here.
+
+        // Log rejected file details for debugging (filename and mimetype)
+        try {
+            const info = {
+                originalName,
+                ext,
+                mimetype,
+                fieldname: file.fieldname,
+                url: req.originalUrl || req.url,
+                ip: req.ip || (req.headers && (req.headers['cf-connecting-ip'] || req.headers['x-forwarded-for'])),
+                userAgent: req.headers && req.headers['user-agent']
+            };
+            console.error('[uploadMiddleware] Rejected file', info);
+            // Also write a compact JSON line to a temp file for reliable capture on the server.
+            // Prefer a deploy-local tmp path so the service user can own it: /root/ubndxanuicam_deploy/backend/tmp
+                try {
+                    // Allow overriding the persistent log location via env. Default to /var/log/upload_rejections.log
+                    const persistentLog = process.env.UPLOAD_REJECTION_LOG || '/var/log/upload_rejections.log';
+                    const deployTmp = '/root/ubndxanuicam_deploy/backend/tmp';
+                    const deployLog = deployTmp + '/upload_rejections.log';
+                    const fallbackLog = '/tmp/upload_rejections.log';
+
+                    // Use synchronous append to ensure the line is on disk before process returns
+                    const appendLineSync = (filePath) => {
+                        try {
+                            const dir = path.dirname(filePath);
+                            if (!fs.existsSync(dir)) {
+                                fs.mkdirSync(dir, { recursive: true });
+                            }
+                            fs.appendFileSync(filePath, JSON.stringify(info) + '\n');
+                            return true;
+                        } catch (e) {
+                            console.error('[uploadMiddleware] appendLineSync error', filePath, e);
+                            return false;
+                        }
+                    };
+
+                    // Try persistent system log, then deploy-local, then /tmp
+                    if (!appendLineSync(persistentLog)) {
+                        if (!appendLineSync(deployLog)) {
+                            appendLineSync(fallbackLog);
+                        }
+                    }
+                } catch (w) {
+                    console.error('[uploadMiddleware] Failed to append rejection log', w);
+                }
+        } catch (e) {
+            console.error('[uploadMiddleware] Rejected file - failed to collect info', e);
+        }
+
+        const err = new Error('Loại tệp không được hỗ trợ');
+        err.code = 'UNSUPPORTED_FILE_TYPE';
+        err.statusCode = 415;
+        return cb(err, false);
     };
 };
 
