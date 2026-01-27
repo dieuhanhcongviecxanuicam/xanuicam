@@ -5,7 +5,9 @@ import '@testing-library/jest-dom';
 
 // Mock mammoth to avoid heavy conversion in tests
 jest.mock('mammoth', () => ({
-  convertToHtml: jest.fn(() => Promise.resolve({ value: '<p>docx content</p>' }))
+  default: {
+    convertToHtml: jest.fn(() => Promise.resolve({ value: '<p>docx content</p>' }))
+  }
 }));
 
 describe('AttachmentViewerModal', () => {
