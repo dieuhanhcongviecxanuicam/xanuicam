@@ -87,8 +87,12 @@ const TaskDetailModal = ({ task, users, onClose, onUpdate }) => {
             window.URL.revokeObjectURL(blobUrl);
         } catch (error) {
             console.error('Error downloading file', error);
-            // fallback: open in new tab
-            window.open(`${BACKEND_URL}/${file.file_path}`, '_blank');
+            // fallback: open in new tab (safe)
+            try {
+                window.open(`${BACKEND_URL}/${file.file_path}`, '_blank', 'noopener,noreferrer');
+            } catch (e) {
+                // ignore
+            }
         }
     };
 

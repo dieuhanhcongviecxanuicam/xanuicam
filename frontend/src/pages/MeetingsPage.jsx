@@ -246,7 +246,7 @@ const MeetingsPage = () => {
                                                     <div key={i} className="flex items-center justify-between gap-3">
                                                         <div className="text-sm text-slate-700 truncate" style={{ maxWidth: 220 }}>{name}</div>
                                                         <div className="flex items-center gap-2">
-                                                                    <button onClick={() => window.open(url, '_blank')} className="px-2 py-1 bg-cyan-600 text-white rounded text-xs">Tải</button>
+                                                                    <button onClick={() => window.open(url, '_blank', 'noopener,noreferrer')} className="px-2 py-1 bg-cyan-600 text-white rounded text-xs">Tải</button>
                                                                     <button onClick={() => setViewAttachment({ file_path: p, file_name: name })} className="px-2 py-1 bg-cyan-100 text-cyan-800 rounded text-xs">Xem</button>
                                                         </div>
                                                     </div>
@@ -260,7 +260,7 @@ const MeetingsPage = () => {
                                                 <div key={name} className="flex items-center justify-between gap-3">
                                                     <div className="text-sm text-slate-700 truncate" style={{ maxWidth: 220 }}>{name}</div>
                                                     <div className="flex items-center gap-2">
-                                                                <button onClick={() => window.open(url, '_blank')} className="px-2 py-1 bg-cyan-600 text-white rounded text-xs">Tải</button>
+                                                                <button onClick={() => window.open(url, '_blank', 'noopener,noreferrer')} className="px-2 py-1 bg-cyan-600 text-white rounded text-xs">Tải</button>
                                                                 <button onClick={() => setViewAttachment({ file_path: single, file_name: name })} className="px-2 py-1 bg-cyan-100 text-cyan-800 rounded text-xs">Xem</button>
                                                     </div>
                                                 </div>

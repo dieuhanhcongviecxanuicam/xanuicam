@@ -235,7 +235,7 @@ export default function AuditLog() {
   const handleViewOnMap = (log) => {
     const q = log.city ? `${log.city}, ${log.country}` : log.ip || '';
     const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
-    window.open(url, '_blank');
+    try { window.open(url, '_blank', 'noopener,noreferrer'); } catch (e) { /* ignore */ }
   };
 
   const handleOpenDetails = async (log) => {
