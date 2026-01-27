@@ -1,5 +1,6 @@
 // ubndxanuicam/frontend/src/pages/UsersPage.jsx
 import React, { useState, useEffect, useCallback } from 'react';
+import useDepartments from '../hooks/useDepartments';
 import { useNavigate } from 'react-router-dom';
 import { Plus, Search, MoreVertical, Edit, Trash2, UserCheck, UserX, XCircle } from 'lucide-react';
 import { Menu, Transition } from '@headlessui/react';
@@ -29,7 +30,7 @@ const UsersPage = () => {
     const [users, setUsers] = useState([]);
     const [allUsersForModal, setAllUsersForModal] = useState([]);
     const [accountSummary, setAccountSummary] = useState({ total: 0, locked: 0, no_department: 0 });
-    const [departments, setDepartments] = useState([]);
+    const { departments, departmentsMap } = useDepartments();
         const [pagination, setPagination] = useState({ currentPage: 1, totalPages: 1 });
     const [loading, setLoading] = useState(true);
     
@@ -69,11 +70,7 @@ const UsersPage = () => {
     useEffect(() => {
         const fetchInitialOptions = async () => {
             try {
-                const [deptsRes, allUsersRes] = await Promise.all([
-                    apiService.getDepartments({ limit: 1000 }),
-                    apiService.getUsers({ limit: 1000 })
-                ]);
-                setDepartments(deptsRes.data || []);
+                const allUsersRes = await apiService.getUsers({ limit: 1000 });
                 setAllUsersForModal(allUsersRes.data || []);
             } catch (error) {
                 console.log("Không thể tải các tùy chọn cho bộ lọc.");
@@ -215,13 +212,19 @@ const UsersPage = () => {
                     return;
                 }
                 const depId = user.department_id || user.departmentId || user.department_id;
-                if (hoverCache.departments[depId]) {
-                    setHoverState({ visible: true, type: 'department', data: hoverCache.departments[depId], x: e ? e.clientX : 0, y: e ? e.clientY : 0 });
+                const depKey = depId != null ? String(depId) : '';
+                // prefer pre-fetched map first
+                if (departmentsMap && departmentsMap[depKey]) {
+                    setHoverState({ visible: true, type: 'department', data: { name: departmentsMap[depKey] }, x: e ? e.clientX : 0, y: e ? e.clientY : 0 });
+                    return;
+                }
+                if (hoverCache.departments[depKey]) {
+                    setHoverState({ visible: true, type: 'department', data: hoverCache.departments[depKey], x: e ? e.clientX : 0, y: e ? e.clientY : 0 });
                     return;
                 }
                 try {
                     const dept = await apiService.getDepartmentById(depId);
-                    setHoverCache(h => ({ ...h, departments: { ...h.departments, [depId]: dept } }));
+                    setHoverCache(h => ({ ...h, departments: { ...h.departments, [depKey]: dept } }));
                     setHoverState({ visible: true, type: 'department', data: dept, x: e ? e.clientX : 0, y: e ? e.clientY : 0 });
                 } catch (e) {
                     setHoverState({ visible: true, type: 'department', data: { name: user.department_name || 'Chưa có' }, x: e ? e.clientX : 0, y: e ? e.clientY : 0 });
@@ -426,7 +429,7 @@ const UsersPage = () => {
                                         {Number(user.task_count) > 0 ? `${user.task_count} công việc` : ''}
                                     </button>
                                 </td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600" tabIndex={0}>{user.department_name || 'Chưa có'}</td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600" tabIndex={0}>{(departmentsMap && departmentsMap[String(user.department_id)]) || user.department_name || 'Chưa có'}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">
                                     <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${user.is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
                                       {user.is_active ? 'Hoạt động' : 'Đã khóa'}

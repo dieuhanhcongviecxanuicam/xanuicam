@@ -1,6 +1,7 @@
 // ubndxanuicam/frontend/src/components/meetings/RoomBookingModal.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import apiService from '../../services/apiService';
+import useDepartments from '../../hooks/useDepartments';
 import { sanitizeDigits, parseIntegerOrNull, validateIntegerInRange, clampInteger } from '../../utils/numberValidation';
 import ModalWrapper from '../common/ModalWrapper';
 import AttachmentViewerModal from '../common/AttachmentViewerModal';
@@ -29,7 +30,7 @@ const RoomBookingModal = ({ isOpen, onClose, onSuccess, selectedTime, selectedRo
     });
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    const [departments, setDepartments] = useState([]);
+    const { departments } = useDepartments();
     const [leaders, setLeaders] = useState([]);
     const [attachmentFiles, setAttachmentFiles] = useState([]);
     const [existingAttachments, setExistingAttachments] = useState([]);
@@ -65,7 +66,7 @@ const RoomBookingModal = ({ isOpen, onClose, onSuccess, selectedTime, selectedRo
                 start_time: formatLocalInput(new Date(booking.start_time)),
                 end_time: formatLocalInput(new Date(booking.end_time)),
                 department_id: booking.department_id || '',
-                department_input: booking.department_name || booking.department_id || '',
+                department_input: booking.department_name || (booking.department_id != null ? String(booking.department_id) : '') || '',
                 attendees_count: booking.attendees_count ? String(booking.attendees_count) : '',
                 other_invited_count: booking.other_invited_count ? String(booking.other_invited_count) : '0',
                 has_led: !!booking.has_led
@@ -134,10 +135,6 @@ const RoomBookingModal = ({ isOpen, onClose, onSuccess, selectedTime, selectedRo
 
     useEffect(() => {
         let mounted = true;
-        apiService.getDepartments().then(resp => {
-            const list = Array.isArray(resp) ? resp : (resp && resp.data) ? resp.data : [];
-            if (mounted) setDepartments(list);
-        }).catch(() => {});
                 // Determine leaders: prefer users with persisted `is_leader` flag; fall back to role-name heuristics
         (async () => {
             try {
@@ -193,6 +190,25 @@ const RoomBookingModal = ({ isOpen, onClose, onSuccess, selectedTime, selectedRo
         })();
         return () => { mounted = false; };
     }, []);
+
+    // If editing an existing booking and backend returned only department_id (numeric),
+    // update the visible input to show the department name once the departments list loads.
+    useEffect(() => {
+        if (!booking) return;
+        if (!departments || departments.length === 0) return;
+        const currentInput = formData.department_input;
+        const bookingDepId = booking.department_id || booking.department || booking.departmentId;
+        if (!bookingDepId) return;
+        // If the input already shows a non-id name, do not overwrite user edits.
+        if (currentInput && String(currentInput) !== String(bookingDepId) && currentInput !== String(bookingDepId)) return;
+        const found = departments.find(d => String(d.id) === String(bookingDepId));
+        if (found) {
+            setFormData(fd => ({ ...fd, department_id: String(found.id), department_input: found.name || String(found.id) }));
+        } else {
+            // fallback: if booking has department_name, use it
+            if (booking.department_name) setFormData(fd => ({ ...fd, department_input: booking.department_name }));
+        }
+    }, [departments, booking, formData.department_input]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
