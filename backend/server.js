@@ -148,8 +148,14 @@ if (process.env.REQUEST_LOGGING === 'true') {
 // to `0` to bind to an ephemeral port.
 const PORT = process.env.PORT || 5000;
 
-// If running behind a proxy (nginx, Heroku, etc.) enable trust proxy
-app.set('trust proxy', true);
+// If running behind a proxy (nginx, Heroku, etc.) enable trust proxy.
+// For CI/test runs we prefer a conservative default to avoid express-rate-limit
+// throwing validation errors when the test runner sets permissive proxy settings.
+if (process.env.NODE_ENV === 'test') {
+  app.set('trust proxy', false);
+} else {
+  app.set('trust proxy', true);
+}
 
 const allowedOrigins = [
   'https://xanuicam.vn', 
