@@ -289,7 +289,7 @@ const EditUserModal = ({ isOpen, onClose, onUserUpdated, userId }) => {
                                     <label className="block text-sm font-medium text-slate-700">Phòng ban/Đơn vị</label>
                                     <select name="department_id" value={formData.department_id} onChange={handleChange} className="mt-1 input-style no-native-arrows">
                                         <option value="">Không thuộc phòng ban</option>
-                                        {Array.isArray(departments) && departments.map(dep => <option key={dep.id} value={dep.id}>{dep.name}</option>)}
+                                        {Array.isArray(departments) && departments.map(dep => <option key={dep.id} value={String(dep.id)}>{dep.name}</option>)}
                                     </select>
                                 </div>
                             </div>

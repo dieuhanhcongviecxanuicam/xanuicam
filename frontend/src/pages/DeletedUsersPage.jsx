@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import useDepartments from '../hooks/useDepartments';
 import apiService from '../services/apiService';
 import useAuth from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
@@ -13,7 +14,7 @@ const DeletedUsersPage = () => {
   
   const { user } = useAuth();
   const navigate = useNavigate();
-
+  const { departmentsMap } = useDepartments();
   useEffect(() => {
     const fetch = async () => {
       setLoading(true);
@@ -90,7 +91,7 @@ const DeletedUsersPage = () => {
                     <td className="px-6 py-4 whitespace-nowrap">{u.id}</td>
                     <td className="px-6 py-4 whitespace-nowrap">{u.full_name}</td>
                     <td className="px-6 py-4 whitespace-nowrap">@{u.username}</td>
-                    <td className="px-6 py-4 whitespace-nowrap">{u.department_name || ''}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{departmentsMap[String(u.department_id)] || u.department_name || ''}</td>
                     <td className="px-6 py-4 whitespace-nowrap">{u.deleted_at ? format(new Date(u.deleted_at), 'dd/MM/yyyy HH:mm') : ''}</td>
                     <td className="px-6 py-4 whitespace-nowrap">{renderRemainingDays(u.deleted_at)}</td>
                     <td className="px-6 py-4 whitespace-nowrap">
