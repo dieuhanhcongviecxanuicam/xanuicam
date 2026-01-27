@@ -34,7 +34,20 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const from = location.state?.from?.pathname || "/";
+  // Sanitize redirect target to prevent open-redirect attacks.
+  const _rawFrom = location.state?.from?.pathname || location.state?.from || "/";
+  const sanitizeRedirect = (target) => {
+    try {
+      const url = new URL(String(target), window.location.origin);
+      if (url.origin === window.location.origin) return url.pathname + url.search + url.hash || "/";
+    } catch (e) {
+      // if constructing URL fails, fallback to '/'
+    }
+    // allow only root-relative paths as a final fallback
+    if (String(target).startsWith('/')) return String(target);
+    return '/';
+  };
+  const from = sanitizeRedirect(_rawFrom);
 
   // Decorations removed: keep login logic minimal and performant
 
