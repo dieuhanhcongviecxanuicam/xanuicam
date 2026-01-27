@@ -147,7 +147,7 @@ const DashboardPage = () => {
     // Available users filtered by selected department (same logic as ReportsPage)
     const availableUsers = useMemo(() => {
         if (!reportFiltersSelected.departmentId) return reportFilters.users || [];
-        return (reportFilters.users || []).filter(u => u.department_id === parseInt(reportFiltersSelected.departmentId));
+        return (reportFilters.users || []).filter(u => String(u.department_id) === String(reportFiltersSelected.departmentId));
     }, [reportFiltersSelected.departmentId, reportFilters.users]);
 
     useEffect(() => {
