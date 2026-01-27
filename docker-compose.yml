@@ -7,6 +7,7 @@ services:
       - ./backend/.env
     environment:
       - SERVE_FRONTEND=true
+      - DATABASE_URL=postgres://ubndxanuicam:DieuhAnhcOngvIec%26%2Axa%5EnUicAm%23%24%21%40716@db:5432/ubndxanuicam
     ports:
       - "5000:5000"
     restart: unless-stopped
