@@ -53,6 +53,39 @@ const MapPickerModal = ({ isOpen, onClose, initialPosition = null, onSelect }) =
     );
   };
 
+  const [googleLoaded, setGoogleLoaded] = useState(false);
+  const [GoogleComponents, setGoogleComponents] = useState(null);
+
+  useEffect(() => {
+    if ((process.env.REACT_APP_MAP_PROVIDER || 'leaflet').toLowerCase() !== 'google') return;
+    let mounted = true;
+    (async () => {
+      try {
+        if (typeof window === 'undefined') return;
+        const mod = await import('@react-google-maps/api');
+        if (!mounted) return;
+        setGoogleComponents(mod);
+        setGoogleLoaded(true);
+      } catch (e) {
+        if (mounted) setGoogleLoaded(false);
+      }
+    })();
+    return () => { mounted = false; };
+  }, []);
+
+  const GoogleView = () => {
+    if (!GoogleComponents) return null;
+    const { LoadScript, GoogleMap, Marker } = GoogleComponents;
+    const center = pos ? { lat: Number(pos[0]), lng: Number(pos[1]) } : { lat: 21.0278, lng: 105.8342 };
+    return (
+      <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
+        <GoogleMap mapContainerStyle={{ height: '100%', width: '100%' }} center={center} zoom={13} onClick={(e) => setPos([e.latLng.lat(), e.latLng.lng()])}>
+          {pos && <Marker position={center} />}
+        </GoogleMap>
+      </LoadScript>
+    );
+  };
+
   const mapProvider = (process.env.REACT_APP_MAP_PROVIDER || 'leaflet').toLowerCase();
 
   return (
@@ -72,10 +105,8 @@ const MapPickerModal = ({ isOpen, onClose, initialPosition = null, onSelect }) =
                 </div>
               </div>
             ) : (
-              // Google API key present: defer to runtime loader (not implemented here)
-              <div className="p-4">
-                <p className="text-sm text-slate-600">Google Maps will be loaded in the browser; please ensure API key and billing are configured.</p>
-              </div>
+                // Google API key present: load and render Google Maps dynamically
+                (googleLoaded ? <GoogleView /> : <div className="p-4"><p className="text-sm text-slate-600">Đang tải Google Maps…</p></div>)
             )) : (
             (leafletLoaded ? <LeafletView /> : (
               <div className="p-4">
