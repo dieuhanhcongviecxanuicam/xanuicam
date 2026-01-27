@@ -1,0 +1,57 @@
+name: Run Server Setup
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-setup:
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare files for remote
+        run: |
+          tar -czf repo.tar.gz --exclude .git --exclude node_modules .
+
+      - name: Copy repo to remote
+        uses: appleboy/scp-action@v0.1.3
+        with:
+          host: ${{ secrets.SETUP_HOST }}
+          username: ${{ secrets.SETUP_USER }}
+          key: ${{ secrets.SETUP_SSH_KEY }}
+          port: ${{ secrets.SETUP_PORT || '22' }}
+          source: repo.tar.gz
+          target: /tmp/
+
+      - name: Run server_setup.sh on remote
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.SETUP_HOST }}
+          username: ${{ secrets.SETUP_USER }}
+          key: ${{ secrets.SETUP_SSH_KEY }}
+          port: ${{ secrets.SETUP_PORT || '22' }}
+          script: |
+            set -euo pipefail
+            cd /tmp
+            rm -rf /tmp/repo_setup
+            mkdir -p /tmp/repo_setup
+            tar -xzf repo.tar.gz -C /tmp/repo_setup
+            if [ -n "${{ secrets.DEPLOY_PUBKEY || '' }}" ]; then
+              echo "${{ secrets.DEPLOY_PUBKEY }}" > /tmp/deploy_key.pub
+            fi
+            sudo bash /tmp/repo_setup/scripts/server_setup.sh
+
+      - name: Cleanup remote temporary files
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.SETUP_HOST }}
+          username: ${{ secrets.SETUP_USER }}
+          key: ${{ secrets.SETUP_SSH_KEY }}
+          port: ${{ secrets.SETUP_PORT || '22' }}
+          script: rm -f /tmp/repo.tar.gz || true
+
+    env:
+      CERT_EMAIL: dieuhanhcongviecxanuicam@gmail.com
+      DOMAINS: dev.xanuicam.vn,www.xanuicam.vn
