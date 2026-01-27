@@ -229,8 +229,21 @@ const AuditDetailModal = ({ isOpen, onClose, auditId }) => {
                 <Field label="URL truy cập" value={data.url || null}>
                   {data.url && (
                     <a href={data.url} onClick={(e)=>{
-                      // Prefer SPA navigation where possible
-                      try { e.preventDefault(); window.location.href = data.url; } catch(ex) { /* fallback */ }
+                      try {
+                        e.preventDefault();
+                        // Sanitize: only navigate same-origin within the SPA; open external links in a new tab safely.
+                        const url = new URL(String(data.url), window.location.origin);
+                        if (url.origin === window.location.origin) {
+                          // same-origin: use location.assign to preserve history
+                          window.location.assign(url.pathname + url.search + url.hash);
+                        } else {
+                          // external: open in a new tab with noopener to avoid giving the new page access
+                          window.open(url.toString(), '_blank', 'noopener');
+                        }
+                      } catch (ex) {
+                        // If URL parsing fails, don't navigate — avoid open-redirect
+                        console.warn('Blocked unsafe redirect to', data.url);
+                      }
                     }} className="text-blue-600 hover:underline break-words">{data.url}</a>
                   )}
                 </Field>
