@@ -19,7 +19,7 @@
     "jspdf-autotable": "^5.0.7",
     "jwt-decode": "^4.0.0",
     "leaflet": "^1.9.4",
-    "lodash": "^4.17.22",
+    "lodash": "^4.17.23",
     "lucide-react": "^0.543.0",
     "mammoth": "^1.4.23",
     "puppeteer": "^24.32.0",
