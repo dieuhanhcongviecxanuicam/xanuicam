@@ -27,18 +27,42 @@ describe('PATCH /api/tasks/:id/status integration', () => {
       query: jest.fn((q, params) => mockClient.query(q, params))
     };
 
-    jest.mock('../src/db', () => mockPool);
+    jest.mock('../../src/db', () => mockPool);
 
     // Mock auth middleware to attach a test user with edit/delete permission
-    jest.mock('../src/middlewares/authMiddleware', () => ({
-      verifyTokenOptional: (req, res, next) => { req.user = { id: 1, fullName: 'Test User', permissions: ['edit_delete_task'] }; next(); }
+    jest.mock('../../src/middlewares/authMiddleware', () => ({
+      verifyTokenOptional: (req, res, next) => { req.user = { id: 1, fullName: 'Test User', permissions: ['create_task','edit_delete_task'] }; next(); },
+      verifyToken: (req, res, next) => { req.user = { id: 1, fullName: 'Test User', permissions: ['create_task','edit_delete_task'] }; next(); },
+      hasPermission: (required) => (req, res, next) => { return next(); },
+      hasAnyPermission: (required) => (req, res, next) => { return next(); }
     }));
 
     // Mock audit logger and notifications (no-op)
-    jest.mock('../src/utils/auditLogger', () => jest.fn());
-    jest.mock('../src/utils/notificationHelper', () => ({ createNotification: jest.fn() }));
+    jest.mock('../../src/utils/auditLogger', () => jest.fn());
+    jest.mock('../../src/utils/notificationHelper', () => ({ createNotification: jest.fn() }));
 
-    serverModule = require('../server');
+    // Limit mounted routes during this integration test to avoid requiring
+    // unrelated route modules that may depend on environment or DB.
+    jest.mock('../../src/routes', () => {
+      const express = require('express');
+      const router = express.Router();
+      try {
+        const taskRoutes = require('../../src/routes/taskRoutes');
+        if (taskRoutes) router.use('/tasks', taskRoutes);
+      } catch (e) {
+        // best-effort: if taskRoutes can't be required, return empty router
+      }
+      return router;
+    });
+
+    // Some route modules are required directly by server.js (e.g. authRoutes).
+    // Mock them to simple empty routers so server can initialize for the test.
+    jest.mock('../../src/routes/authRoutes', () => {
+      const express = require('express');
+      return express.Router();
+    });
+
+    serverModule = require('../../server');
   });
 
   afterAll((done) => {
