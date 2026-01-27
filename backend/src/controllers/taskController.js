@@ -130,14 +130,18 @@ exports.updateTaskStatus = async (req, res) => {
         const isAssignee = task.assignee_id === userId;
         const isCreator = task.creator_id === userId;
         const canApprove = permissions.includes('approve_task');
+        const canEdit = permissions.includes('edit_delete_task');
         let logAction = 'Cập nhật trạng thái';
         let logDetails = `${fullName} đã cập nhật trạng thái thành "${status}"`;
         let notificationMessage = '';
         let notificationRecipientId = null;
 
+        // Allow assignee to take work-related status transitions, and allow
+        // creator or privileged users to request redo/approve completion or cancel.
         const canPerformAction = 
             (['Tiếp nhận', 'Đang thực hiện', 'Chờ duyệt'].includes(status) && isAssignee) ||
-            (['Yêu cầu làm lại', 'Hoàn thành'].includes(status) && (isCreator || canApprove));
+            (['Yêu cầu làm lại', 'Hoàn thành'].includes(status) && (isCreator || canApprove)) ||
+            (status === 'Đã hủy' && (isCreator || canEdit));
 
         if (!canPerformAction) {
             await client.query('ROLLBACK');
