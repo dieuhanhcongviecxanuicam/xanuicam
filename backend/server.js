@@ -351,22 +351,28 @@ app.get('/', (req, res) => {
   res.send('UBND xã Núi Cấm - Backend API is running. Use /api for endpoints.');
 });
 
-// Dev-only helper: issue a short-lived test JWT for local E2E/UI testing
-// This endpoint is gated by `ALLOW_INTERNAL_TEST_TOKEN=true` to avoid
-// exposing a test signing endpoint in unintended environments.
-app.get('/internal/test/token', (req, res) => {
-  if (process.env.ALLOW_INTERNAL_TEST_TOKEN !== 'true') return res.status(404).end();
-  try {
-    const payload = { user: { id: 1, permissions: ['full_access'], fullName: 'Dev Test' } };
-    // Use server JWT_SECRET for signing so verifyTokenOptional accepts it
-    const token = jwt.sign(payload, process.env.JWT_SECRET || 'devtestsecret000000000000000000000000', { expiresIn: '1h' });
-    res.setHeader('Content-Type', 'text/plain');
-    return res.send(token);
-  } catch (e) {
-    console.error('Failed to sign test token', e);
-    return res.status(500).json({ message: 'Unable to create test token' });
-  }
-});
+// Dev-only helper: issue a short-lived test JWT for local E2E/UI testing.
+// Only register this endpoint in non-production environments and when the
+// explicit ALLOW_INTERNAL_TEST_TOKEN=true is set. This prevents accidental
+// exposure in production even if the env var is misconfigured.
+if (process.env.NODE_ENV !== 'production' && process.env.ALLOW_INTERNAL_TEST_TOKEN === 'true') {
+  app.get('/internal/test/token', (req, res) => {
+    try {
+      const payload = { user: { id: 1, permissions: ['full_access'], fullName: 'Dev Test' } };
+      // Use server JWT_SECRET for signing so verifyTokenOptional accepts it
+      const token = jwt.sign(payload, process.env.JWT_SECRET || 'devtestsecret000000000000000000000000', { expiresIn: '1h' });
+      res.setHeader('Content-Type', 'text/plain');
+      return res.send(token);
+    } catch (e) {
+      console.error('Failed to sign test token', e);
+      return res.status(500).json({ message: 'Unable to create test token' });
+    }
+  });
+} else {
+  // Ensure the route is not accidentally available in production or when
+  // the env var is not explicitly enabled.
+  try { app.get('/internal/test/token', (req, res) => res.status(404).end()); } catch (e) { }
+}
 
 // Lightweight JSON health endpoint
 app.get('/health', (req, res) => {
