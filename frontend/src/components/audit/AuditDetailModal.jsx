@@ -67,9 +67,16 @@ const AuditDetailModal = ({ isOpen, onClose, auditId }) => {
             <div>${Object.keys(data || {}).map(k => `<strong>${k}:</strong> ${String((data||{})[k] ?? '-').replace(/</g,'&lt;')}`).join('<br/>')}</div>
             <script>window.onload = function(){ window.print(); setTimeout(()=>window.close(),100); }</script>
           </body></html>`;
-        const w = window.open('', '_blank');
-        w.document.write(html);
-        w.document.close();
+        const w = window.open('', '_blank', 'noopener,noreferrer');
+        if (w) {
+          try {
+            w.document.write(html);
+            w.document.close();
+          } catch (e) {
+            console.warn('Failed to write printable HTML to popup', e);
+            w.close();
+          }
+        }
         return;
       }
 
@@ -238,7 +245,7 @@ const AuditDetailModal = ({ isOpen, onClose, auditId }) => {
                           window.location.assign(url.pathname + url.search + url.hash);
                         } else {
                           // external: open in a new tab with noopener to avoid giving the new page access
-                          window.open(url.toString(), '_blank', 'noopener');
+                          window.open(url.toString(), '_blank', 'noopener,noreferrer');
                         }
                       } catch (ex) {
                         // If URL parsing fails, don't navigate — avoid open-redirect
