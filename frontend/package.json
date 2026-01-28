@@ -71,6 +71,7 @@
     "webpack-dev-server": "^4.15.2"
   },
   "overrides": {
+    "webpack-dev-server": "^4.15.2",
     "whatwg-fetch": "^3.6.2",
     "nth-check": "^2.0.1",
     "svgo": "^2.8.0",
