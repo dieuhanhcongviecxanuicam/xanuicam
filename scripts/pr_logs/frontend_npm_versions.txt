@@ -1,0 +1,8 @@
+C:\Users\nguye\scoop\apps\nvm\current\nodejs\nodejs\npm
+C:\Users\nguye\scoop\apps\nvm\current\nodejs\nodejs\npm.cmd
+C:\Program Files\nodejs\npm
+C:\Program Files\nodejs\npm.cmd
+C:\Users\nguye\AppData\Roaming\npm\npm
+C:\Users\nguye\AppData\Roaming\npm\npm.cmd
+v20.19.0
+10.8.2

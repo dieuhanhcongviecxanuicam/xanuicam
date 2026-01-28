@@ -1,0 +1,29 @@
+73	chore(security): upgrade lodash & react-router; sanitize redirects	fix/ci-deploy-tests	OPEN	2026-01-27T04:35:05Z
+72	fix(ci): stabilize tests & deploy script	fix/ci-deploy-tests	OPEN	2026-01-27T04:00:19Z
+71	chore(security): upgrade lodash & react-router; sanitize redirects	ci/integration-tests-gate-token	OPEN	2026-01-27T02:12:03Z
+70	chore(release): promote develop → main	develop	OPEN	2026-01-26T18:49:42Z
+68	chore(deps): bump framer-motion from 10.18.0 to 12.29.2 in /frontend	dependabot/npm_and_yarn/frontend/framer-motion-12.29.2	OPEN	2026-01-26T16:58:59Z
+67	chore(deps): bump lucide-react from 0.543.0 to 0.563.0 in /frontend	dependabot/npm_and_yarn/frontend/lucide-react-0.563.0	OPEN	2026-01-26T16:58:28Z
+66	chore(deps): bump puppeteer from 24.34.0 to 24.36.0 in /frontend	dependabot/npm_and_yarn/frontend/puppeteer-24.36.0	OPEN	2026-01-26T16:57:12Z
+65	chore(deps): bump @babel/parser from 7.28.5 to 7.28.6 in /frontend	dependabot/npm_and_yarn/frontend/babel/parser-7.28.6	OPEN	2026-01-26T16:56:55Z
+64	chore(deps): bump the npm_and_yarn group across 1 directory with 2 updates	dependabot/npm_and_yarn/frontend/npm_and_yarn-9087fee575	OPEN	2026-01-26T16:56:51Z
+63	chore(deps): bump axios from 1.13.2 to 1.13.3 in /frontend	dependabot/npm_and_yarn/frontend/axios-1.13.3	OPEN	2026-01-26T16:56:41Z
+62	chore(deps): bump @sentry/node from 7.120.4 to 10.36.0 in /backend	dependabot/npm_and_yarn/backend/sentry/node-10.36.0	OPEN	2026-01-26T16:56:30Z
+61	chore(deps): bump react-router-dom from 7.11.0 to 7.13.0 in /frontend	dependabot/npm_and_yarn/frontend/react-router-dom-7.13.0	OPEN	2026-01-26T16:56:30Z
+60	chore(deps): bump react-leaflet from 4.2.1 to 5.0.0 in /frontend	dependabot/npm_and_yarn/frontend/react-leaflet-5.0.0	OPEN	2026-01-26T16:56:14Z
+59	chore(deps): bump axios from 1.13.2 to 1.13.3	dependabot/npm_and_yarn/axios-1.13.3	OPEN	2026-01-26T16:56:02Z
+58	chore(deps): bump helmet from 7.2.0 to 8.1.0 in /backend	dependabot/npm_and_yarn/backend/helmet-8.1.0	OPEN	2026-01-26T16:56:02Z
+53	chore(opt): cache test route, Sentry deps, docs	chore/all-optimizations	OPEN	2026-01-22T16:47:50Z
+49	ci: add deploy workflow	ci/deploy-workflow	OPEN	2026-01-22T16:25:38Z
+41	chore(deps): bump react from 18.3.1 to 19.2.3 in /frontend	dependabot/npm_and_yarn/frontend/react-19.2.3	OPEN	2026-01-22T12:31:13Z
+36	chore(deps): bump dotenv from 16.6.1 to 17.2.3 in /backend	dependabot/npm_and_yarn/backend/dotenv-17.2.3	OPEN	2026-01-22T12:29:10Z
+35	chore(deps): bump express from 4.22.1 to 5.2.1 in /backend	dependabot/npm_and_yarn/backend/express-5.2.1	OPEN	2026-01-22T12:29:03Z
+34	chore(deps): bump bcryptjs from 2.4.3 to 3.0.3 in /backend	dependabot/npm_and_yarn/backend/bcryptjs-3.0.3	OPEN	2026-01-22T12:28:54Z
+32	chore(deps-dev): bump jest from 29.7.0 to 30.2.0 in /backend	dependabot/npm_and_yarn/backend/jest-30.2.0	OPEN	2026-01-22T12:28:39Z
+31	chore(deps-dev): bump supertest from 6.3.3 to 7.2.2 in /backend	dependabot/npm_and_yarn/backend/supertest-7.2.2	OPEN	2026-01-22T12:28:09Z
+30	chore(deps): bump puppeteer from 24.34.0 to 24.36.0	dependabot/npm_and_yarn/puppeteer-24.36.0	OPEN	2026-01-22T12:28:07Z
+29	chore(deps): bump ua-parser-js from 1.0.41 to 2.0.8 in /backend	dependabot/npm_and_yarn/backend/ua-parser-js-2.0.8	OPEN	2026-01-22T12:28:01Z
+28	chore(deps): bump node-fetch from 2.7.0 to 3.3.2 in /backend	dependabot/npm_and_yarn/backend/node-fetch-3.3.2	OPEN	2026-01-22T12:27:54Z
+14	chore(deps): bump react-dom from 18.3.1 to 19.2.3 in /frontend	dependabot/npm_and_yarn/frontend/react-dom-19.2.3	OPEN	2026-01-21T18:18:11Z
+12	chore(deps): bump cross-env from 7.0.3 to 10.1.0	dependabot/npm_and_yarn/cross-env-10.1.0	OPEN	2026-01-21T18:17:57Z
+11	chore(deps): bump date-fns from 2.30.0 to 4.1.0 in /backend	dependabot/npm_and_yarn/backend/date-fns-4.1.0	OPEN	2026-01-21T18:17:56Z

@@ -1,0 +1,200 @@
+completed	failure	Release: UI + features	CI - Build Frontend	release/ui-and-features-20260128-221525	pull_request	21443855851	5s	2026-01-28T15:16:03Z
+completed	failure	Release: UI + features	npm audit	release/ui-and-features-20260128-221525	pull_request	21443855822	5s	2026-01-28T15:16:03Z
+completed	failure	Release: UI + features	CI - Backend & Frontend Check	release/ui-and-features-20260128-221525	pull_request	21443855819	4s	2026-01-28T15:16:03Z
+completed	failure	Release: UI + features	E2E Dashboard Export	release/ui-and-features-20260128-221525	pull_request	21443855804	4s	2026-01-28T15:16:03Z
+completed	failure	Release: UI + features	Secret scan (gitleaks)	release/ui-and-features-20260128-221525	pull_request	21443855800	4s	2026-01-28T15:16:03Z
+completed	failure	Release: UI + features	Semgrep Scan	release/ui-and-features-20260128-221525	pull_request	21443855794	6s	2026-01-28T15:16:03Z
+completed	failure	chore(deps): bump express from 4.22.1 to 5.2.1 in /backend	CI - Backend & Frontend Check	dependabot/npm_and_yarn/backend/express-5.2.1	pull_request	21441934223	3s	2026-01-28T14:22:13Z
+completed	failure	chore(deps): bump express from 4.22.1 to 5.2.1 in /backend	CI - Build Frontend	dependabot/npm_and_yarn/backend/express-5.2.1	pull_request	21441934217	4s	2026-01-28T14:22:13Z
+completed	failure	chore(deps): bump express from 4.22.1 to 5.2.1 in /backend	Secret scan (gitleaks)	dependabot/npm_and_yarn/backend/express-5.2.1	pull_request	21441934212	3s	2026-01-28T14:22:13Z
+completed	failure	chore(deps): bump express from 4.22.1 to 5.2.1 in /backend	E2E Dashboard Export	dependabot/npm_and_yarn/backend/express-5.2.1	pull_request	21441934210	6s	2026-01-28T14:22:13Z
+completed	failure	Resolve merge conflicts: accept remote changes to proceed with deploy	npm audit	main	push	21441933129	4s	2026-01-28T14:22:11Z
+completed	failure	Resolve merge conflicts: accept remote changes to proceed with deploy	Semgrep Scan	main	push	21441933128	4s	2026-01-28T14:22:11Z
+completed	failure	Resolve merge conflicts: accept remote changes to proceed with deploy	CI - Build Frontend	main	push	21441933122	4s	2026-01-28T14:22:11Z
+completed	failure	Resolve merge conflicts: accept remote changes to proceed with deploy	Deploy to Production	main	push	21441933120	4s	2026-01-28T14:22:11Z
+completed	failure	Resolve merge conflicts: accept remote changes to proceed with deploy	E2E Dashboard Export	main	push	21441933114	4s	2026-01-28T14:22:11Z
+completed	failure	Resolve merge conflicts: accept remote changes to proceed with deploy	CI - Backend & Frontend Check	main	push	21441933112	4s	2026-01-28T14:22:11Z
+completed	failure	Resolve merge conflicts: accept remote changes to proceed with deploy	Deploy to Server via SSH	main	push	21441933105	3s	2026-01-28T14:22:11Z
+completed	failure	Resolve merge conflicts: accept remote changes to proceed with deploy	Secret scan (gitleaks)	main	push	21441933101	6s	2026-01-28T14:22:11Z
+completed	failure	npm_and_yarn in /frontend for webpack-dev-server, webpack-dev-server - Update #1223435929	Dependabot Updates	main	dynamic	21411016681	46s	2026-01-27T19:25:58Z
+completed	failure	Run Server Setup	Run Server Setup	main	workflow_dispatch	21408370068	19s	2026-01-27T18:00:59Z
+completed	failure	Run Server Setup	Run Server Setup	main	workflow_dispatch	21407879261	21s	2026-01-27T18:00:53Z
+completed	failure	Run Server Setup	Run Server Setup	main	workflow_dispatch	21407864525	4s	2026-01-27T17:44:44Z
+completed	failure	Run Server Setup	Run Server Setup	main	workflow_dispatch	21407723497	3s	2026-01-27T17:40:15Z
+completed	failure	Merge pull request #77 from dieuhanhcongviecxanuicam/ci/run-server-setup	Semgrep Scan	main	push	21407645558	4s	2026-01-27T17:37:46Z
+completed	failure	Merge pull request #77 from dieuhanhcongviecxanuicam/ci/run-server-setup	CI - Backend & Frontend Check	main	push	21407645550	6s	2026-01-27T17:37:46Z
+completed	failure	Merge pull request #77 from dieuhanhcongviecxanuicam/ci/run-server-setup	Deploy to Server via SSH	main	push	21407645549	4s	2026-01-27T17:37:46Z
+completed	failure	Merge pull request #77 from dieuhanhcongviecxanuicam/ci/run-server-setup	E2E Dashboard Export	main	push	21407645546	5s	2026-01-27T17:37:46Z
+completed	failure	Merge pull request #77 from dieuhanhcongviecxanuicam/ci/run-server-setup	Deploy to Production	main	push	21407645534	4s	2026-01-27T17:37:46Z
+completed	failure	Merge pull request #77 from dieuhanhcongviecxanuicam/ci/run-server-setup	Secret scan (gitleaks)	main	push	21407645523	4s	2026-01-27T17:37:46Z
+completed	failure	Merge pull request #77 from dieuhanhcongviecxanuicam/ci/run-server-setup	CI - Build Frontend	main	push	21407645521	5s	2026-01-27T17:37:46Z
+completed	failure	Merge pull request #77 from dieuhanhcongviecxanuicam/ci/run-server-setup	npm audit	main	push	21407645520	5s	2026-01-27T17:37:46Z
+completed	failure	ci: add Run Server Setup workflow	CI - Backend & Frontend Check	ci/run-server-setup	pull_request	21406681836	4s	2026-01-27T17:08:25Z
+completed	failure	ci: add Run Server Setup workflow	E2E Dashboard Export	ci/run-server-setup	pull_request	21406681826	5s	2026-01-27T17:08:25Z
+completed	failure	ci: add Run Server Setup workflow	Semgrep Scan	ci/run-server-setup	pull_request	21406681825	4s	2026-01-27T17:08:25Z
+completed	failure	ci: add Run Server Setup workflow	Secret scan (gitleaks)	ci/run-server-setup	pull_request	21406681824	4s	2026-01-27T17:08:25Z
+completed	failure	ci: add Run Server Setup workflow	CI - Build Frontend	ci/run-server-setup	pull_request	21406681792	5s	2026-01-27T17:08:25Z
+completed	failure	ci: add Run Server Setup workflow	npm audit	ci/run-server-setup	pull_request	21406681788	4s	2026-01-27T17:08:25Z
+completed	success	chore(deps): bump @babel/parser from 7.28.5 to 7.28.6 in /frontend	Semgrep Scan	dependabot/npm_and_yarn/frontend/babel/parser-7.28.6	pull_request	21403593459	18s	2026-01-27T15:39:52Z
+completed	failure	chore(deps): bump @babel/parser from 7.28.5 to 7.28.6 in /frontend	CI - Build Frontend	dependabot/npm_and_yarn/frontend/babel/parser-7.28.6	pull_request	21403593433	1m55s	2026-01-27T15:39:52Z
+completed	success	chore(deps): bump @babel/parser from 7.28.5 to 7.28.6 in /frontend	CI - Backend & Frontend Check	dependabot/npm_and_yarn/frontend/babel/parser-7.28.6	pull_request	21403593372	2m22s	2026-01-27T15:39:52Z
+completed	success	chore(deps): bump @babel/parser from 7.28.5 to 7.28.6 in /frontend	npm audit	dependabot/npm_and_yarn/frontend/babel/parser-7.28.6	pull_request	21403593370	59s	2026-01-27T15:39:52Z
+completed	success	chore(deps): bump @babel/parser from 7.28.5 to 7.28.6 in /frontend	Secret scan (gitleaks)	dependabot/npm_and_yarn/frontend/babel/parser-7.28.6	pull_request	21403593356	11s	2026-01-27T15:39:52Z
+completed	failure	chore(deps): bump @babel/parser from 7.28.5 to 7.28.6 in /frontend	E2E Dashboard Export	dependabot/npm_and_yarn/frontend/babel/parser-7.28.6	pull_request	21403593349	2m6s	2026-01-27T15:39:52Z
+completed	success	chore(deps): bump react from 18.3.1 to 19.2.3 in /frontend	Semgrep Scan	dependabot/npm_and_yarn/frontend/react-19.2.3	pull_request	21403541054	29s	2026-01-27T15:38:23Z
+completed	failure	chore(deps): bump react from 18.3.1 to 19.2.3 in /frontend	npm audit	dependabot/npm_and_yarn/frontend/react-19.2.3	pull_request	21403541031	22s	2026-01-27T15:38:23Z
+completed	failure	chore(deps): bump react from 18.3.1 to 19.2.3 in /frontend	CI - Build Frontend	dependabot/npm_and_yarn/frontend/react-19.2.3	pull_request	21403541018	2m5s	2026-01-27T15:38:23Z
+completed	failure	chore(deps): bump react from 18.3.1 to 19.2.3 in /frontend	E2E Dashboard Export	dependabot/npm_and_yarn/frontend/react-19.2.3	pull_request	21403540993	33s	2026-01-27T15:38:23Z
+completed	success	chore(deps): bump react from 18.3.1 to 19.2.3 in /frontend	Secret scan (gitleaks)	dependabot/npm_and_yarn/frontend/react-19.2.3	pull_request	21403540977	16s	2026-01-27T15:38:23Z
+completed	success	chore(deps): bump react from 18.3.1 to 19.2.3 in /frontend	CI - Backend & Frontend Check	dependabot/npm_and_yarn/frontend/react-19.2.3	pull_request	21403540974	2m20s	2026-01-27T15:38:23Z
+completed	success	npm_and_yarn in /frontend for react - Update #1223226284	Dependabot Updates	main	dynamic	21403540752	4m47s	2026-01-27T15:38:23Z
+completed	success	chore(deps): bump react-dom from 18.3.1 to 19.2.3 in /frontend	CI - Backend & Frontend Check	dependabot/npm_and_yarn/frontend/react-dom-19.2.3	pull_request	21403539503	2m18s	2026-01-27T15:38:21Z
+completed	success	chore(deps): bump react-dom from 18.3.1 to 19.2.3 in /frontend	Semgrep Scan	dependabot/npm_and_yarn/frontend/react-dom-19.2.3	pull_request	21403539501	20s	2026-01-27T15:38:21Z
+completed	failure	chore(deps): bump react-dom from 18.3.1 to 19.2.3 in /frontend	npm audit	dependabot/npm_and_yarn/frontend/react-dom-19.2.3	pull_request	21403539488	24s	2026-01-27T15:38:21Z
+completed	failure	chore(deps): bump react-dom from 18.3.1 to 19.2.3 in /frontend	E2E Dashboard Export	dependabot/npm_and_yarn/frontend/react-dom-19.2.3	pull_request	21403539485	33s	2026-01-27T15:38:21Z
+completed	success	chore(deps): bump react-dom from 18.3.1 to 19.2.3 in /frontend	Secret scan (gitleaks)	dependabot/npm_and_yarn/frontend/react-dom-19.2.3	pull_request	21403539466	18s	2026-01-27T15:38:21Z
+completed	failure	chore(deps): bump react-dom from 18.3.1 to 19.2.3 in /frontend	CI - Build Frontend	dependabot/npm_and_yarn/frontend/react-dom-19.2.3	pull_request	21403539454	1m53s	2026-01-27T15:38:21Z
+completed	success	npm_and_yarn in /frontend for react-dom - Update #1223226240	Dependabot Updates	main	dynamic	21403539398	55s	2026-01-27T15:38:21Z
+completed	success	npm_and_yarn in /frontend for @babel/parser - Update #1223226168	Dependabot Updates	main	dynamic	21403537544	53s	2026-01-27T15:38:17Z
+completed	success	npm_and_yarn in /frontend for react-leaflet - Update #1223226052	Dependabot Updates	main	dynamic	21403534228	56s	2026-01-27T15:38:12Z
+completed	success	chore(deps): bump react-leaflet from 4.2.1 to 5.0.0 in /frontend	Secret scan (gitleaks)	dependabot/npm_and_yarn/frontend/react-leaflet-5.0.0	pull_request	21403533838	12s	2026-01-27T15:38:11Z
+completed	failure	chore(deps): bump react-leaflet from 4.2.1 to 5.0.0 in /frontend	CI - Build Frontend	dependabot/npm_and_yarn/frontend/react-leaflet-5.0.0	pull_request	21403533776	2m2s	2026-01-27T15:38:11Z
+completed	failure	chore(deps): bump react-leaflet from 4.2.1 to 5.0.0 in /frontend	E2E Dashboard Export	dependabot/npm_and_yarn/frontend/react-leaflet-5.0.0	pull_request	21403533766	33s	2026-01-27T15:38:11Z
+completed	success	chore(deps): bump react-leaflet from 4.2.1 to 5.0.0 in /frontend	CI - Backend & Frontend Check	dependabot/npm_and_yarn/frontend/react-leaflet-5.0.0	pull_request	21403533758	2m36s	2026-01-27T15:38:11Z
+completed	success	chore(deps): bump react-leaflet from 4.2.1 to 5.0.0 in /frontend	Semgrep Scan	dependabot/npm_and_yarn/frontend/react-leaflet-5.0.0	pull_request	21403533754	19s	2026-01-27T15:38:11Z
+completed	failure	chore(deps): bump react-leaflet from 4.2.1 to 5.0.0 in /frontend	npm audit	dependabot/npm_and_yarn/frontend/react-leaflet-5.0.0	pull_request	21403533741	24s	2026-01-27T15:38:11Z
+completed	success	npm_and_yarn in /frontend for @babel/parser - Update #1223224854	Dependabot Updates	main	dynamic	21403502616	57s	2026-01-27T15:37:17Z
+completed	success	npm_and_yarn in /frontend for react-leaflet - Update #1223224786	Dependabot Updates	main	dynamic	21403500463	54s	2026-01-27T15:37:14Z
+completed	success	npm_and_yarn in /frontend for react-dom - Update #1223224758	Dependabot Updates	main	dynamic	21403500347	1m3s	2026-01-27T15:37:14Z
+completed	success	npm_and_yarn in /frontend for react - Update #1223224765	Dependabot Updates	main	dynamic	21403500336	1m6s	2026-01-27T15:37:14Z
+completed	success	Merge pull request #76 from dieuhanhcongviecxanuicam/feature/npm-audi…	npm audit	main	push	21403488920	1m7s	2026-01-27T15:36:55Z
+completed	success	Merge pull request #76 from dieuhanhcongviecxanuicam/feature/npm-audi…	Semgrep Scan	main	push	21403488911	30s	2026-01-27T15:36:55Z
+completed	success	Merge pull request #76 from dieuhanhcongviecxanuicam/feature/npm-audi…	CI - Backend & Frontend Check	main	push	21403488908	2m21s	2026-01-27T15:36:55Z
+completed	failure	Merge pull request #76 from dieuhanhcongviecxanuicam/feature/npm-audi…	E2E Dashboard Export	main	push	21403488897	2m10s	2026-01-27T15:36:55Z
+completed	success	Merge pull request #76 from dieuhanhcongviecxanuicam/feature/npm-audi…	Secret scan (gitleaks)	main	push	21403488892	12s	2026-01-27T15:36:55Z
+completed	failure	Merge pull request #76 from dieuhanhcongviecxanuicam/feature/npm-audi…	CI - Build Frontend	main	push	21403488870	1m55s	2026-01-27T15:36:55Z
+completed	failure	Merge pull request #76 from dieuhanhcongviecxanuicam/feature/npm-audi…	Deploy to Server via SSH	main	push	21403488824	8s	2026-01-27T15:36:55Z
+completed	failure	Merge pull request #76 from dieuhanhcongviecxanuicam/feature/npm-audi…	Deploy to Production	main	push	21403488819	18s	2026-01-27T15:36:55Z
+completed	failure	MapPicker: provider toggle + Google Maps dev config	E2E Dashboard Export	feature/npm-audit-fix-2026-01-27	pull_request	21402501300	2m13s	2026-01-27T15:09:57Z
+completed	failure	MapPicker: provider toggle + Google Maps dev config	CI - Build Frontend	feature/npm-audit-fix-2026-01-27	pull_request	21402501290	2m6s	2026-01-27T15:09:57Z
+completed	success	MapPicker: provider toggle + Google Maps dev config	Semgrep Scan	feature/npm-audit-fix-2026-01-27	pull_request	21402501286	24s	2026-01-27T15:09:57Z
+completed	success	MapPicker: provider toggle + Google Maps dev config	Secret scan (gitleaks)	feature/npm-audit-fix-2026-01-27	pull_request	21402501268	16s	2026-01-27T15:09:57Z
+completed	success	MapPicker: provider toggle + Google Maps dev config	CI - Backend & Frontend Check	feature/npm-audit-fix-2026-01-27	pull_request	21402501267	2m22s	2026-01-27T15:09:57Z
+completed	success	MapPicker: provider toggle + Google Maps dev config	npm audit	feature/npm-audit-fix-2026-01-27	pull_request	21402501238	1m4s	2026-01-27T15:09:57Z
+completed	success	MapPicker: provider toggle + Google Maps dev config	Secret scan (gitleaks)	feature/npm-audit-fix-2026-01-27	pull_request	21402318182	10s	2026-01-27T15:04:55Z
+completed	success	MapPicker: provider toggle + Google Maps dev config	npm audit	feature/npm-audit-fix-2026-01-27	pull_request	21402318177	1m4s	2026-01-27T15:04:54Z
+completed	success	MapPicker: provider toggle + Google Maps dev config	CI - Backend & Frontend Check	feature/npm-audit-fix-2026-01-27	pull_request	21402318150	2m28s	2026-01-27T15:04:54Z
+completed	failure	MapPicker: provider toggle + Google Maps dev config	E2E Dashboard Export	feature/npm-audit-fix-2026-01-27	pull_request	21402318147	2m14s	2026-01-27T15:04:54Z
+completed	success	MapPicker: provider toggle + Google Maps dev config	Semgrep Scan	feature/npm-audit-fix-2026-01-27	pull_request	21402318142	23s	2026-01-27T15:04:54Z
+completed	failure	MapPicker: provider toggle + Google Maps dev config	CI - Build Frontend	feature/npm-audit-fix-2026-01-27	pull_request	21402318134	2m27s	2026-01-27T15:04:54Z
+completed	success	npm_and_yarn in /frontend for react - Update #1223135011	Dependabot Updates	main	dynamic	21400324692	3m49s	2026-01-27T14:08:01Z
+completed	success	chore(deps): bump react from 18.3.1 to 19.2.3 in /frontend	Semgrep Scan	dependabot/npm_and_yarn/frontend/react-19.2.3	pull_request	21400322987	1m18s	2026-01-27T14:07:58Z
+completed	failure	chore(deps): bump react from 18.3.1 to 19.2.3 in /frontend	npm audit	dependabot/npm_and_yarn/frontend/react-19.2.3	pull_request	21400322944	2m42s	2026-01-27T14:07:57Z
+completed	success	chore(deps): bump react from 18.3.1 to 19.2.3 in /frontend	CI - Build Frontend	dependabot/npm_and_yarn/frontend/react-19.2.3	pull_request	21400322943	3m14s	2026-01-27T14:07:57Z
+completed	success	chore(deps): bump react from 18.3.1 to 19.2.3 in /frontend	Secret scan (gitleaks)	dependabot/npm_and_yarn/frontend/react-19.2.3	pull_request	21400322921	19s	2026-01-27T14:07:57Z
+completed	failure	chore(deps): bump react from 18.3.1 to 19.2.3 in /frontend	E2E Dashboard Export	dependabot/npm_and_yarn/frontend/react-19.2.3	pull_request	21400322918	1m56s	2026-01-27T14:07:57Z
+completed	success	chore(deps): bump react from 18.3.1 to 19.2.3 in /frontend	CI - Backend & Frontend Check	dependabot/npm_and_yarn/frontend/react-19.2.3	pull_request	21400322912	5m14s	2026-01-27T14:07:57Z
+completed	success	chore(deps): bump framer-motion from 10.18.0 to 12.29.2 in /frontend	CI - Build Frontend	dependabot/npm_and_yarn/frontend/framer-motion-12.29.2	pull_request	21400319562	2m17s	2026-01-27T14:07:51Z
+completed	success	chore(deps): bump framer-motion from 10.18.0 to 12.29.2 in /frontend	Semgrep Scan	dependabot/npm_and_yarn/frontend/framer-motion-12.29.2	pull_request	21400319522	1m32s	2026-01-27T14:07:51Z
+completed	success	chore(deps): bump framer-motion from 10.18.0 to 12.29.2 in /frontend	CI - Backend & Frontend Check	dependabot/npm_and_yarn/frontend/framer-motion-12.29.2	pull_request	21400319514	5m15s	2026-01-27T14:07:51Z
+completed	success	chore(deps): bump framer-motion from 10.18.0 to 12.29.2 in /frontend	npm audit	dependabot/npm_and_yarn/frontend/framer-motion-12.29.2	pull_request	21400319509	3m50s	2026-01-27T14:07:51Z
+completed	success	chore(deps): bump framer-motion from 10.18.0 to 12.29.2 in /frontend	E2E Dashboard Export	dependabot/npm_and_yarn/frontend/framer-motion-12.29.2	pull_request	21400319508	10m27s	2026-01-27T14:07:51Z
+completed	success	chore(deps): bump framer-motion from 10.18.0 to 12.29.2 in /frontend	Secret scan (gitleaks)	dependabot/npm_and_yarn/frontend/framer-motion-12.29.2	pull_request	21400319505	2m23s	2026-01-27T14:07:51Z
+completed	success	npm_and_yarn in /frontend for framer-motion - Update #1223134839	Dependabot Updates	main	dynamic	21400319011	3m23s	2026-01-27T14:07:50Z
+completed	success	chore(deps): bump axios from 1.13.2 to 1.13.3 in /frontend	Secret scan (gitleaks)	dependabot/npm_and_yarn/frontend/axios-1.13.3	pull_request	21400318924	2m13s	2026-01-27T14:07:50Z
+completed	success	chore(deps): bump axios from 1.13.2 to 1.13.3 in /frontend	npm audit	dependabot/npm_and_yarn/frontend/axios-1.13.3	pull_request	21400318901	3m4s	2026-01-27T14:07:50Z
+completed	success	chore(deps): bump axios from 1.13.2 to 1.13.3 in /frontend	CI - Backend & Frontend Check	dependabot/npm_and_yarn/frontend/axios-1.13.3	pull_request	21400318879	4m25s	2026-01-27T14:07:50Z
+completed	success	chore(deps): bump axios from 1.13.2 to 1.13.3 in /frontend	CI - Build Frontend	dependabot/npm_and_yarn/frontend/axios-1.13.3	pull_request	21400318874	2m37s	2026-01-27T14:07:50Z
+completed	success	chore(deps): bump axios from 1.13.2 to 1.13.3 in /frontend	E2E Dashboard Export	dependabot/npm_and_yarn/frontend/axios-1.13.3	pull_request	21400318868	9m13s	2026-01-27T14:07:50Z
+completed	success	chore(deps): bump axios from 1.13.2 to 1.13.3 in /frontend	Semgrep Scan	dependabot/npm_and_yarn/frontend/axios-1.13.3	pull_request	21400318862	2m49s	2026-01-27T14:07:50Z
+completed	failure	chore(deps): bump react-dom from 18.3.1 to 19.2.3 in /frontend	E2E Dashboard Export	dependabot/npm_and_yarn/frontend/react-dom-19.2.3	pull_request	21400317995	1m31s	2026-01-27T14:07:49Z
+completed	failure	chore(deps): bump react-dom from 18.3.1 to 19.2.3 in /frontend	npm audit	dependabot/npm_and_yarn/frontend/react-dom-19.2.3	pull_request	21400317992	1m14s	2026-01-27T14:07:49Z
+completed	success	chore(deps): bump react-dom from 18.3.1 to 19.2.3 in /frontend	CI - Backend & Frontend Check	dependabot/npm_and_yarn/frontend/react-dom-19.2.3	pull_request	21400317991	2m56s	2026-01-27T14:07:49Z
+completed	success	chore(deps): bump react-dom from 18.3.1 to 19.2.3 in /frontend	CI - Build Frontend	dependabot/npm_and_yarn/frontend/react-dom-19.2.3	pull_request	21400317988	3m59s	2026-01-27T14:07:49Z
+completed	success	chore(deps): bump react-dom from 18.3.1 to 19.2.3 in /frontend	Secret scan (gitleaks)	dependabot/npm_and_yarn/frontend/react-dom-19.2.3	pull_request	21400317987	3m2s	2026-01-27T14:07:49Z
+completed	success	chore(deps): bump react-dom from 18.3.1 to 19.2.3 in /frontend	Semgrep Scan	dependabot/npm_and_yarn/frontend/react-dom-19.2.3	pull_request	21400317985	53s	2026-01-27T14:07:49Z
+completed	success	npm_and_yarn in /frontend for axios - Update #1223134799	Dependabot Updates	main	dynamic	21400317934	3m20s	2026-01-27T14:07:48Z
+completed	success	npm_and_yarn in /frontend for react-dom - Update #1223134758	Dependabot Updates	main	dynamic	21400317221	3m1s	2026-01-27T14:07:47Z
+completed	success	chore(deps): bump @babel/parser from 7.28.5 to 7.28.6 in /frontend	Secret scan (gitleaks)	dependabot/npm_and_yarn/frontend/babel/parser-7.28.6	pull_request	21400315427	1m1s	2026-01-27T14:07:44Z
+completed	success	chore(deps): bump @babel/parser from 7.28.5 to 7.28.6 in /frontend	E2E Dashboard Export	dependabot/npm_and_yarn/frontend/babel/parser-7.28.6	pull_request	21400315418	11m21s	2026-01-27T14:07:44Z
+completed	success	chore(deps): bump @babel/parser from 7.28.5 to 7.28.6 in /frontend	Semgrep Scan	dependabot/npm_and_yarn/frontend/babel/parser-7.28.6	pull_request	21400315401	31s	2026-01-27T14:07:44Z
+completed	success	chore(deps): bump @babel/parser from 7.28.5 to 7.28.6 in /frontend	CI - Backend & Frontend Check	dependabot/npm_and_yarn/frontend/babel/parser-7.28.6	pull_request	21400315396	2m33s	2026-01-27T14:07:44Z
+completed	success	chore(deps): bump @babel/parser from 7.28.5 to 7.28.6 in /frontend	CI - Build Frontend	dependabot/npm_and_yarn/frontend/babel/parser-7.28.6	pull_request	21400315388	4m3s	2026-01-27T14:07:44Z
+completed	success	chore(deps): bump @babel/parser from 7.28.5 to 7.28.6 in /frontend	npm audit	dependabot/npm_and_yarn/frontend/babel/parser-7.28.6	pull_request	21400315380	2m28s	2026-01-27T14:07:44Z
+completed	success	chore(deps): bump puppeteer from 24.34.0 to 24.36.0 in /frontend	E2E Dashboard Export	dependabot/npm_and_yarn/frontend/puppeteer-24.36.0	pull_request	21400315080	9m19s	2026-01-27T14:07:43Z
+completed	success	chore(deps): bump puppeteer from 24.34.0 to 24.36.0 in /frontend	CI - Build Frontend	dependabot/npm_and_yarn/frontend/puppeteer-24.36.0	pull_request	21400315074	2m11s	2026-01-27T14:07:43Z
+completed	success	chore(deps): bump puppeteer from 24.34.0 to 24.36.0 in /frontend	npm audit	dependabot/npm_and_yarn/frontend/puppeteer-24.36.0	pull_request	21400315068	1m27s	2026-01-27T14:07:43Z
+completed	success	chore(deps): bump puppeteer from 24.34.0 to 24.36.0 in /frontend	Secret scan (gitleaks)	dependabot/npm_and_yarn/frontend/puppeteer-24.36.0	pull_request	21400315067	2m36s	2026-01-27T14:07:43Z
+completed	success	chore(deps): bump puppeteer from 24.34.0 to 24.36.0 in /frontend	CI - Backend & Frontend Check	dependabot/npm_and_yarn/frontend/puppeteer-24.36.0	pull_request	21400315065	3m11s	2026-01-27T14:07:43Z
+completed	success	chore(deps): bump puppeteer from 24.34.0 to 24.36.0 in /frontend	Semgrep Scan	dependabot/npm_and_yarn/frontend/puppeteer-24.36.0	pull_request	21400315064	2m3s	2026-01-27T14:07:43Z
+completed	success	chore(deps): bump lucide-react from 0.543.0 to 0.563.0 in /frontend	Secret scan (gitleaks)	dependabot/npm_and_yarn/frontend/lucide-react-0.563.0	pull_request	21400314863	13s	2026-01-27T14:07:43Z
+completed	success	chore(deps): bump lucide-react from 0.543.0 to 0.563.0 in /frontend	Semgrep Scan	dependabot/npm_and_yarn/frontend/lucide-react-0.563.0	pull_request	21400314862	27s	2026-01-27T14:07:43Z
+completed	success	chore(deps): bump lucide-react from 0.543.0 to 0.563.0 in /frontend	CI - Build Frontend	dependabot/npm_and_yarn/frontend/lucide-react-0.563.0	pull_request	21400314858	3m12s	2026-01-27T14:07:43Z
+completed	success	chore(deps): bump lucide-react from 0.543.0 to 0.563.0 in /frontend	CI - Backend & Frontend Check	dependabot/npm_and_yarn/frontend/lucide-react-0.563.0	pull_request	21400314853	2m15s	2026-01-27T14:07:43Z
+completed	success	chore(deps): bump lucide-react from 0.543.0 to 0.563.0 in /frontend	E2E Dashboard Export	dependabot/npm_and_yarn/frontend/lucide-react-0.563.0	pull_request	21400314852	8m50s	2026-01-27T14:07:43Z
+completed	success	chore(deps): bump lucide-react from 0.543.0 to 0.563.0 in /frontend	npm audit	dependabot/npm_and_yarn/frontend/lucide-react-0.563.0	pull_request	21400314850	1m0s	2026-01-27T14:07:43Z
+completed	success	npm_and_yarn in /frontend for @babel/parser - Update #1223134681	Dependabot Updates	main	dynamic	21400314439	1m39s	2026-01-27T14:07:42Z
+completed	success	npm_and_yarn in /frontend for puppeteer - Update #1223134673	Dependabot Updates	main	dynamic	21400314323	1m11s	2026-01-27T14:07:42Z
+completed	success	npm_and_yarn in /frontend for lucide-react - Update #1223134670	Dependabot Updates	main	dynamic	21400314071	53s	2026-01-27T14:07:41Z
+completed	failure	chore(deps): bump react-leaflet from 4.2.1 to 5.0.0 in /frontend	CI - Build Frontend	dependabot/npm_and_yarn/frontend/react-leaflet-5.0.0	pull_request	21400312394	2m6s	2026-01-27T14:07:38Z
+completed	success	chore(deps): bump react-leaflet from 4.2.1 to 5.0.0 in /frontend	Secret scan (gitleaks)	dependabot/npm_and_yarn/frontend/react-leaflet-5.0.0	pull_request	21400312389	11s	2026-01-27T14:07:38Z
+completed	success	chore(deps): bump react-leaflet from 4.2.1 to 5.0.0 in /frontend	Semgrep Scan	dependabot/npm_and_yarn/frontend/react-leaflet-5.0.0	pull_request	21400312364	22s	2026-01-27T14:07:38Z
+completed	failure	chore(deps): bump react-leaflet from 4.2.1 to 5.0.0 in /frontend	E2E Dashboard Export	dependabot/npm_and_yarn/frontend/react-leaflet-5.0.0	pull_request	21400312352	39s	2026-01-27T14:07:38Z
+completed	failure	chore(deps): bump react-leaflet from 4.2.1 to 5.0.0 in /frontend	npm audit	dependabot/npm_and_yarn/frontend/react-leaflet-5.0.0	pull_request	21400312346	26s	2026-01-27T14:07:38Z
+completed	success	chore(deps): bump react-leaflet from 4.2.1 to 5.0.0 in /frontend	CI - Backend & Frontend Check	dependabot/npm_and_yarn/frontend/react-leaflet-5.0.0	pull_request	21400312341	2m16s	2026-01-27T14:07:38Z
+completed	success	npm_and_yarn in /frontend for react-leaflet - Update #1223134601	Dependabot Updates	main	dynamic	21400310940	51s	2026-01-27T14:07:36Z
+completed	success	npm_and_yarn in /frontend for framer-motion - Update #1223133988	Dependabot Updates	main	dynamic	21400287034	56s	2026-01-27T14:06:53Z
+completed	success	npm_and_yarn in /frontend for react - Update #1223133956	Dependabot Updates	main	dynamic	21400285485	1m5s	2026-01-27T14:06:49Z
+completed	success	npm_and_yarn in /frontend for @babel/parser - Update #1223133845	Dependabot Updates	main	dynamic	21400284876	51s	2026-01-27T14:06:48Z
+completed	success	npm_and_yarn in /frontend for lucide-react - Update #1223133892	Dependabot Updates	main	dynamic	21400283342	52s	2026-01-27T14:06:46Z
+completed	success	npm_and_yarn in /frontend for puppeteer - Update #1223133837	Dependabot Updates	main	dynamic	21400281736	57s	2026-01-27T14:06:43Z
+completed	success	npm_and_yarn in /frontend for react-router-dom - Update #1223133830	Dependabot Updates	main	dynamic	21400281709	46s	2026-01-27T14:06:43Z
+completed	success	npm_and_yarn in /frontend for axios - Update #1223133799	Dependabot Updates	main	dynamic	21400281003	1m5s	2026-01-27T14:06:41Z
+completed	success	npm_and_yarn in /frontend for lodash, react-router - Update #1223133801	Dependabot Updates	main	dynamic	21400280945	53s	2026-01-27T14:06:41Z
+completed	success	npm_and_yarn in /frontend for react-dom - Update #1223133736	Dependabot Updates	main	dynamic	21400279984	1m5s	2026-01-27T14:06:39Z
+completed	success	npm_and_yarn in /frontend for react-leaflet - Update #1223133748	Dependabot Updates	main	dynamic	21400279293	57s	2026-01-27T14:06:38Z
+completed	success	Merge pull request #75 from dieuhanhcongviecxanuicam/feature/npm-audi…	CI - Build Frontend	main	push	21400267303	2m5s	2026-01-27T14:06:17Z
+completed	success	Merge pull request #75 from dieuhanhcongviecxanuicam/feature/npm-audi…	E2E Dashboard Export	main	push	21400267262	8m50s	2026-01-27T14:06:17Z
+completed	failure	Merge pull request #75 from dieuhanhcongviecxanuicam/feature/npm-audi…	Deploy to Server via SSH	main	push	21400267260	6s	2026-01-27T14:06:17Z
+completed	success	Merge pull request #75 from dieuhanhcongviecxanuicam/feature/npm-audi…	Secret scan (gitleaks)	main	push	21400267255	11s	2026-01-27T14:06:17Z
+completed	failure	Merge pull request #75 from dieuhanhcongviecxanuicam/feature/npm-audi…	Deploy to Production	main	push	21400267252	19s	2026-01-27T14:06:17Z
+completed	success	Merge pull request #75 from dieuhanhcongviecxanuicam/feature/npm-audi…	Semgrep Scan	main	push	21400267229	23s	2026-01-27T14:06:17Z
+completed	success	Merge pull request #75 from dieuhanhcongviecxanuicam/feature/npm-audi…	npm audit	main	push	21400267227	58s	2026-01-27T14:06:17Z
+completed	success	Merge pull request #75 from dieuhanhcongviecxanuicam/feature/npm-audi…	CI - Backend & Frontend Check	main	push	21400267225	2m20s	2026-01-27T14:06:17Z
+completed	success	Frontend: apply npm audit fixes	Secret scan (gitleaks)	feature/npm-audit-fix-2026-01-27	pull_request	21400241482	13s	2026-01-27T14:05:32Z
+completed	success	Frontend: apply npm audit fixes	E2E Dashboard Export	feature/npm-audit-fix-2026-01-27	pull_request	21400241481	8m50s	2026-01-27T14:05:32Z
+completed	success	Frontend: apply npm audit fixes	npm audit	feature/npm-audit-fix-2026-01-27	pull_request	21400241480	1m4s	2026-01-27T14:05:32Z
+completed	success	Frontend: apply npm audit fixes	Semgrep Scan	feature/npm-audit-fix-2026-01-27	pull_request	21400241479	27s	2026-01-27T14:05:32Z
+completed	success	Frontend: apply npm audit fixes	CI - Backend & Frontend Check	feature/npm-audit-fix-2026-01-27	pull_request	21400241467	2m19s	2026-01-27T14:05:32Z
+completed	success	Frontend: apply npm audit fixes	CI - Build Frontend	feature/npm-audit-fix-2026-01-27	pull_request	21400241462	2m5s	2026-01-27T14:05:32Z
+completed	success	chore(deps): bump react-router-dom from 7.11.0 to 7.13.0 in /frontend	Semgrep Scan	dependabot/npm_and_yarn/frontend/react-router-dom-7.13.0	pull_request	21397390894	30s	2026-01-27T12:35:05Z
+completed	success	chore(deps): bump react-router-dom from 7.11.0 to 7.13.0 in /frontend	CI - Backend & Frontend Check	dependabot/npm_and_yarn/frontend/react-router-dom-7.13.0	pull_request	21397390877	5m30s	2026-01-27T12:35:05Z
+completed	success	chore(deps): bump react-router-dom from 7.11.0 to 7.13.0 in /frontend	CI - Build Frontend	dependabot/npm_and_yarn/frontend/react-router-dom-7.13.0	pull_request	21397390838	3m57s	2026-01-27T12:35:05Z
+completed	success	chore(deps): bump react-router-dom from 7.11.0 to 7.13.0 in /frontend	E2E Dashboard Export	dependabot/npm_and_yarn/frontend/react-router-dom-7.13.0	pull_request	21397390829	12m18s	2026-01-27T12:35:05Z
+completed	success	chore(deps): bump react-router-dom from 7.11.0 to 7.13.0 in /frontend	npm audit	dependabot/npm_and_yarn/frontend/react-router-dom-7.13.0	pull_request	21397390827	1m52s	2026-01-27T12:35:05Z
+completed	success	chore(deps): bump react-router-dom from 7.11.0 to 7.13.0 in /frontend	Secret scan (gitleaks)	dependabot/npm_and_yarn/frontend/react-router-dom-7.13.0	pull_request	21397390826	2m59s	2026-01-27T12:35:05Z
+completed	success	npm_and_yarn in /frontend for react-router-dom - Update #1223022096	Dependabot Updates	main	dynamic	21397389488	4m12s	2026-01-27T12:35:02Z
+completed	success	npm_and_yarn in /frontend for lodash, react-router - Update #1223022014	Dependabot Updates	main	dynamic	21397388334	4m39s	2026-01-27T12:35:00Z
+completed	success	chore(deps): bump the npm_and_yarn group across 1 directory with 2 updates	Semgrep Scan	dependabot/npm_and_yarn/frontend/npm_and_yarn-9087fee575	pull_request	21397388333	3m13s	2026-01-27T12:35:00Z
+completed	success	chore(deps): bump the npm_and_yarn group across 1 directory with 2 updates	npm audit	dependabot/npm_and_yarn/frontend/npm_and_yarn-9087fee575	pull_request	21397388310	3m35s	2026-01-27T12:35:00Z
+completed	success	chore(deps): bump the npm_and_yarn group across 1 directory with 2 updates	E2E Dashboard Export	dependabot/npm_and_yarn/frontend/npm_and_yarn-9087fee575	pull_request	21397388306	11m12s	2026-01-27T12:34:59Z
+completed	success	chore(deps): bump the npm_and_yarn group across 1 directory with 2 updates	CI - Build Frontend	dependabot/npm_and_yarn/frontend/npm_and_yarn-9087fee575	pull_request	21397388305	3m7s	2026-01-27T12:35:00Z
+completed	success	chore(deps): bump the npm_and_yarn group across 1 directory with 2 updates	Secret scan (gitleaks)	dependabot/npm_and_yarn/frontend/npm_and_yarn-9087fee575	pull_request	21397388300	27s	2026-01-27T12:34:59Z
+completed	success	chore(deps): bump the npm_and_yarn group across 1 directory with 2 updates	CI - Backend & Frontend Check	dependabot/npm_and_yarn/frontend/npm_and_yarn-9087fee575	pull_request	21397388298	3m44s	2026-01-27T12:34:59Z
+completed	success	chore(deps): bump lucide-react from 0.543.0 to 0.563.0 in /frontend	CI - Build Frontend	dependabot/npm_and_yarn/frontend/lucide-react-0.563.0	pull_request	21397387427	3m12s	2026-01-27T12:34:58Z
+completed	success	chore(deps): bump lucide-react from 0.543.0 to 0.563.0 in /frontend	CI - Backend & Frontend Check	dependabot/npm_and_yarn/frontend/lucide-react-0.563.0	pull_request	21397387408	4m55s	2026-01-27T12:34:58Z
+completed	success	chore(deps): bump lucide-react from 0.543.0 to 0.563.0 in /frontend	Secret scan (gitleaks)	dependabot/npm_and_yarn/frontend/lucide-react-0.563.0	pull_request	21397387405	3m18s	2026-01-27T12:34:58Z
+completed	success	chore(deps): bump lucide-react from 0.543.0 to 0.563.0 in /frontend	npm audit	dependabot/npm_and_yarn/frontend/lucide-react-0.563.0	pull_request	21397387400	3m33s	2026-01-27T12:34:58Z
+completed	success	chore(deps): bump lucide-react from 0.543.0 to 0.563.0 in /frontend	Semgrep Scan	dependabot/npm_and_yarn/frontend/lucide-react-0.563.0	pull_request	21397387398	21s	2026-01-27T12:34:58Z
+completed	success	chore(deps): bump lucide-react from 0.543.0 to 0.563.0 in /frontend	E2E Dashboard Export	dependabot/npm_and_yarn/frontend/lucide-react-0.563.0	pull_request	21397387395	11m14s	2026-01-27T12:34:58Z
+completed	success	npm_and_yarn in /frontend for lucide-react - Update #1223021918	Dependabot Updates	main	dynamic	21397386823	4m10s	2026-01-27T12:34:57Z
+completed	success	chore(deps): bump puppeteer from 24.34.0 to 24.36.0 in /frontend	Semgrep Scan	dependabot/npm_and_yarn/frontend/puppeteer-24.36.0	pull_request	21397384655	47s	2026-01-27T12:34:53Z
+completed	success	chore(deps): bump puppeteer from 24.34.0 to 24.36.0 in /frontend	CI - Backend & Frontend Check	dependabot/npm_and_yarn/frontend/puppeteer-24.36.0	pull_request	21397384638	2m31s	2026-01-27T12:34:53Z
+completed	success	chore(deps): bump puppeteer from 24.34.0 to 24.36.0 in /frontend	CI - Build Frontend	dependabot/npm_and_yarn/frontend/puppeteer-24.36.0	pull_request	21397384633	2m43s	2026-01-27T12:34:53Z
+completed	success	chore(deps): bump puppeteer from 24.34.0 to 24.36.0 in /frontend	Secret scan (gitleaks)	dependabot/npm_and_yarn/frontend/puppeteer-24.36.0	pull_request	21397384625	3m28s	2026-01-27T12:34:53Z
+completed	success	chore(deps): bump puppeteer from 24.34.0 to 24.36.0 in /frontend	npm audit	dependabot/npm_and_yarn/frontend/puppeteer-24.36.0	pull_request	21397384617	3m30s	2026-01-27T12:34:53Z
+completed	success	chore(deps): bump puppeteer from 24.34.0 to 24.36.0 in /frontend	E2E Dashboard Export	dependabot/npm_and_yarn/frontend/puppeteer-24.36.0	pull_request	21397384614	8m58s	2026-01-27T12:34:53Z
+completed	success	npm_and_yarn in /frontend for puppeteer - Update #1223021776	Dependabot Updates	main	dynamic	21397383661	4m24s	2026-01-27T12:34:51Z
+completed	failure	chore(deps): bump react from 18.3.1 to 19.2.3 in /frontend	E2E Dashboard Export	dependabot/npm_and_yarn/frontend/react-19.2.3	pull_request	21397383343	3m53s	2026-01-27T12:34:50Z
+completed	success	npm_and_yarn in /frontend for react - Update #1223021714	Dependabot Updates	main	dynamic	21397383330	4m12s	2026-01-27T12:34:50Z
+completed	success	chore(deps): bump react from 18.3.1 to 19.2.3 in /frontend	CI - Backend & Frontend Check	dependabot/npm_and_yarn/frontend/react-19.2.3	pull_request	21397383305	3m1s	2026-01-27T12:34:50Z

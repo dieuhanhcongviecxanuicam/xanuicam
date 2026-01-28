@@ -1,0 +1,5 @@
+completed	success	fix(ci): stabilize tests & deploy script	CI - Backend & Frontend Check	fix/ci-deploy-tests	pull_request	21384118487	1m47s	2026-01-27T04:06:25Z
+completed	failure	fix(ci): stabilize tests & deploy script	Backend Tests	fix/ci-deploy-tests	pull_request	21384118457	35s	2026-01-27T04:06:25Z
+completed	failure	fix(ci): stabilize tests & deploy script	npm audit	fix/ci-deploy-tests	pull_request	21384118464	30s	2026-01-27T04:06:25Z
+completed	success	fix(ci): stabilize tests & deploy script	Secret scan (gitleaks)	fix/ci-deploy-tests	pull_request	21384118452	10s	2026-01-27T04:06:25Z
+completed	failure	fix(ci): stabilize tests & deploy script	Backend Tests	fix/ci-deploy-tests	pull_request	21383990837	34s	2026-01-27T04:00:23Z

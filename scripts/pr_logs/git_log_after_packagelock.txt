@@ -1,0 +1,3 @@
+dd9dfc9 chore: restore frontend package-lock.json to align overrides
+c90947a chore: pin webpack-dev-server override and dependency hardenings
+76bea13 chore(frontend): adjust webpack-dev-server to compatible patched 4.x and update overrides

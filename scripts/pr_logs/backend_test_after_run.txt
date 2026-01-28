@@ -1,0 +1,42 @@
+PASS tests/integration/taskCancel.integration.test.js (115.002 s)
+  ● Console
+
+    console.warn
+      AUDIT_LOG_KEY not set — generating temporary 32-byte key (not for production).
+
+      24 | }
+      25 | if (!process.env.AUDIT_LOG_KEY) {
+    > 26 |   console.warn('AUDIT_LOG_KEY not set — generating temporary 32-byte key (not for production).');
+         |           ^
+      27 |   process.env.AUDIT_LOG_KEY = crypto.randomBytes(32).toString('base64');
+      28 | }
+      29 |
+
+      at Object.warn (server.js:26:11)
+      at Object.require (tests/integration/taskCancel.integration.test.js:65:20)
+
+    console.log
+      Not serving frontend build (NODE_ENV != production and SERVE_FRONTEND != true).
+
+      at Object.log (server.js:465:13)
+
+    console.log
+      [REQ] 2026-01-28T11:17:34.726Z ip=::ffff:127.0.0.1 method=POST url=/api/tasks cf-ray=
+
+      at log (server.js:139:15)
+
+    console.log
+      [REQ-DETAIL] 2026-01-28T11:17:36.211Z POST /api/tasks ip=::ffff:127.0.0.1 headers={"host":"127.0.0.1:37127","accept-encoding":"gzip, deflate","content-type":"application/json","content-length":"114","connection":"close"} body={"title":"Integration test","description":"auto","assignee_id":1,"due_date":"2026-01-30","priority":"Trung bình"}
+
+      at log (server.js:235:15)
+
+    console.log
+      [REQ] 2026-01-28T11:17:36.298Z ip=::ffff:127.0.0.1 method=PATCH url=/api/tasks/100/status cf-ray=
+
+      at log (server.js:139:15)
+
+    console.log
+      [REQ-DETAIL] 2026-01-28T11:17:36.310Z PATCH /api/tasks/100/status ip=::ffff:127.0.0.1 headers={"host":"127.0.0.1:38685","accept-encoding":"gzip, deflate","content-type":"application/json","content-length":"64","connection":"close"} body={"status":"Đã hủy","details":"cancel from integration test"}
+
+      at log (server.js:235:15)
+

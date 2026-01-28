@@ -1,0 +1,1 @@
+c90947a chore: pin webpack-dev-server override and dependency hardenings

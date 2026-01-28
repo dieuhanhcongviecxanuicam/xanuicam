@@ -1,0 +1,9 @@
+[napi-postinstall@0.3.4] Trying to install package "@unrs/resolver-binding-linux-x64-gnu" using npm
+● Validation Error:
+
+  Module /mnt/c/Users/nguye/AppData/Roaming/npm/node_modules/jest/node_modules/jest-circus/build/runner.js in the testRunner option was not found.
+         <rootDir> is: /mnt/e/ubndxanuicam_deploy/backend
+
+  Configuration Documentation:
+  https://jestjs.io/docs/configuration
+

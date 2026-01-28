@@ -1,0 +1,20 @@
+completed	failure	Release: UI + features	CI - Build Frontend	release/ui-and-features-20260128-221525	pull_request	21443855851	5s	2026-01-28T15:16:03Z
+completed	failure	Release: UI + features	npm audit	release/ui-and-features-20260128-221525	pull_request	21443855822	5s	2026-01-28T15:16:03Z
+completed	failure	Release: UI + features	CI - Backend & Frontend Check	release/ui-and-features-20260128-221525	pull_request	21443855819	4s	2026-01-28T15:16:03Z
+completed	failure	Release: UI + features	E2E Dashboard Export	release/ui-and-features-20260128-221525	pull_request	21443855804	4s	2026-01-28T15:16:03Z
+completed	failure	Release: UI + features	Secret scan (gitleaks)	release/ui-and-features-20260128-221525	pull_request	21443855800	4s	2026-01-28T15:16:03Z
+completed	failure	Release: UI + features	Semgrep Scan	release/ui-and-features-20260128-221525	pull_request	21443855794	6s	2026-01-28T15:16:03Z
+completed	failure	chore(deps): bump express from 4.22.1 to 5.2.1 in /backend	CI - Backend & Frontend Check	dependabot/npm_and_yarn/backend/express-5.2.1	pull_request	21441934223	3s	2026-01-28T14:22:13Z
+completed	failure	chore(deps): bump express from 4.22.1 to 5.2.1 in /backend	CI - Build Frontend	dependabot/npm_and_yarn/backend/express-5.2.1	pull_request	21441934217	4s	2026-01-28T14:22:13Z
+completed	failure	chore(deps): bump express from 4.22.1 to 5.2.1 in /backend	Secret scan (gitleaks)	dependabot/npm_and_yarn/backend/express-5.2.1	pull_request	21441934212	3s	2026-01-28T14:22:13Z
+completed	failure	chore(deps): bump express from 4.22.1 to 5.2.1 in /backend	E2E Dashboard Export	dependabot/npm_and_yarn/backend/express-5.2.1	pull_request	21441934210	6s	2026-01-28T14:22:13Z
+completed	failure	Resolve merge conflicts: accept remote changes to proceed with deploy	npm audit	main	push	21441933129	4s	2026-01-28T14:22:11Z
+completed	failure	Resolve merge conflicts: accept remote changes to proceed with deploy	Semgrep Scan	main	push	21441933128	4s	2026-01-28T14:22:11Z
+completed	failure	Resolve merge conflicts: accept remote changes to proceed with deploy	CI - Build Frontend	main	push	21441933122	4s	2026-01-28T14:22:11Z
+completed	failure	Resolve merge conflicts: accept remote changes to proceed with deploy	Deploy to Production	main	push	21441933120	4s	2026-01-28T14:22:11Z
+completed	failure	Resolve merge conflicts: accept remote changes to proceed with deploy	E2E Dashboard Export	main	push	21441933114	4s	2026-01-28T14:22:11Z
+completed	failure	Resolve merge conflicts: accept remote changes to proceed with deploy	CI - Backend & Frontend Check	main	push	21441933112	4s	2026-01-28T14:22:11Z
+completed	failure	Resolve merge conflicts: accept remote changes to proceed with deploy	Deploy to Server via SSH	main	push	21441933105	3s	2026-01-28T14:22:11Z
+completed	failure	Resolve merge conflicts: accept remote changes to proceed with deploy	Secret scan (gitleaks)	main	push	21441933101	6s	2026-01-28T14:22:11Z
+completed	failure	npm_and_yarn in /frontend for webpack-dev-server, webpack-dev-server - Update #1223435929	Dependabot Updates	main	dynamic	21411016681	46s	2026-01-27T19:25:58Z
+completed	failure	Run Server Setup	Run Server Setup	main	workflow_dispatch	21408370068	19s	2026-01-27T18:00:59Z

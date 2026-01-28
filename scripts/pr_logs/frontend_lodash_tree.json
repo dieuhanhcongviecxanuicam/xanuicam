@@ -1,0 +1,22 @@
+{
+  "version": "0.1.0",
+  "name": "frontend",
+  "problems": [
+    "invalid: lodash@ /mnt/e/ubndxanuicam_deploy/frontend/node_modules/lodash"
+  ],
+  "dependencies": {
+    "lodash": {
+      "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.17.23.tgz",
+      "overridden": false,
+      "invalid": "\"^4.17.22\" from the root project",
+      "problems": [
+        "invalid: lodash@ /mnt/e/ubndxanuicam_deploy/frontend/node_modules/lodash"
+      ]
+    }
+  },
+  "error": {
+    "code": "ELSPROBLEMS",
+    "summary": "invalid: lodash@ /mnt/e/ubndxanuicam_deploy/frontend/node_modules/lodash",
+    "detail": ""
+  }
+}

@@ -1,0 +1,12 @@
+Backend Tests	active	227209364
+CI - Backend & Frontend Check	active	221469080
+CI Deploy — Build, Push, and Remote Deploy	active	226080201
+Deploy Frontend to GitHub Pages	active	221469081
+Deploy to Server via SSH	active	221469082
+Deploy to Production	active	221469083
+E2E Dashboard Export	active	221469084
+CI - Build Frontend	active	221469086
+npm audit	active	225931976
+Secret scan (gitleaks)	active	225740984
+Semgrep Scan	active	226085111
+Dependabot Updates	active	221469130

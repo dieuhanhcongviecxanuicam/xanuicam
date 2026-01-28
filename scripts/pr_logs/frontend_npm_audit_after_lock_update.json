@@ -1,0 +1,7 @@
+{
+  "error": {
+    "code": "EOVERRIDE",
+    "summary": "Override for webpack-dev-server@^5.4.3 conflicts with direct dependency",
+    "detail": ""
+  }
+}

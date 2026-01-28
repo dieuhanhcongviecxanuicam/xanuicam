@@ -1,0 +1,330 @@
+﻿2026-01-27T04:06:29.5108317Z Current runner version: '2.331.0'
+2026-01-27T04:06:29.5141314Z ##[group]Runner Image Provisioner
+2026-01-27T04:06:29.5142584Z Hosted Compute Agent
+2026-01-27T04:06:29.5143923Z Version: 20260115.477
+2026-01-27T04:06:29.5144912Z Commit: 4b342d620503cbe250a3154040964899ea7c9b00
+2026-01-27T04:06:29.5145979Z Build Date: 2026-01-15T22:32:41Z
+2026-01-27T04:06:29.5147140Z Worker ID: {d83fa153-694f-40c5-983c-2134115ed6af}
+2026-01-27T04:06:29.5148247Z Azure Region: westus
+2026-01-27T04:06:29.5149104Z ##[endgroup]
+2026-01-27T04:06:29.5151683Z ##[group]Operating System
+2026-01-27T04:06:29.5152957Z Ubuntu
+2026-01-27T04:06:29.5153699Z 24.04.3
+2026-01-27T04:06:29.5154526Z LTS
+2026-01-27T04:06:29.5155307Z ##[endgroup]
+2026-01-27T04:06:29.5156101Z ##[group]Runner Image
+2026-01-27T04:06:29.5157152Z Image: ubuntu-24.04
+2026-01-27T04:06:29.5157981Z Version: 20260119.4.1
+2026-01-27T04:06:29.5160067Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260119.4/images/ubuntu/Ubuntu2404-Readme.md
+2026-01-27T04:06:29.5162952Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260119.4
+2026-01-27T04:06:29.5164662Z ##[endgroup]
+2026-01-27T04:06:29.5166594Z ##[group]GITHUB_TOKEN Permissions
+2026-01-27T04:06:29.5169382Z Contents: read
+2026-01-27T04:06:29.5170412Z Metadata: read
+2026-01-27T04:06:29.5171354Z Packages: read
+2026-01-27T04:06:29.5172214Z ##[endgroup]
+2026-01-27T04:06:29.5175351Z Secret source: Actions
+2026-01-27T04:06:29.5176954Z Prepare workflow directory
+2026-01-27T04:06:29.5844342Z Prepare all required actions
+2026-01-27T04:06:29.5901319Z Getting action download info
+2026-01-27T04:06:30.1435088Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-01-27T04:06:30.5382084Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-01-27T04:06:30.7939531Z Complete job name: audit
+2026-01-27T04:06:30.8632259Z ##[group]Run actions/checkout@v4
+2026-01-27T04:06:30.8633386Z with:
+2026-01-27T04:06:30.8633916Z   repository: dieuhanhcongviecxanuicam/xanuicam
+2026-01-27T04:06:30.8634726Z   token: ***
+2026-01-27T04:06:30.8635139Z   ssh-strict: true
+2026-01-27T04:06:30.8635565Z   ssh-user: git
+2026-01-27T04:06:30.8636001Z   persist-credentials: true
+2026-01-27T04:06:30.8636487Z   clean: true
+2026-01-27T04:06:30.8636939Z   sparse-checkout-cone-mode: true
+2026-01-27T04:06:30.8637471Z   fetch-depth: 1
+2026-01-27T04:06:30.8637926Z   fetch-tags: false
+2026-01-27T04:06:30.8638369Z   show-progress: true
+2026-01-27T04:06:30.8638839Z   lfs: false
+2026-01-27T04:06:30.8639259Z   submodules: false
+2026-01-27T04:06:30.8639707Z   set-safe-directory: true
+2026-01-27T04:06:30.8640436Z ##[endgroup]
+2026-01-27T04:06:30.9790423Z Syncing repository: dieuhanhcongviecxanuicam/xanuicam
+2026-01-27T04:06:30.9793752Z ##[group]Getting Git version info
+2026-01-27T04:06:30.9795117Z Working directory is '/home/runner/work/xanuicam/xanuicam'
+2026-01-27T04:06:30.9797205Z [command]/usr/bin/git version
+2026-01-27T04:06:31.0936715Z git version 2.52.0
+2026-01-27T04:06:31.0957441Z ##[endgroup]
+2026-01-27T04:06:31.0974915Z Temporarily overriding HOME='/home/runner/work/_temp/61f9a3f3-d282-407d-b027-34864512f3dd' before making global git config changes
+2026-01-27T04:06:31.0978735Z Adding repository directory to the temporary git global config as a safe directory
+2026-01-27T04:06:31.0983204Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/xanuicam/xanuicam
+2026-01-27T04:06:31.1071183Z Deleting the contents of '/home/runner/work/xanuicam/xanuicam'
+2026-01-27T04:06:31.1076154Z ##[group]Initializing the repository
+2026-01-27T04:06:31.1081108Z [command]/usr/bin/git init /home/runner/work/xanuicam/xanuicam
+2026-01-27T04:06:31.1729035Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-01-27T04:06:31.1731135Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-01-27T04:06:31.1732579Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-01-27T04:06:31.1734214Z hint: call:
+2026-01-27T04:06:31.1734992Z hint:
+2026-01-27T04:06:31.1735945Z hint: 	git config --global init.defaultBranch <name>
+2026-01-27T04:06:31.1736895Z hint:
+2026-01-27T04:06:31.1737895Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-01-27T04:06:31.1739246Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-01-27T04:06:31.1740292Z hint:
+2026-01-27T04:06:31.1741073Z hint: 	git branch -m <name>
+2026-01-27T04:06:31.1741857Z hint:
+2026-01-27T04:06:31.1743079Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-01-27T04:06:31.1774484Z Initialized empty Git repository in /home/runner/work/xanuicam/xanuicam/.git/
+2026-01-27T04:06:31.1789687Z [command]/usr/bin/git remote add origin https://github.com/dieuhanhcongviecxanuicam/xanuicam
+2026-01-27T04:06:31.1878408Z ##[endgroup]
+2026-01-27T04:06:31.1880206Z ##[group]Disabling automatic garbage collection
+2026-01-27T04:06:31.1881979Z [command]/usr/bin/git config --local gc.auto 0
+2026-01-27T04:06:31.1916335Z ##[endgroup]
+2026-01-27T04:06:31.1918031Z ##[group]Setting up auth
+2026-01-27T04:06:31.1923854Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-01-27T04:06:31.1958639Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-01-27T04:06:31.3868961Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-01-27T04:06:31.3903496Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-01-27T04:06:31.4135938Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-01-27T04:06:31.4178208Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-01-27T04:06:31.4508205Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-01-27T04:06:31.4556876Z ##[endgroup]
+2026-01-27T04:06:31.4559095Z ##[group]Fetching the repository
+2026-01-27T04:06:31.4569376Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +2f5129014026e6642b54b42b48654119a22a19a1:refs/remotes/pull/72/merge
+2026-01-27T04:06:32.8796551Z From https://github.com/dieuhanhcongviecxanuicam/xanuicam
+2026-01-27T04:06:32.8798091Z  * [new ref]         2f5129014026e6642b54b42b48654119a22a19a1 -> pull/72/merge
+2026-01-27T04:06:32.8896293Z ##[endgroup]
+2026-01-27T04:06:32.8898901Z ##[group]Determining the checkout info
+2026-01-27T04:06:32.8900201Z ##[endgroup]
+2026-01-27T04:06:32.8903755Z [command]/usr/bin/git sparse-checkout disable
+2026-01-27T04:06:32.9002838Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-01-27T04:06:32.9033084Z ##[group]Checking out the ref
+2026-01-27T04:06:32.9037008Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/72/merge
+2026-01-27T04:06:33.1266103Z Note: switching to 'refs/remotes/pull/72/merge'.
+2026-01-27T04:06:33.1270025Z 
+2026-01-27T04:06:33.1272310Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-01-27T04:06:33.1277526Z changes and commit them, and you can discard any commits you make in this
+2026-01-27T04:06:33.1305661Z state without impacting any branches by switching back to a branch.
+2026-01-27T04:06:33.1306926Z 
+2026-01-27T04:06:33.1307611Z If you want to create a new branch to retain commits you create, you may
+2026-01-27T04:06:33.1308496Z do so (now or later) by using -c with the switch command. Example:
+2026-01-27T04:06:33.1308976Z 
+2026-01-27T04:06:33.1309220Z   git switch -c <new-branch-name>
+2026-01-27T04:06:33.1309549Z 
+2026-01-27T04:06:33.1309762Z Or undo this operation with:
+2026-01-27T04:06:33.1310405Z 
+2026-01-27T04:06:33.1310569Z   git switch -
+2026-01-27T04:06:33.1310813Z 
+2026-01-27T04:06:33.1311286Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-01-27T04:06:33.1311893Z 
+2026-01-27T04:06:33.1312544Z HEAD is now at 2f51290 Merge 21ff9c89a95df8dbe177abb337f606b5fe7b852f into f2b7a37500f286320d0b002707344b669ffa12b2
+2026-01-27T04:06:33.1314874Z ##[endgroup]
+2026-01-27T04:06:33.1348294Z [command]/usr/bin/git log -1 --format=%H
+2026-01-27T04:06:33.1372001Z 2f5129014026e6642b54b42b48654119a22a19a1
+2026-01-27T04:06:33.1624230Z ##[group]Run actions/setup-node@v4
+2026-01-27T04:06:33.1624580Z with:
+2026-01-27T04:06:33.1624828Z   node-version: 20
+2026-01-27T04:06:33.1625063Z   cache: npm
+2026-01-27T04:06:33.1625290Z   always-auth: false
+2026-01-27T04:06:33.1625539Z   check-latest: false
+2026-01-27T04:06:33.1625946Z   token: ***
+2026-01-27T04:06:33.1626205Z ##[endgroup]
+2026-01-27T04:06:33.3918110Z Found in cache @ /opt/hostedtoolcache/node/20.20.0/x64
+2026-01-27T04:06:33.3925681Z ##[group]Environment details
+2026-01-27T04:06:35.6094506Z node: v20.20.0
+2026-01-27T04:06:35.6095321Z npm: 10.8.2
+2026-01-27T04:06:35.6096176Z yarn: 1.22.22
+2026-01-27T04:06:35.6097586Z ##[endgroup]
+2026-01-27T04:06:35.6126831Z [command]/opt/hostedtoolcache/node/20.20.0/x64/bin/npm config get cache
+2026-01-27T04:06:35.9071406Z /home/runner/.npm
+2026-01-27T04:06:36.2248743Z Cache hit for: node-cache-Linux-x64-npm-7eb8e3b05b78c38efce98504ae699bb971a8a62daab79278ffba35b8ac4ef951
+2026-01-27T04:06:37.5491372Z Received 4194304 of 111610796 (3.8%), 4.0 MBs/sec
+2026-01-27T04:06:38.4801450Z Received 111610796 of 111610796 (100.0%), 55.1 MBs/sec
+2026-01-27T04:06:38.4803107Z Cache Size: ~106 MB (111610796 B)
+2026-01-27T04:06:38.4835108Z [command]/usr/bin/tar -xf /home/runner/work/_temp/1f17c410-fecc-4ea4-b4e2-8816a7c1a4f7/cache.tzst -P -C /home/runner/work/xanuicam/xanuicam --use-compress-program unzstd
+2026-01-27T04:06:39.0919572Z Cache restored successfully
+2026-01-27T04:06:39.1149189Z Cache restored from key: node-cache-Linux-x64-npm-7eb8e3b05b78c38efce98504ae699bb971a8a62daab79278ffba35b8ac4ef951
+2026-01-27T04:06:39.1328264Z ##[group]Run set -e
+2026-01-27T04:06:39.1328568Z [36;1mset -e[0m
+2026-01-27T04:06:39.1328762Z [36;1mcd backend[0m
+2026-01-27T04:06:39.1329000Z [36;1mnpm ci || npm install --no-audit[0m
+2026-01-27T04:06:39.1329293Z [36;1mcd ../frontend/frontend[0m
+2026-01-27T04:06:39.1329557Z [36;1mnpm ci || npm install --no-audit[0m
+2026-01-27T04:06:39.1416054Z shell: /usr/bin/bash -e {0}
+2026-01-27T04:06:39.1416319Z ##[endgroup]
+2026-01-27T04:06:42.7440481Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+2026-01-27T04:06:42.8136569Z npm warn deprecated rimraf@2.7.1: Rimraf versions prior to v4 are no longer supported
+2026-01-27T04:06:42.8395749Z npm warn deprecated supertest@6.3.3: Please upgrade to supertest v7.1.3+, see release notes at https://github.com/forwardemail/supertest/releases/tag/v7.1.3 - maintenance is supported by Forward Email @ https://forwardemail.net
+2026-01-27T04:06:42.8512472Z npm warn deprecated lodash.isequal@4.5.0: This package is deprecated. Use require('node:util').isDeepStrictEqual instead.
+2026-01-27T04:06:42.9349414Z npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+2026-01-27T04:06:43.1497446Z npm warn deprecated fstream@1.0.12: This package is no longer supported.
+2026-01-27T04:06:43.2988902Z npm warn deprecated superagent@8.1.2: Please upgrade to superagent v10.2.2+, see release notes at https://github.com/forwardemail/superagent/releases/tag/v10.2.2 - maintenance is supported by Forward Email @ https://forwardemail.net
+2026-01-27T04:06:47.8460334Z 
+2026-01-27T04:06:47.8473078Z > backend@2.0.0 postinstall
+2026-01-27T04:06:47.8477638Z > node scripts/postinstall-deploy.js
+2026-01-27T04:06:47.8493257Z 
+2026-01-27T04:06:48.0707769Z Running backend postinstall deploy checks...
+2026-01-27T04:06:48.0721252Z exceljs is installed.
+2026-01-27T04:06:48.0721913Z NODE_ENV != production, skipping pm2 restart.
+2026-01-27T04:06:48.0889940Z 
+2026-01-27T04:06:48.0890820Z added 569 packages, and audited 570 packages in 9s
+2026-01-27T04:06:48.0891620Z 
+2026-01-27T04:06:48.0894019Z 72 packages are looking for funding
+2026-01-27T04:06:48.0895366Z   run `npm fund` for details
+2026-01-27T04:06:48.0898794Z 
+2026-01-27T04:06:48.0901401Z found 0 vulnerabilities
+2026-01-27T04:06:49.6153847Z npm warn ERESOLVE overriding peer dependency
+2026-01-27T04:06:49.6155159Z npm warn While resolving: @react-leaflet/core@3.0.0
+2026-01-27T04:06:49.6155887Z npm warn Found: react@18.3.1
+2026-01-27T04:06:49.6156435Z npm warn node_modules/react
+2026-01-27T04:06:49.6157089Z npm warn   react@"^18.2.0" from the root project
+2026-01-27T04:06:49.6157992Z npm warn   19 more (@floating-ui/react, @floating-ui/react-dom, ...)
+2026-01-27T04:06:49.6158686Z npm warn
+2026-01-27T04:06:49.6159421Z npm warn Could not resolve dependency:
+2026-01-27T04:06:49.6163308Z npm warn peer react@"^19.0.0" from @react-leaflet/core@3.0.0
+2026-01-27T04:06:49.6164213Z npm warn node_modules/@react-leaflet/core
+2026-01-27T04:06:49.6165356Z npm warn   @react-leaflet/core@"^3.0.0" from react-leaflet@5.0.0
+2026-01-27T04:06:49.6166265Z npm warn   node_modules/react-leaflet
+2026-01-27T04:06:49.6166932Z npm warn
+2026-01-27T04:06:49.6167586Z npm warn Conflicting peer dependency: react@19.2.4
+2026-01-27T04:06:49.6168211Z npm warn node_modules/react
+2026-01-27T04:06:49.6168875Z npm warn   peer react@"^19.0.0" from @react-leaflet/core@3.0.0
+2026-01-27T04:06:49.6169560Z npm warn   node_modules/@react-leaflet/core
+2026-01-27T04:06:49.6170335Z npm warn     @react-leaflet/core@"^3.0.0" from react-leaflet@5.0.0
+2026-01-27T04:06:49.6171124Z npm warn     node_modules/react-leaflet
+2026-01-27T04:06:49.6403458Z npm warn ERESOLVE overriding peer dependency
+2026-01-27T04:06:49.6404683Z npm warn While resolving: @react-leaflet/core@3.0.0
+2026-01-27T04:06:49.6405445Z npm warn Found: react-dom@18.3.1
+2026-01-27T04:06:49.6406451Z npm warn node_modules/react-dom
+2026-01-27T04:06:49.6437776Z npm warn   react-dom@"^18.2.0" from the root project
+2026-01-27T04:06:49.6438867Z npm warn   11 more (@floating-ui/react, @floating-ui/react-dom, ...)
+2026-01-27T04:06:49.6439643Z npm warn
+2026-01-27T04:06:49.6440202Z npm warn Could not resolve dependency:
+2026-01-27T04:06:49.6440918Z npm warn peer react-dom@"^19.0.0" from @react-leaflet/core@3.0.0
+2026-01-27T04:06:49.6450082Z npm warn node_modules/@react-leaflet/core
+2026-01-27T04:06:49.6450896Z npm warn   @react-leaflet/core@"^3.0.0" from react-leaflet@5.0.0
+2026-01-27T04:06:49.6451566Z npm warn   node_modules/react-leaflet
+2026-01-27T04:06:49.6451976Z npm warn
+2026-01-27T04:06:49.6452475Z npm warn Conflicting peer dependency: react-dom@19.2.4
+2026-01-27T04:06:49.6453498Z npm warn node_modules/react-dom
+2026-01-27T04:06:49.6454234Z npm warn   peer react-dom@"^19.0.0" from @react-leaflet/core@3.0.0
+2026-01-27T04:06:49.6454941Z npm warn   node_modules/@react-leaflet/core
+2026-01-27T04:06:49.6455669Z npm warn     @react-leaflet/core@"^3.0.0" from react-leaflet@5.0.0
+2026-01-27T04:06:49.6456342Z npm warn     node_modules/react-leaflet
+2026-01-27T04:06:49.7763600Z npm error code ERESOLVE
+2026-01-27T04:06:49.7766152Z npm error ERESOLVE could not resolve
+2026-01-27T04:06:49.7768582Z npm error
+2026-01-27T04:06:49.7771269Z npm error While resolving: react-leaflet@5.0.0
+2026-01-27T04:06:49.7773046Z npm error Found: react@18.3.1
+2026-01-27T04:06:49.7774525Z npm error node_modules/react
+2026-01-27T04:06:49.7776083Z npm error   react@"^18.2.0" from the root project
+2026-01-27T04:06:49.7777861Z npm error   peer react@">=16.8.0" from @floating-ui/react@0.26.28
+2026-01-27T04:06:49.7779618Z npm error   node_modules/@floating-ui/react
+2026-01-27T04:06:49.7781387Z npm error     @floating-ui/react@"^0.26.16" from @headlessui/react@2.2.9
+2026-01-27T04:06:49.7783493Z npm error     node_modules/@headlessui/react
+2026-01-27T04:06:49.7785866Z npm error       @headlessui/react@"^2.2.7" from the root project
+2026-01-27T04:06:49.7787277Z npm error   18 more (@floating-ui/react-dom, @headlessui/react, ...)
+2026-01-27T04:06:49.7788350Z npm error
+2026-01-27T04:06:49.7788925Z npm error Could not resolve dependency:
+2026-01-27T04:06:49.7789582Z npm error peer react@"^19.0.0" from react-leaflet@5.0.0
+2026-01-27T04:06:49.7790186Z npm error node_modules/react-leaflet
+2026-01-27T04:06:49.7790818Z npm error   react-leaflet@"^5.0.0" from the root project
+2026-01-27T04:06:49.7791326Z npm error
+2026-01-27T04:06:49.7791862Z npm error Conflicting peer dependency: react@19.2.4
+2026-01-27T04:06:49.7792481Z npm error node_modules/react
+2026-01-27T04:06:49.7793268Z npm error   peer react@"^19.0.0" from react-leaflet@5.0.0
+2026-01-27T04:06:49.7793908Z npm error   node_modules/react-leaflet
+2026-01-27T04:06:49.7794554Z npm error     react-leaflet@"^5.0.0" from the root project
+2026-01-27T04:06:49.7795061Z npm error
+2026-01-27T04:06:49.7795561Z npm error Fix the upstream dependency conflict, or retry
+2026-01-27T04:06:49.7796339Z npm error this command with --force or --legacy-peer-deps
+2026-01-27T04:06:49.7797253Z npm error to accept an incorrect (and potentially broken) dependency resolution.
+2026-01-27T04:06:49.7797925Z npm error
+2026-01-27T04:06:49.7798197Z npm error
+2026-01-27T04:06:49.7799508Z npm error For a full report see:
+2026-01-27T04:06:49.7813726Z npm error /home/runner/.npm/_logs/2026-01-27T04_06_48_179Z-eresolve-report.txt
+2026-01-27T04:06:49.7815334Z npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-01-27T04_06_48_179Z-debug-0.log
+2026-01-27T04:06:51.7255213Z npm warn ERESOLVE overriding peer dependency
+2026-01-27T04:06:51.7267473Z npm warn While resolving: @react-leaflet/core@3.0.0
+2026-01-27T04:06:51.7268299Z npm warn Found: react@18.3.1
+2026-01-27T04:06:51.7268990Z npm warn node_modules/react
+2026-01-27T04:06:51.7269698Z npm warn   react@"^18.2.0" from the root project
+2026-01-27T04:06:51.7270688Z npm warn   19 more (@floating-ui/react, @floating-ui/react-dom, ...)
+2026-01-27T04:06:51.7284162Z npm warn
+2026-01-27T04:06:51.7285537Z npm warn Could not resolve dependency:
+2026-01-27T04:06:51.7286650Z npm warn peer react@"^19.0.0" from @react-leaflet/core@3.0.0
+2026-01-27T04:06:51.7287523Z npm warn node_modules/@react-leaflet/core
+2026-01-27T04:06:51.7288470Z npm warn   @react-leaflet/core@"^3.0.0" from react-leaflet@5.0.0
+2026-01-27T04:06:51.7289266Z npm warn   node_modules/react-leaflet
+2026-01-27T04:06:51.7289872Z npm warn
+2026-01-27T04:06:51.7290521Z npm warn Conflicting peer dependency: react@19.2.4
+2026-01-27T04:06:51.7291069Z npm warn node_modules/react
+2026-01-27T04:06:51.7291684Z npm warn   peer react@"^19.0.0" from @react-leaflet/core@3.0.0
+2026-01-27T04:06:51.7292338Z npm warn   node_modules/@react-leaflet/core
+2026-01-27T04:06:51.7293308Z npm warn     @react-leaflet/core@"^3.0.0" from react-leaflet@5.0.0
+2026-01-27T04:06:51.7293974Z npm warn     node_modules/react-leaflet
+2026-01-27T04:06:51.7331119Z npm warn ERESOLVE overriding peer dependency
+2026-01-27T04:06:51.7334332Z npm warn While resolving: @react-leaflet/core@3.0.0
+2026-01-27T04:06:51.7334958Z npm warn Found: react-dom@18.3.1
+2026-01-27T04:06:51.7335854Z npm warn node_modules/react-dom
+2026-01-27T04:06:51.7336429Z npm warn   react-dom@"^18.2.0" from the root project
+2026-01-27T04:06:51.7337203Z npm warn   11 more (@floating-ui/react, @floating-ui/react-dom, ...)
+2026-01-27T04:06:51.7337769Z npm warn
+2026-01-27T04:06:51.7338166Z npm warn Could not resolve dependency:
+2026-01-27T04:06:51.7338843Z npm warn peer react-dom@"^19.0.0" from @react-leaflet/core@3.0.0
+2026-01-27T04:06:51.7339455Z npm warn node_modules/@react-leaflet/core
+2026-01-27T04:06:51.7340100Z npm warn   @react-leaflet/core@"^3.0.0" from react-leaflet@5.0.0
+2026-01-27T04:06:51.7340702Z npm warn   node_modules/react-leaflet
+2026-01-27T04:06:51.7341096Z npm warn
+2026-01-27T04:06:51.7341543Z npm warn Conflicting peer dependency: react-dom@19.2.4
+2026-01-27T04:06:51.7342124Z npm warn node_modules/react-dom
+2026-01-27T04:06:51.7343287Z npm warn   peer react-dom@"^19.0.0" from @react-leaflet/core@3.0.0
+2026-01-27T04:06:51.7343997Z npm warn   node_modules/@react-leaflet/core
+2026-01-27T04:06:51.7344715Z npm warn     @react-leaflet/core@"^3.0.0" from react-leaflet@5.0.0
+2026-01-27T04:06:51.7345378Z npm warn     node_modules/react-leaflet
+2026-01-27T04:06:51.7924134Z npm error code ERESOLVE
+2026-01-27T04:06:51.7925482Z npm error ERESOLVE could not resolve
+2026-01-27T04:06:51.7925916Z npm error
+2026-01-27T04:06:51.7926420Z npm error While resolving: react-leaflet@5.0.0
+2026-01-27T04:06:51.7926993Z npm error Found: react@18.3.1
+2026-01-27T04:06:51.7927476Z npm error node_modules/react
+2026-01-27T04:06:51.7928053Z npm error   react@"^18.2.0" from the root project
+2026-01-27T04:06:51.7928867Z npm error   peer react@">=16.8.0" from @floating-ui/react@0.26.28
+2026-01-27T04:06:51.7929695Z npm error   node_modules/@floating-ui/react
+2026-01-27T04:06:51.7930543Z npm error     @floating-ui/react@"^0.26.16" from @headlessui/react@2.2.9
+2026-01-27T04:06:51.7931407Z npm error     node_modules/@headlessui/react
+2026-01-27T04:06:51.7932220Z npm error       @headlessui/react@"^2.2.7" from the root project
+2026-01-27T04:06:51.7939890Z npm error   18 more (@floating-ui/react-dom, @headlessui/react, ...)
+2026-01-27T04:06:51.7940481Z npm error
+2026-01-27T04:06:51.7940943Z npm error Could not resolve dependency:
+2026-01-27T04:06:51.7941509Z npm error peer react@"^19.0.0" from react-leaflet@5.0.0
+2026-01-27T04:06:51.7942057Z npm error node_modules/react-leaflet
+2026-01-27T04:06:51.7942837Z npm error   react-leaflet@"^5.0.0" from the root project
+2026-01-27T04:06:51.7943315Z npm error
+2026-01-27T04:06:51.7943780Z npm error Conflicting peer dependency: react@19.2.4
+2026-01-27T04:06:51.7944238Z npm error node_modules/react
+2026-01-27T04:06:51.7944804Z npm error   peer react@"^19.0.0" from react-leaflet@5.0.0
+2026-01-27T04:06:51.7945364Z npm error   node_modules/react-leaflet
+2026-01-27T04:06:51.7945935Z npm error     react-leaflet@"^5.0.0" from the root project
+2026-01-27T04:06:51.7946412Z npm error
+2026-01-27T04:06:51.7947170Z npm error Fix the upstream dependency conflict, or retry
+2026-01-27T04:06:51.7947869Z npm error this command with --force or --legacy-peer-deps
+2026-01-27T04:06:51.7948834Z npm error to accept an incorrect (and potentially broken) dependency resolution.
+2026-01-27T04:06:51.7949494Z npm error
+2026-01-27T04:06:51.7949775Z npm error
+2026-01-27T04:06:51.7950150Z npm error For a full report see:
+2026-01-27T04:06:51.7950908Z npm error /home/runner/.npm/_logs/2026-01-27T04_06_49_883Z-eresolve-report.txt
+2026-01-27T04:06:51.7952148Z npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-01-27T04_06_49_883Z-debug-0.log
+2026-01-27T04:06:51.8084975Z ##[error]Process completed with exit code 1.
+2026-01-27T04:06:51.8250739Z Post job cleanup.
+2026-01-27T04:06:51.9608168Z [command]/usr/bin/git version
+2026-01-27T04:06:51.9684643Z git version 2.52.0
+2026-01-27T04:06:51.9745159Z Temporarily overriding HOME='/home/runner/work/_temp/021e6c43-a086-405a-9348-01bea993ee0a' before making global git config changes
+2026-01-27T04:06:51.9753173Z Adding repository directory to the temporary git global config as a safe directory
+2026-01-27T04:06:51.9786051Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/xanuicam/xanuicam
+2026-01-27T04:06:51.9851087Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-01-27T04:06:51.9909754Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-01-27T04:06:52.0256399Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-01-27T04:06:52.0293646Z http.https://github.com/.extraheader
+2026-01-27T04:06:52.0307069Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-01-27T04:06:52.0353899Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-01-27T04:06:52.0696553Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-01-27T04:06:52.0749252Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-01-27T04:06:52.1213693Z Cleaning up orphan processes

@@ -1,0 +1,33 @@
+﻿2026-01-27T04:06:30.0500483Z Current runner version: '2.331.0'
+2026-01-27T04:06:30.0528832Z ##[group]Runner Image Provisioner
+2026-01-27T04:06:30.0529703Z Hosted Compute Agent
+2026-01-27T04:06:30.0530244Z Version: 20260115.477
+2026-01-27T04:06:30.0530904Z Commit: 4b342d620503cbe250a3154040964899ea7c9b00
+2026-01-27T04:06:30.0531659Z Build Date: 2026-01-15T22:32:41Z
+2026-01-27T04:06:30.0532312Z Worker ID: {b70d27da-9c9d-4485-98fc-2159fa2d40f3}
+2026-01-27T04:06:30.0533117Z Azure Region: centralus
+2026-01-27T04:06:30.0533672Z ##[endgroup]
+2026-01-27T04:06:30.0535069Z ##[group]Operating System
+2026-01-27T04:06:30.0535664Z Ubuntu
+2026-01-27T04:06:30.0536588Z 24.04.3
+2026-01-27T04:06:30.0537043Z LTS
+2026-01-27T04:06:30.0537537Z ##[endgroup]
+2026-01-27T04:06:30.0538135Z ##[group]Runner Image
+2026-01-27T04:06:30.0538681Z Image: ubuntu-24.04
+2026-01-27T04:06:30.0539187Z Version: 20260119.4.1
+2026-01-27T04:06:30.0540237Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260119.4/images/ubuntu/Ubuntu2404-Readme.md
+2026-01-27T04:06:30.0541882Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260119.4
+2026-01-27T04:06:30.0542897Z ##[endgroup]
+2026-01-27T04:06:30.0543982Z ##[group]GITHUB_TOKEN Permissions
+2026-01-27T04:06:30.0546362Z Contents: read
+2026-01-27T04:06:30.0546937Z Metadata: read
+2026-01-27T04:06:30.0547463Z Packages: read
+2026-01-27T04:06:30.0547986Z ##[endgroup]
+2026-01-27T04:06:30.0550004Z Secret source: Actions
+2026-01-27T04:06:30.0551073Z Prepare workflow directory
+2026-01-27T04:06:30.0954371Z Prepare all required actions
+2026-01-27T04:06:30.1009218Z Getting action download info
+2026-01-27T04:06:30.4569040Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-01-27T04:06:30.5794074Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-01-27T04:06:30.6798687Z Download action repository 'actions/cache@v4' (SHA:0057852bfaa89a56745cba8c7296529d2fc39830)
+2026-01-27T04:06:30.9004656Z Complete job name: Run backend Jest tests (18.x)

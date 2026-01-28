@@ -1,0 +1,23 @@
+﻿2026-01-27T04:06:33.1624211Z ##[group]Run actions/setup-node@v4
+2026-01-27T04:06:33.1624576Z with:
+2026-01-27T04:06:33.1624823Z   node-version: 20
+2026-01-27T04:06:33.1625059Z   cache: npm
+2026-01-27T04:06:33.1625286Z   always-auth: false
+2026-01-27T04:06:33.1625535Z   check-latest: false
+2026-01-27T04:06:33.1625942Z   token: ***
+2026-01-27T04:06:33.1626202Z ##[endgroup]
+2026-01-27T04:06:33.3918060Z Found in cache @ /opt/hostedtoolcache/node/20.20.0/x64
+2026-01-27T04:06:33.3925642Z ##[group]Environment details
+2026-01-27T04:06:35.6094461Z node: v20.20.0
+2026-01-27T04:06:35.6095311Z npm: 10.8.2
+2026-01-27T04:06:35.6096165Z yarn: 1.22.22
+2026-01-27T04:06:35.6097575Z ##[endgroup]
+2026-01-27T04:06:35.6126817Z [command]/opt/hostedtoolcache/node/20.20.0/x64/bin/npm config get cache
+2026-01-27T04:06:35.9071359Z /home/runner/.npm
+2026-01-27T04:06:36.2248718Z Cache hit for: node-cache-Linux-x64-npm-7eb8e3b05b78c38efce98504ae699bb971a8a62daab79278ffba35b8ac4ef951
+2026-01-27T04:06:37.5491222Z Received 4194304 of 111610796 (3.8%), 4.0 MBs/sec
+2026-01-27T04:06:38.4801409Z Received 111610796 of 111610796 (100.0%), 55.1 MBs/sec
+2026-01-27T04:06:38.4803095Z Cache Size: ~106 MB (111610796 B)
+2026-01-27T04:06:38.4835089Z [command]/usr/bin/tar -xf /home/runner/work/_temp/1f17c410-fecc-4ea4-b4e2-8816a7c1a4f7/cache.tzst -P -C /home/runner/work/xanuicam/xanuicam --use-compress-program unzstd
+2026-01-27T04:06:39.0919531Z Cache restored successfully
+2026-01-27T04:06:39.1149148Z Cache restored from key: node-cache-Linux-x64-npm-7eb8e3b05b78c38efce98504ae699bb971a8a62daab79278ffba35b8ac4ef951

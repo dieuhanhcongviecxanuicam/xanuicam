@@ -1,0 +1,105 @@
+{
+  "total_count": 1,
+  "jobs": [
+    {
+      "id": 61557061051,
+      "run_id": 21384118464,
+      "workflow_name": "npm audit",
+      "head_branch": "fix/ci-deploy-tests",
+      "run_url": "https://api.github.com/repos/dieuhanhcongviecxanuicam/xanuicam/actions/runs/21384118464",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOQ0J2hs8AAAAOVRY1uw",
+      "head_sha": "21ff9c89a95df8dbe177abb337f606b5fe7b852f",
+      "url": "https://api.github.com/repos/dieuhanhcongviecxanuicam/xanuicam/actions/jobs/61557061051",
+      "html_url": "https://github.com/dieuhanhcongviecxanuicam/xanuicam/actions/runs/21384118464/job/61557061051",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-01-27T04:06:25Z",
+      "started_at": "2026-01-27T04:06:28Z",
+      "completed_at": "2026-01-27T04:06:54Z",
+      "name": "audit",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-01-27T04:06:29Z",
+          "completed_at": "2026-01-27T04:06:30Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-01-27T04:06:30Z",
+          "completed_at": "2026-01-27T04:06:33Z"
+        },
+        {
+          "name": "Setup Node.js",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-01-27T04:06:33Z",
+          "completed_at": "2026-01-27T04:06:39Z"
+        },
+        {
+          "name": "Install dependencies",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 4,
+          "started_at": "2026-01-27T04:06:39Z",
+          "completed_at": "2026-01-27T04:06:51Z"
+        },
+        {
+          "name": "Run npm audit (backend)",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 5,
+          "started_at": "2026-01-27T04:06:51Z",
+          "completed_at": "2026-01-27T04:06:51Z"
+        },
+        {
+          "name": "Run npm audit (frontend)",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 6,
+          "started_at": "2026-01-27T04:06:51Z",
+          "completed_at": "2026-01-27T04:06:51Z"
+        },
+        {
+          "name": "Post Setup Node.js",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 11,
+          "started_at": "2026-01-27T04:06:51Z",
+          "completed_at": "2026-01-27T04:06:51Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-01-27T04:06:51Z",
+          "completed_at": "2026-01-27T04:06:52Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-01-27T04:06:52Z",
+          "completed_at": "2026-01-27T04:06:52Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/dieuhanhcongviecxanuicam/xanuicam/check-runs/61557061051",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000000903,
+      "runner_name": "GitHub Actions 1000000903",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    }
+  ]
+}

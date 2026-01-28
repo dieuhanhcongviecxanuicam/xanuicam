@@ -1,0 +1,111 @@
+﻿2026-01-27T04:06:53.5151314Z ##[group]Run npm --prefix backend test --silent -- --runInBand
+2026-01-27T04:06:53.5151788Z [36;1mnpm --prefix backend test --silent -- --runInBand[0m
+2026-01-27T04:06:53.5184056Z shell: /usr/bin/bash -e {0}
+2026-01-27T04:06:53.5184294Z env:
+2026-01-27T04:06:53.5184457Z   NODE_ENV: test
+2026-01-27T04:06:53.5184643Z ##[endgroup]
+2026-01-27T04:06:55.6737529Z FAIL tests/integration/taskCancel.integration.test.js
+2026-01-27T04:06:55.7043693Z   ● Console
+2026-01-27T04:06:55.7044508Z 
+2026-01-27T04:06:55.7044838Z     console.warn
+2026-01-27T04:06:55.7045915Z       JWT_SECRET not set — generating temporary runtime secret (not for production).
+2026-01-27T04:06:55.7046492Z 
+2026-01-27T04:06:55.7047366Z     [0m [90m 20 |[39m [90m// Ensure critical secrets exist at runtime; if missing, generate temporary values[39m
+2026-01-27T04:06:55.7048739Z      [90m 21 |[39m [36mif[39m ([33m![39mprocess[33m.[39menv[33m.[39m[33mJWT_SECRET[39m) {
+2026-01-27T04:06:55.7050501Z     [31m[1m>[22m[39m[90m 22 |[39m   console[33m.[39mwarn([32m'JWT_SECRET not set — generating temporary runtime secret (not for production).'[39m)[33m;[39m
+2026-01-27T04:06:55.7051935Z      [90m    |[39m           [31m[1m^[22m[39m
+2026-01-27T04:06:55.7053481Z      [90m 23 |[39m   process[33m.[39menv[33m.[39m[33mJWT_SECRET[39m [33m=[39m crypto[33m.[39mrandomBytes([35m32[39m)[33m.[39mtoString([32m'hex'[39m)[33m;[39m
+2026-01-27T04:06:55.7054658Z      [90m 24 |[39m }
+2026-01-27T04:06:55.7055576Z      [90m 25 |[39m [36mif[39m ([33m![39mprocess[33m.[39menv[33m.[39m[33mAUDIT_LOG_KEY[39m) {[0m
+2026-01-27T04:06:55.7056388Z 
+2026-01-27T04:06:55.7056616Z       at Object.warn (server.js:22:11)
+2026-01-27T04:06:55.7057369Z       at Object.require (tests/integration/taskCancel.integration.test.js:65:20)
+2026-01-27T04:06:55.7057907Z 
+2026-01-27T04:06:55.7058066Z     console.warn
+2026-01-27T04:06:55.7058906Z       AUDIT_LOG_KEY not set — generating temporary 32-byte key (not for production).
+2026-01-27T04:06:55.7059476Z 
+2026-01-27T04:06:55.7059697Z     [0m [90m 24 |[39m }
+2026-01-27T04:06:55.7060643Z      [90m 25 |[39m [36mif[39m ([33m![39mprocess[33m.[39menv[33m.[39m[33mAUDIT_LOG_KEY[39m) {
+2026-01-27T04:06:55.7062456Z     [31m[1m>[22m[39m[90m 26 |[39m   console[33m.[39mwarn([32m'AUDIT_LOG_KEY not set — generating temporary 32-byte key (not for production).'[39m)[33m;[39m
+2026-01-27T04:06:55.7063891Z      [90m    |[39m           [31m[1m^[22m[39m
+2026-01-27T04:06:55.7065548Z      [90m 27 |[39m   process[33m.[39menv[33m.[39m[33mAUDIT_LOG_KEY[39m [33m=[39m crypto[33m.[39mrandomBytes([35m32[39m)[33m.[39mtoString([32m'base64'[39m)[33m;[39m
+2026-01-27T04:06:55.7067047Z      [90m 28 |[39m }
+2026-01-27T04:06:55.7067494Z      [90m 29 |[39m[0m
+2026-01-27T04:06:55.7067749Z 
+2026-01-27T04:06:55.7067961Z       at Object.warn (server.js:26:11)
+2026-01-27T04:06:55.7068716Z       at Object.require (tests/integration/taskCancel.integration.test.js:65:20)
+2026-01-27T04:06:55.7069575Z 
+2026-01-27T04:06:55.7069757Z     console.log
+2026-01-27T04:06:55.7070458Z       Not serving frontend build (NODE_ENV != production and SERVE_FRONTEND != true).
+2026-01-27T04:06:55.7071047Z 
+2026-01-27T04:06:55.7071278Z       at Object.log (server.js:465:13)
+2026-01-27T04:06:55.7071575Z 
+2026-01-27T04:06:55.7072295Z   ● PATCH /api/tasks/:id/status integration › creator or edit_delete_task can cancel a task
+2026-01-27T04:06:55.7073299Z 
+2026-01-27T04:06:55.7073519Z     expected 200 "OK", got 403 "Forbidden"
+2026-01-27T04:06:55.7073838Z 
+2026-01-27T04:06:55.7074367Z     [0m [90m 89 |[39m       [33m.[39mpatch([32m`/api/tasks/${id}/status`[39m)
+2026-01-27T04:06:55.7076290Z      [90m 90 |[39m       [33m.[39msend({ status[33m:[39m [32m'Đã hủy'[39m[33m,[39m details[33m:[39m [32m'cancel from integration test'[39m })
+2026-01-27T04:06:55.7077695Z     [31m[1m>[22m[39m[90m 91 |[39m       [33m.[39mexpect([35m200[39m)[33m;[39m
+2026-01-27T04:06:55.7078524Z      [90m    |[39m        [31m[1m^[22m[39m
+2026-01-27T04:06:55.7079437Z      [90m 92 |[39m
+2026-01-27T04:06:55.7080675Z      [90m 93 |[39m     expect(patchRes[33m.[39mbody)[33m.[39mtoHaveProperty([32m'status'[39m[33m,[39m [32m'Đã hủy'[39m)[33m;[39m
+2026-01-27T04:06:55.7081818Z      [90m 94 |[39m   })[33m;[39m[0m
+2026-01-27T04:06:55.7082125Z 
+2026-01-27T04:06:55.7082599Z       at Object.expect (tests/integration/taskCancel.integration.test.js:91:8)
+2026-01-27T04:06:55.7083290Z       ----
+2026-01-27T04:06:55.7083871Z       at Test._assertStatus (node_modules/supertest/lib/test.js:252:14)
+2026-01-27T04:06:55.7084587Z       at node_modules/supertest/lib/test.js:308:13
+2026-01-27T04:06:55.7085345Z       at Test._assertFunction (node_modules/supertest/lib/test.js:285:13)
+2026-01-27T04:06:55.7086382Z       at Test.assert (node_modules/supertest/lib/test.js:164:23)
+2026-01-27T04:06:55.7087187Z       at Server.localAssert (node_modules/supertest/lib/test.js:120:14)
+2026-01-27T04:06:55.7087666Z 
+2026-01-27T04:06:57.7274262Z PASS tests/export.integration.test.js
+2026-01-27T04:06:57.7443388Z   ● Console
+2026-01-27T04:06:57.7443661Z 
+2026-01-27T04:06:57.7443811Z     console.warn
+2026-01-27T04:06:57.7444718Z       JWT_SECRET not set — generating temporary runtime secret (not for production).
+2026-01-27T04:06:57.7445314Z 
+2026-01-27T04:06:57.7446396Z     [0m [90m 20 |[39m [90m// Ensure critical secrets exist at runtime; if missing, generate temporary values[39m
+2026-01-27T04:06:57.7447822Z      [90m 21 |[39m [36mif[39m ([33m![39mprocess[33m.[39menv[33m.[39m[33mJWT_SECRET[39m) {
+2026-01-27T04:06:57.7449586Z     [31m[1m>[22m[39m[90m 22 |[39m   console[33m.[39mwarn([32m'JWT_SECRET not set — generating temporary runtime secret (not for production).'[39m)[33m;[39m
+2026-01-27T04:06:57.7450919Z      [90m    |[39m           [31m[1m^[22m[39m
+2026-01-27T04:06:57.7452494Z      [90m 23 |[39m   process[33m.[39menv[33m.[39m[33mJWT_SECRET[39m [33m=[39m crypto[33m.[39mrandomBytes([35m32[39m)[33m.[39mtoString([32m'hex'[39m)[33m;[39m
+2026-01-27T04:06:57.7453711Z      [90m 24 |[39m }
+2026-01-27T04:06:57.7454593Z      [90m 25 |[39m [36mif[39m ([33m![39mprocess[33m.[39menv[33m.[39m[33mAUDIT_LOG_KEY[39m) {[0m
+2026-01-27T04:06:57.7455221Z 
+2026-01-27T04:06:57.7455436Z       at Object.warn (server.js:22:11)
+2026-01-27T04:06:57.7456290Z       at Object.require (tests/export.integration.test.js:23:20)
+2026-01-27T04:06:57.7456736Z 
+2026-01-27T04:06:57.7456883Z     console.warn
+2026-01-27T04:06:57.7457671Z       AUDIT_LOG_KEY not set — generating temporary 32-byte key (not for production).
+2026-01-27T04:06:57.7458236Z 
+2026-01-27T04:06:57.7458452Z     [0m [90m 24 |[39m }
+2026-01-27T04:06:57.7459216Z      [90m 25 |[39m [36mif[39m ([33m![39mprocess[33m.[39menv[33m.[39m[33mAUDIT_LOG_KEY[39m) {
+2026-01-27T04:06:57.7460922Z     [31m[1m>[22m[39m[90m 26 |[39m   console[33m.[39mwarn([32m'AUDIT_LOG_KEY not set — generating temporary 32-byte key (not for production).'[39m)[33m;[39m
+2026-01-27T04:06:57.7462269Z      [90m    |[39m           [31m[1m^[22m[39m
+2026-01-27T04:06:57.7463953Z      [90m 27 |[39m   process[33m.[39menv[33m.[39m[33mAUDIT_LOG_KEY[39m [33m=[39m crypto[33m.[39mrandomBytes([35m32[39m)[33m.[39mtoString([32m'base64'[39m)[33m;[39m
+2026-01-27T04:06:57.7465167Z      [90m 28 |[39m }
+2026-01-27T04:06:57.7465582Z      [90m 29 |[39m[0m
+2026-01-27T04:06:57.7466479Z 
+2026-01-27T04:06:57.7466718Z       at Object.warn (server.js:26:11)
+2026-01-27T04:06:57.7467391Z       at Object.require (tests/export.integration.test.js:23:20)
+2026-01-27T04:06:57.7467848Z 
+2026-01-27T04:06:57.7467988Z     console.log
+2026-01-27T04:06:57.7469064Z       Not serving frontend build (NODE_ENV != production and SERVE_FRONTEND != true).
+2026-01-27T04:06:57.7477629Z 
+2026-01-27T04:06:57.7478078Z       at Object.log (server.js:465:13)
+2026-01-27T04:06:57.7479264Z 
+2026-01-27T04:06:57.7479440Z     console.log
+2026-01-27T04:06:57.7479999Z       [exportConfigs] PDF export: rows=2 generated_bytes=2194
+2026-01-27T04:06:57.7480861Z 
+2026-01-27T04:06:57.7481552Z       at PassThrough.log (src/controllers/computerConfigsController.js:284:21)
+2026-01-27T04:06:57.7482126Z 
+2026-01-27T04:06:57.7908179Z PASS tests/userUnlock.test.js
+2026-01-27T04:06:57.7920492Z 
+2026-01-27T04:06:57.7929188Z Test Suites: 1 failed, 2 passed, 3 total
+2026-01-27T04:06:57.7938848Z Tests:       1 failed, 2 passed, 3 total
+2026-01-27T04:06:57.7939192Z Snapshots:   0 total
+2026-01-27T04:06:57.7939419Z Time:        3.726 s
+2026-01-27T04:06:57.7939630Z Ran all test suites.
+2026-01-27T04:06:57.9296584Z ##[error]Process completed with exit code 1.

@@ -1,0 +1,172 @@
+﻿2026-01-27T04:06:39.1328249Z ##[group]Run set -e
+2026-01-27T04:06:39.1328564Z [36;1mset -e[0m
+2026-01-27T04:06:39.1328760Z [36;1mcd backend[0m
+2026-01-27T04:06:39.1328997Z [36;1mnpm ci || npm install --no-audit[0m
+2026-01-27T04:06:39.1329290Z [36;1mcd ../frontend/frontend[0m
+2026-01-27T04:06:39.1329555Z [36;1mnpm ci || npm install --no-audit[0m
+2026-01-27T04:06:39.1416042Z shell: /usr/bin/bash -e {0}
+2026-01-27T04:06:39.1416317Z ##[endgroup]
+2026-01-27T04:06:42.7440444Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+2026-01-27T04:06:42.8136523Z npm warn deprecated rimraf@2.7.1: Rimraf versions prior to v4 are no longer supported
+2026-01-27T04:06:42.8395619Z npm warn deprecated supertest@6.3.3: Please upgrade to supertest v7.1.3+, see release notes at https://github.com/forwardemail/supertest/releases/tag/v7.1.3 - maintenance is supported by Forward Email @ https://forwardemail.net
+2026-01-27T04:06:42.8512437Z npm warn deprecated lodash.isequal@4.5.0: This package is deprecated. Use require('node:util').isDeepStrictEqual instead.
+2026-01-27T04:06:42.9349366Z npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+2026-01-27T04:06:43.1497405Z npm warn deprecated fstream@1.0.12: This package is no longer supported.
+2026-01-27T04:06:43.2988856Z npm warn deprecated superagent@8.1.2: Please upgrade to superagent v10.2.2+, see release notes at https://github.com/forwardemail/superagent/releases/tag/v10.2.2 - maintenance is supported by Forward Email @ https://forwardemail.net
+2026-01-27T04:06:47.8460280Z 
+2026-01-27T04:06:47.8473062Z > backend@2.0.0 postinstall
+2026-01-27T04:06:47.8477622Z > node scripts/postinstall-deploy.js
+2026-01-27T04:06:47.8493243Z 
+2026-01-27T04:06:48.0707730Z Running backend postinstall deploy checks...
+2026-01-27T04:06:48.0721239Z exceljs is installed.
+2026-01-27T04:06:48.0721884Z NODE_ENV != production, skipping pm2 restart.
+2026-01-27T04:06:48.0889911Z 
+2026-01-27T04:06:48.0890808Z added 569 packages, and audited 570 packages in 9s
+2026-01-27T04:06:48.0891611Z 
+2026-01-27T04:06:48.0894005Z 72 packages are looking for funding
+2026-01-27T04:06:48.0895356Z   run `npm fund` for details
+2026-01-27T04:06:48.0898782Z 
+2026-01-27T04:06:48.0901388Z found 0 vulnerabilities
+2026-01-27T04:06:49.6153806Z npm warn ERESOLVE overriding peer dependency
+2026-01-27T04:06:49.6155150Z npm warn While resolving: @react-leaflet/core@3.0.0
+2026-01-27T04:06:49.6155882Z npm warn Found: react@18.3.1
+2026-01-27T04:06:49.6156431Z npm warn node_modules/react
+2026-01-27T04:06:49.6157085Z npm warn   react@"^18.2.0" from the root project
+2026-01-27T04:06:49.6157988Z npm warn   19 more (@floating-ui/react, @floating-ui/react-dom, ...)
+2026-01-27T04:06:49.6158681Z npm warn
+2026-01-27T04:06:49.6159416Z npm warn Could not resolve dependency:
+2026-01-27T04:06:49.6163278Z npm warn peer react@"^19.0.0" from @react-leaflet/core@3.0.0
+2026-01-27T04:06:49.6164207Z npm warn node_modules/@react-leaflet/core
+2026-01-27T04:06:49.6165349Z npm warn   @react-leaflet/core@"^3.0.0" from react-leaflet@5.0.0
+2026-01-27T04:06:49.6166260Z npm warn   node_modules/react-leaflet
+2026-01-27T04:06:49.6166927Z npm warn
+2026-01-27T04:06:49.6167574Z npm warn Conflicting peer dependency: react@19.2.4
+2026-01-27T04:06:49.6168186Z npm warn node_modules/react
+2026-01-27T04:06:49.6168867Z npm warn   peer react@"^19.0.0" from @react-leaflet/core@3.0.0
+2026-01-27T04:06:49.6169555Z npm warn   node_modules/@react-leaflet/core
+2026-01-27T04:06:49.6170327Z npm warn     @react-leaflet/core@"^3.0.0" from react-leaflet@5.0.0
+2026-01-27T04:06:49.6171116Z npm warn     node_modules/react-leaflet
+2026-01-27T04:06:49.6403415Z npm warn ERESOLVE overriding peer dependency
+2026-01-27T04:06:49.6404672Z npm warn While resolving: @react-leaflet/core@3.0.0
+2026-01-27T04:06:49.6405434Z npm warn Found: react-dom@18.3.1
+2026-01-27T04:06:49.6405994Z npm warn node_modules/react-dom
+2026-01-27T04:06:49.6437763Z npm warn   react-dom@"^18.2.0" from the root project
+2026-01-27T04:06:49.6438862Z npm warn   11 more (@floating-ui/react, @floating-ui/react-dom, ...)
+2026-01-27T04:06:49.6439638Z npm warn
+2026-01-27T04:06:49.6440193Z npm warn Could not resolve dependency:
+2026-01-27T04:06:49.6440914Z npm warn peer react-dom@"^19.0.0" from @react-leaflet/core@3.0.0
+2026-01-27T04:06:49.6450061Z npm warn node_modules/@react-leaflet/core
+2026-01-27T04:06:49.6450882Z npm warn   @react-leaflet/core@"^3.0.0" from react-leaflet@5.0.0
+2026-01-27T04:06:49.6451562Z npm warn   node_modules/react-leaflet
+2026-01-27T04:06:49.6451972Z npm warn
+2026-01-27T04:06:49.6452470Z npm warn Conflicting peer dependency: react-dom@19.2.4
+2026-01-27T04:06:49.6453491Z npm warn node_modules/react-dom
+2026-01-27T04:06:49.6454229Z npm warn   peer react-dom@"^19.0.0" from @react-leaflet/core@3.0.0
+2026-01-27T04:06:49.6454937Z npm warn   node_modules/@react-leaflet/core
+2026-01-27T04:06:49.6455649Z npm warn     @react-leaflet/core@"^3.0.0" from react-leaflet@5.0.0
+2026-01-27T04:06:49.6456338Z npm warn     node_modules/react-leaflet
+2026-01-27T04:06:49.7763562Z npm error code ERESOLVE
+2026-01-27T04:06:49.7766142Z npm error ERESOLVE could not resolve
+2026-01-27T04:06:49.7768574Z npm error
+2026-01-27T04:06:49.7771260Z npm error While resolving: react-leaflet@5.0.0
+2026-01-27T04:06:49.7773039Z npm error Found: react@18.3.1
+2026-01-27T04:06:49.7774513Z npm error node_modules/react
+2026-01-27T04:06:49.7776077Z npm error   react@"^18.2.0" from the root project
+2026-01-27T04:06:49.7777856Z npm error   peer react@">=16.8.0" from @floating-ui/react@0.26.28
+2026-01-27T04:06:49.7779612Z npm error   node_modules/@floating-ui/react
+2026-01-27T04:06:49.7781381Z npm error     @floating-ui/react@"^0.26.16" from @headlessui/react@2.2.9
+2026-01-27T04:06:49.7783486Z npm error     node_modules/@headlessui/react
+2026-01-27T04:06:49.7785858Z npm error       @headlessui/react@"^2.2.7" from the root project
+2026-01-27T04:06:49.7787257Z npm error   18 more (@floating-ui/react-dom, @headlessui/react, ...)
+2026-01-27T04:06:49.7788345Z npm error
+2026-01-27T04:06:49.7788915Z npm error Could not resolve dependency:
+2026-01-27T04:06:49.7789578Z npm error peer react@"^19.0.0" from react-leaflet@5.0.0
+2026-01-27T04:06:49.7790183Z npm error node_modules/react-leaflet
+2026-01-27T04:06:49.7790814Z npm error   react-leaflet@"^5.0.0" from the root project
+2026-01-27T04:06:49.7791320Z npm error
+2026-01-27T04:06:49.7791855Z npm error Conflicting peer dependency: react@19.2.4
+2026-01-27T04:06:49.7792465Z npm error node_modules/react
+2026-01-27T04:06:49.7793262Z npm error   peer react@"^19.0.0" from react-leaflet@5.0.0
+2026-01-27T04:06:49.7793904Z npm error   node_modules/react-leaflet
+2026-01-27T04:06:49.7794551Z npm error     react-leaflet@"^5.0.0" from the root project
+2026-01-27T04:06:49.7795058Z npm error
+2026-01-27T04:06:49.7795558Z npm error Fix the upstream dependency conflict, or retry
+2026-01-27T04:06:49.7796325Z npm error this command with --force or --legacy-peer-deps
+2026-01-27T04:06:49.7797250Z npm error to accept an incorrect (and potentially broken) dependency resolution.
+2026-01-27T04:06:49.7797922Z npm error
+2026-01-27T04:06:49.7798194Z npm error
+2026-01-27T04:06:49.7799502Z npm error For a full report see:
+2026-01-27T04:06:49.7813711Z npm error /home/runner/.npm/_logs/2026-01-27T04_06_48_179Z-eresolve-report.txt
+2026-01-27T04:06:49.7815321Z npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-01-27T04_06_48_179Z-debug-0.log
+2026-01-27T04:06:51.7255174Z npm warn ERESOLVE overriding peer dependency
+2026-01-27T04:06:51.7267458Z npm warn While resolving: @react-leaflet/core@3.0.0
+2026-01-27T04:06:51.7268294Z npm warn Found: react@18.3.1
+2026-01-27T04:06:51.7268985Z npm warn node_modules/react
+2026-01-27T04:06:51.7269694Z npm warn   react@"^18.2.0" from the root project
+2026-01-27T04:06:51.7270684Z npm warn   19 more (@floating-ui/react, @floating-ui/react-dom, ...)
+2026-01-27T04:06:51.7284147Z npm warn
+2026-01-27T04:06:51.7285152Z npm warn Could not resolve dependency:
+2026-01-27T04:06:51.7286640Z npm warn peer react@"^19.0.0" from @react-leaflet/core@3.0.0
+2026-01-27T04:06:51.7287517Z npm warn node_modules/@react-leaflet/core
+2026-01-27T04:06:51.7288463Z npm warn   @react-leaflet/core@"^3.0.0" from react-leaflet@5.0.0
+2026-01-27T04:06:51.7289261Z npm warn   node_modules/react-leaflet
+2026-01-27T04:06:51.7289867Z npm warn
+2026-01-27T04:06:51.7290511Z npm warn Conflicting peer dependency: react@19.2.4
+2026-01-27T04:06:51.7291066Z npm warn node_modules/react
+2026-01-27T04:06:51.7291673Z npm warn   peer react@"^19.0.0" from @react-leaflet/core@3.0.0
+2026-01-27T04:06:51.7292334Z npm warn   node_modules/@react-leaflet/core
+2026-01-27T04:06:51.7293302Z npm warn     @react-leaflet/core@"^3.0.0" from react-leaflet@5.0.0
+2026-01-27T04:06:51.7293969Z npm warn     node_modules/react-leaflet
+2026-01-27T04:06:51.7331104Z npm warn ERESOLVE overriding peer dependency
+2026-01-27T04:06:51.7334309Z npm warn While resolving: @react-leaflet/core@3.0.0
+2026-01-27T04:06:51.7334954Z npm warn Found: react-dom@18.3.1
+2026-01-27T04:06:51.7335850Z npm warn node_modules/react-dom
+2026-01-27T04:06:51.7336425Z npm warn   react-dom@"^18.2.0" from the root project
+2026-01-27T04:06:51.7337192Z npm warn   11 more (@floating-ui/react, @floating-ui/react-dom, ...)
+2026-01-27T04:06:51.7337766Z npm warn
+2026-01-27T04:06:51.7338162Z npm warn Could not resolve dependency:
+2026-01-27T04:06:51.7338839Z npm warn peer react-dom@"^19.0.0" from @react-leaflet/core@3.0.0
+2026-01-27T04:06:51.7339450Z npm warn node_modules/@react-leaflet/core
+2026-01-27T04:06:51.7340094Z npm warn   @react-leaflet/core@"^3.0.0" from react-leaflet@5.0.0
+2026-01-27T04:06:51.7340698Z npm warn   node_modules/react-leaflet
+2026-01-27T04:06:51.7341090Z npm warn
+2026-01-27T04:06:51.7341538Z npm warn Conflicting peer dependency: react-dom@19.2.4
+2026-01-27T04:06:51.7342120Z npm warn node_modules/react-dom
+2026-01-27T04:06:51.7343282Z npm warn   peer react-dom@"^19.0.0" from @react-leaflet/core@3.0.0
+2026-01-27T04:06:51.7343984Z npm warn   node_modules/@react-leaflet/core
+2026-01-27T04:06:51.7344712Z npm warn     @react-leaflet/core@"^3.0.0" from react-leaflet@5.0.0
+2026-01-27T04:06:51.7345366Z npm warn     node_modules/react-leaflet
+2026-01-27T04:06:51.7924092Z npm error code ERESOLVE
+2026-01-27T04:06:51.7925471Z npm error ERESOLVE could not resolve
+2026-01-27T04:06:51.7925912Z npm error
+2026-01-27T04:06:51.7926413Z npm error While resolving: react-leaflet@5.0.0
+2026-01-27T04:06:51.7926986Z npm error Found: react@18.3.1
+2026-01-27T04:06:51.7927468Z npm error node_modules/react
+2026-01-27T04:06:51.7928044Z npm error   react@"^18.2.0" from the root project
+2026-01-27T04:06:51.7928859Z npm error   peer react@">=16.8.0" from @floating-ui/react@0.26.28
+2026-01-27T04:06:51.7929686Z npm error   node_modules/@floating-ui/react
+2026-01-27T04:06:51.7930532Z npm error     @floating-ui/react@"^0.26.16" from @headlessui/react@2.2.9
+2026-01-27T04:06:51.7931398Z npm error     node_modules/@headlessui/react
+2026-01-27T04:06:51.7932188Z npm error       @headlessui/react@"^2.2.7" from the root project
+2026-01-27T04:06:51.7939875Z npm error   18 more (@floating-ui/react-dom, @headlessui/react, ...)
+2026-01-27T04:06:51.7940475Z npm error
+2026-01-27T04:06:51.7940938Z npm error Could not resolve dependency:
+2026-01-27T04:06:51.7941506Z npm error peer react@"^19.0.0" from react-leaflet@5.0.0
+2026-01-27T04:06:51.7942053Z npm error node_modules/react-leaflet
+2026-01-27T04:06:51.7942832Z npm error   react-leaflet@"^5.0.0" from the root project
+2026-01-27T04:06:51.7943312Z npm error
+2026-01-27T04:06:51.7943776Z npm error Conflicting peer dependency: react@19.2.4
+2026-01-27T04:06:51.7944235Z npm error node_modules/react
+2026-01-27T04:06:51.7944800Z npm error   peer react@"^19.0.0" from react-leaflet@5.0.0
+2026-01-27T04:06:51.7945361Z npm error   node_modules/react-leaflet
+2026-01-27T04:06:51.7945932Z npm error     react-leaflet@"^5.0.0" from the root project
+2026-01-27T04:06:51.7946407Z npm error
+2026-01-27T04:06:51.7946899Z npm error Fix the upstream dependency conflict, or retry
+2026-01-27T04:06:51.7947864Z npm error this command with --force or --legacy-peer-deps
+2026-01-27T04:06:51.7948830Z npm error to accept an incorrect (and potentially broken) dependency resolution.
+2026-01-27T04:06:51.7949491Z npm error
+2026-01-27T04:06:51.7949772Z npm error
+2026-01-27T04:06:51.7950146Z npm error For a full report see:
+2026-01-27T04:06:51.7950905Z npm error /home/runner/.npm/_logs/2026-01-27T04_06_49_883Z-eresolve-report.txt
+2026-01-27T04:06:51.7952144Z npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-01-27T04_06_49_883Z-debug-0.log
+2026-01-27T04:06:51.8084957Z ##[error]Process completed with exit code 1.

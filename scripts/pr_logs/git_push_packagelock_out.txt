@@ -1,0 +1,6 @@
+remote: 
+remote: GitHub found 4 vulnerabilities on dieuhanhcongviecxanuicam/xanuicam's default branch (2 high, 2 moderate). To find out more, visit:        
+remote:      https://github.com/dieuhanhcongviecxanuicam/xanuicam/security/dependabot        
+remote: 
+To github.com:dieuhanhcongviecxanuicam/xanuicam.git
+   76bea13..dd9dfc9  HEAD -> fix/lodash-4.17.23

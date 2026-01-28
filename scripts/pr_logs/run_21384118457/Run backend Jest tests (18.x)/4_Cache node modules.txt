@@ -1,0 +1,12 @@
+﻿2026-01-27T04:06:37.9863891Z ##[group]Run actions/cache@v4
+2026-01-27T04:06:37.9864317Z with:
+2026-01-27T04:06:37.9864608Z   path: backend/node_modules
+2026-01-27T04:06:37.9864991Z   key: Linux-node-18.x-deps
+2026-01-27T04:06:37.9865386Z   restore-keys: Linux-node-18.x-
+
+2026-01-27T04:06:37.9866058Z   enableCrossOsArchive: false
+2026-01-27T04:06:37.9866462Z   fail-on-cache-miss: false
+2026-01-27T04:06:37.9866846Z   lookup-only: false
+2026-01-27T04:06:37.9867170Z   save-always: false
+2026-01-27T04:06:37.9867496Z ##[endgroup]
+2026-01-27T04:06:38.5535512Z Cache not found for input keys: Linux-node-18.x-deps, Linux-node-18.x-
