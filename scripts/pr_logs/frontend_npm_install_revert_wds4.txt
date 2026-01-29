@@ -1,0 +1,6 @@
+
+up to date in 17s
+
+312 packages are looking for funding
+  run `npm fund` for details
+install_exit:0
