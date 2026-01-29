@@ -1,0 +1,7 @@
+npm error code ENOTEMPTY
+npm error syscall rename
+npm error path /mnt/e/ubndxanuicam_deploy/frontend/node_modules/ajv
+npm error dest /mnt/e/ubndxanuicam_deploy/frontend/node_modules/.ajv-H81IIQ4z
+npm error errno -39
+npm error ENOTEMPTY: directory not empty, rename '/mnt/e/ubndxanuicam_deploy/frontend/node_modules/ajv' -> '/mnt/e/ubndxanuicam_deploy/frontend/node_modules/.ajv-H81IIQ4z'
+npm error A complete log of this run can be found in: /home/nguyentrangtinhsu/.npm/_logs/2026-01-28T19_28_57_532Z-debug-0.log

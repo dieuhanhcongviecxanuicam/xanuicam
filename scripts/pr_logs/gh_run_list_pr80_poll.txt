@@ -1,0 +1,35 @@
+2026-01-29T02:36:29+07:00
+completed	failure	chore: security updates (frontend pins/overrides)	Semgrep Scan	fix/lodash-4.17.23-clean	pull_request	21452701365	4s	2026-01-28T19:34:35Z
+completed	failure	chore: security updates (frontend pins/overrides)	CI - Build Frontend	fix/lodash-4.17.23-clean	pull_request	21452701003	3s	2026-01-28T19:34:35Z
+completed	failure	chore: security updates (frontend pins/overrides)	npm audit	fix/lodash-4.17.23-clean	pull_request	21452701378	3s	2026-01-28T19:34:35Z
+completed	failure	chore: security updates (frontend pins/overrides)	Secret scan (gitleaks)	fix/lodash-4.17.23-clean	pull_request	21452701346	4s	2026-01-28T19:34:35Z
+completed	failure	chore: security updates (frontend pins/overrides)	CI - Backend & Frontend Check	fix/lodash-4.17.23-clean	pull_request	21452701351	4s	2026-01-28T19:34:35Z
+completed	failure	chore: security updates (frontend pins/overrides)	E2E Dashboard Export	fix/lodash-4.17.23-clean	pull_request	21452700953	5s	2026-01-28T19:34:34Z
+2026-01-29T02:36:42+07:00
+completed	failure	chore: security updates (frontend pins/overrides)	Semgrep Scan	fix/lodash-4.17.23-clean	pull_request	21452701365	4s	2026-01-28T19:34:35Z
+completed	failure	chore: security updates (frontend pins/overrides)	CI - Build Frontend	fix/lodash-4.17.23-clean	pull_request	21452701003	3s	2026-01-28T19:34:35Z
+completed	failure	chore: security updates (frontend pins/overrides)	npm audit	fix/lodash-4.17.23-clean	pull_request	21452701378	3s	2026-01-28T19:34:35Z
+completed	failure	chore: security updates (frontend pins/overrides)	Secret scan (gitleaks)	fix/lodash-4.17.23-clean	pull_request	21452701346	4s	2026-01-28T19:34:35Z
+completed	failure	chore: security updates (frontend pins/overrides)	CI - Backend & Frontend Check	fix/lodash-4.17.23-clean	pull_request	21452701351	4s	2026-01-28T19:34:35Z
+completed	failure	chore: security updates (frontend pins/overrides)	E2E Dashboard Export	fix/lodash-4.17.23-clean	pull_request	21452700953	5s	2026-01-28T19:34:34Z
+2026-01-29T02:36:54+07:00
+completed	failure	chore: security updates (frontend pins/overrides)	Semgrep Scan	fix/lodash-4.17.23-clean	pull_request	21452701365	4s	2026-01-28T19:34:35Z
+completed	failure	chore: security updates (frontend pins/overrides)	CI - Build Frontend	fix/lodash-4.17.23-clean	pull_request	21452701003	3s	2026-01-28T19:34:35Z
+completed	failure	chore: security updates (frontend pins/overrides)	npm audit	fix/lodash-4.17.23-clean	pull_request	21452701378	3s	2026-01-28T19:34:35Z
+completed	failure	chore: security updates (frontend pins/overrides)	Secret scan (gitleaks)	fix/lodash-4.17.23-clean	pull_request	21452701346	4s	2026-01-28T19:34:35Z
+completed	failure	chore: security updates (frontend pins/overrides)	CI - Backend & Frontend Check	fix/lodash-4.17.23-clean	pull_request	21452701351	4s	2026-01-28T19:34:35Z
+completed	failure	chore: security updates (frontend pins/overrides)	E2E Dashboard Export	fix/lodash-4.17.23-clean	pull_request	21452700953	5s	2026-01-28T19:34:34Z
+2026-01-29T02:37:08+07:00
+completed	failure	chore: security updates (frontend pins/overrides)	Semgrep Scan	fix/lodash-4.17.23-clean	pull_request	21452701365	4s	2026-01-28T19:34:35Z
+completed	failure	chore: security updates (frontend pins/overrides)	CI - Build Frontend	fix/lodash-4.17.23-clean	pull_request	21452701003	3s	2026-01-28T19:34:35Z
+completed	failure	chore: security updates (frontend pins/overrides)	npm audit	fix/lodash-4.17.23-clean	pull_request	21452701378	3s	2026-01-28T19:34:35Z
+completed	failure	chore: security updates (frontend pins/overrides)	Secret scan (gitleaks)	fix/lodash-4.17.23-clean	pull_request	21452701346	4s	2026-01-28T19:34:35Z
+completed	failure	chore: security updates (frontend pins/overrides)	CI - Backend & Frontend Check	fix/lodash-4.17.23-clean	pull_request	21452701351	4s	2026-01-28T19:34:35Z
+completed	failure	chore: security updates (frontend pins/overrides)	E2E Dashboard Export	fix/lodash-4.17.23-clean	pull_request	21452700953	5s	2026-01-28T19:34:34Z
+2026-01-29T02:37:18+07:00
+completed	failure	chore: security updates (frontend pins/overrides)	Semgrep Scan	fix/lodash-4.17.23-clean	pull_request	21452701365	4s	2026-01-28T19:34:35Z
+completed	failure	chore: security updates (frontend pins/overrides)	CI - Build Frontend	fix/lodash-4.17.23-clean	pull_request	21452701003	3s	2026-01-28T19:34:35Z
+completed	failure	chore: security updates (frontend pins/overrides)	npm audit	fix/lodash-4.17.23-clean	pull_request	21452701378	3s	2026-01-28T19:34:35Z
+completed	failure	chore: security updates (frontend pins/overrides)	Secret scan (gitleaks)	fix/lodash-4.17.23-clean	pull_request	21452701346	4s	2026-01-28T19:34:35Z
+completed	failure	chore: security updates (frontend pins/overrides)	CI - Backend & Frontend Check	fix/lodash-4.17.23-clean	pull_request	21452701351	4s	2026-01-28T19:34:35Z
+completed	failure	chore: security updates (frontend pins/overrides)	E2E Dashboard Export	fix/lodash-4.17.23-clean	pull_request	21452700953	5s	2026-01-28T19:34:34Z
