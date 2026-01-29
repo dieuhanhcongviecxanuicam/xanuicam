@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Cancel Test UI</title>
+  </head>
+  <body>
+    <h3>Cancel Test UI</h3>
+    <button id="create">Create Task</button>
+    <button id="cancel" disabled>Cancel Task</button>
+    <pre id="out"></pre>
+
+    <script>
+      const out = (t) => { document.getElementById('out').textContent += t + '\n'; };
+      let lastId = null;
+      const API = 'http://localhost:5001/api';
+      // test token can be injected by Puppeteer into window.__TEST_TOKEN__
+
+      document.getElementById('create').addEventListener('click', async () => {
+        out('Creating...');
+        try {
+          const curToken = window.__TEST_TOKEN__ || '';
+          const res = await fetch(API + '/tasks', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', ...(curToken ? { Authorization: `Bearer ${curToken}` } : {}) },
+            body: JSON.stringify({ title: 'UI test task', description: 'from ui', assignee_id: 1, due_date: '2026-01-30', priority: 'Trung bình' })
+          });
+          const j = await res.json();
+          lastId = j.id;
+          out('Created id=' + lastId + ' status=' + (j.status || 'unknown'));
+          document.getElementById('cancel').disabled = false;
+        } catch (e) { out('Create error: ' + e.message); }
+      });
+
+      document.getElementById('cancel').addEventListener('click', async () => {
+        if (!lastId) return out('No id');
+        out('Canceling...');
+        try {
+          const curToken = window.__TEST_TOKEN__ || '';
+          const res = await fetch(API + `/tasks/${lastId}/status`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json', ...(curToken ? { Authorization: `Bearer ${curToken}` } : {}) },
+            body: JSON.stringify({ status: 'Đã hủy', details: 'Canceled from UI test' })
+          });
+          const j = await res.json();
+          out('Patch result: ' + JSON.stringify(j));
+        } catch (e) { out('Patch error: ' + e.message); }
+      });
+    </script>
+  </body>
+</html>

@@ -137,7 +137,9 @@ exports.updateTaskStatus = async (req, res) => {
 
         const canPerformAction = 
             (['Tiếp nhận', 'Đang thực hiện', 'Chờ duyệt'].includes(status) && isAssignee) ||
-            (['Yêu cầu làm lại', 'Hoàn thành'].includes(status) && (isCreator || canApprove));
+            (['Yêu cầu làm lại', 'Hoàn thành'].includes(status) && (isCreator || canApprove)) ||
+            // Allow cancel ('Đã hủy') if the requester is the creator or has edit/delete permission
+            (status === 'Đã hủy' && (isCreator || permissions.includes('edit_delete_task')));
 
         if (!canPerformAction) {
             await client.query('ROLLBACK');
