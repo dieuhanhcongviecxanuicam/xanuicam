@@ -23,7 +23,7 @@
     "lucide-react": "^0.543.0",
     "mammoth": "^1.4.23",
     "puppeteer": "^24.32.0",
-    "react": "^18.2.0",
+    "react": "^19.2.4",
     "react-chartjs-2": "^5.3.1",
     "react-dom": "^18.2.0",
     "react-leaflet": "^4.2.0",
