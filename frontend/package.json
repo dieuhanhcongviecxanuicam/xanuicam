@@ -68,7 +68,7 @@
     "jsdom-testing-mocks": "^1.16.0",
     "postcss": "^8.4.31",
     "tailwindcss": "^4.1.18",
-    "webpack-dev-server": "^5.2.3"
+    "webpack-dev-server": "^4.15.2"
   },
   "overrides": {
     
