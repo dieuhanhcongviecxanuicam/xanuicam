@@ -1,0 +1,8 @@
+Archive:  scripts/pr_logs/job_61785340153_logs.zip
+  End-of-central-directory signature not found.  Either this file is not
+  a zipfile, or it constitutes one disk of a multi-part archive.  In the
+  latter case the central directory and zipfile comment will be found on
+  the last disk(s) of this archive.
+note:  scripts/pr_logs/job_61785340153_logs.zip may be a plain executable, not an archive
+unzip:  cannot find zipfile directory in one of scripts/pr_logs/job_61785340153_logs.zip or
+        scripts/pr_logs/job_61785340153_logs.zip.zip, and cannot find scripts/pr_logs/job_61785340153_logs.zip.ZIP, period.
