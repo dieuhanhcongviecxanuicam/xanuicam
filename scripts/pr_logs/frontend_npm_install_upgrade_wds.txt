@@ -1,3 +1,0 @@
-npm error code EOVERRIDE
-npm error Override for webpack-dev-server@^5.2.3 conflicts with direct dependency
-npm error A complete log of this run can be found in: /home/nguyentrangtinhsu/.npm/_logs/2026-01-29T03_02_42_163Z-debug-0.log

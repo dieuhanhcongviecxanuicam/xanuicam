@@ -1,5 +1,0 @@
-[33mdad859f[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfix/cancel-permission-automated[m[33m)[m fix(task): allow creator or edit_delete_task to cancel tasks; add e2e artifacts and helpers
-[33m022d0f0[m[33m ([m[1;31morigin/fix/lodash-4.17.23-clean[m[33m, [m[1;32mfix/lodash-4.17.23-upgrade-wds[m[33m, [m[1;32mfix/lodash-4.17.23-clean[m[33m)[m chore(frontend): pin lodash 4.17.23, set webpack-dev-server@4.15.2, add overrides (xlsx >=0.19.3)
-[33m6740213[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m, [m[1;32mfix/lodash-4.17.23[m[33m)[m Merge pull request #76 from dieuhanhcongviecxanuicam/feature/npm-audit-fix-2026-01-27
-[33m67dae58[m[33m ([m[1;31morigin/feature/npm-audit-fix-2026-01-27[m[33m)[m MapPicker: add Google Maps provider support via @react-google-maps/api; add .env.example and Jest mock
-[33md54a359[m MapPicker: support REACT_APP_MAP_PROVIDER; add .env.example and Jest mock for Google Maps

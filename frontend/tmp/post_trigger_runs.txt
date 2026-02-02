@@ -1,0 +1,25 @@
+completed	success	Merge pull request #95 from dieuhanhcongviecxanuicam/ci/rebuild-trigg…	Secret scan (gitleaks)	main	push	21598756149	16s	2026-02-02T16:39:04Z
+in_progress		Merge pull request #95 from dieuhanhcongviecxanuicam/ci/rebuild-trigg…	Semgrep Scan	main	push	21598756137	28s	2026-02-02T16:39:04Z
+in_progress		Merge pull request #95 from dieuhanhcongviecxanuicam/ci/rebuild-trigg…	npm audit	main	push	21598756127	28s	2026-02-02T16:39:04Z
+in_progress		Merge pull request #95 from dieuhanhcongviecxanuicam/ci/rebuild-trigg…	E2E Dashboard Export	main	push	21598756112	28s	2026-02-02T16:39:04Z
+in_progress		Merge pull request #95 from dieuhanhcongviecxanuicam/ci/rebuild-trigg…	CI - Build Frontend	main	push	21598756104	28s	2026-02-02T16:39:04Z
+in_progress		Merge pull request #95 from dieuhanhcongviecxanuicam/ci/rebuild-trigg…	Deploy to Server via SSH	main	push	21598756102	28s	2026-02-02T16:39:04Z
+completed	failure	Merge pull request #95 from dieuhanhcongviecxanuicam/ci/rebuild-trigg…	Deploy to Production	main	push	21598756098	16s	2026-02-02T16:39:04Z
+in_progress		Merge pull request #95 from dieuhanhcongviecxanuicam/ci/rebuild-trigg…	CI - Backend & Frontend Check	main	push	21598756097	28s	2026-02-02T16:39:04Z
+completed	success	ci: trigger rebuild 2	Semgrep Scan	ci/rebuild-trigger-2	pull_request	21598748826	26s	2026-02-02T16:38:51Z
+completed	failure	ci: trigger rebuild 2	E2E Dashboard Export	ci/rebuild-trigger-2	pull_request	21598748789	37s	2026-02-02T16:38:51Z
+in_progress		ci: trigger rebuild 2	E2E Smoke	ci/rebuild-trigger-2	pull_request	21598748779	41s	2026-02-02T16:38:51Z
+in_progress		ci: trigger rebuild 2	npm audit	ci/rebuild-trigger-2	pull_request	21598748773	41s	2026-02-02T16:38:51Z
+completed	success	ci: trigger rebuild 2	Secret scan (gitleaks)	ci/rebuild-trigger-2	pull_request	21598748766	13s	2026-02-02T16:38:51Z
+in_progress		ci: trigger rebuild 2	CI - Backend & Frontend Check	ci/rebuild-trigger-2	pull_request	21598748761	41s	2026-02-02T16:38:51Z
+in_progress		ci: trigger rebuild 2	CI - Build Frontend	ci/rebuild-trigger-2	pull_request	21598748721	41s	2026-02-02T16:38:51Z
+completed	success	Merge pull request #94 from dieuhanhcongviecxanuicam/ci/rebuild-trigger	CI - Backend & Frontend Check	main	push	21598071772	2m4s	2026-02-02T16:19:32Z
+completed	success	Merge pull request #94 from dieuhanhcongviecxanuicam/ci/rebuild-trigger	Semgrep Scan	main	push	21598071765	20s	2026-02-02T16:19:32Z
+completed	success	Merge pull request #94 from dieuhanhcongviecxanuicam/ci/rebuild-trigger	npm audit	main	push	21598071753	1m17s	2026-02-02T16:19:32Z
+completed	success	Merge pull request #94 from dieuhanhcongviecxanuicam/ci/rebuild-trigger	Secret scan (gitleaks)	main	push	21598071749	10s	2026-02-02T16:19:32Z
+completed	success	ci: trigger rebuild	Secret scan (gitleaks)	ci/rebuild-trigger	pull_request	21598064477	9s	2026-02-02T16:19:20Z
+completed	success	ci: trigger rebuild	npm audit	ci/rebuild-trigger	pull_request	21598064435	1m11s	2026-02-02T16:19:20Z
+completed	success	ci: trigger rebuild	E2E Smoke	ci/rebuild-trigger	pull_request	21598064407	1m1s	2026-02-02T16:19:20Z
+completed	success	ci: trigger rebuild	CI - Backend & Frontend Check	ci/rebuild-trigger	pull_request	21598064367	2m4s	2026-02-02T16:19:20Z
+completed	success	ci: trigger rebuild	Semgrep Scan	ci/rebuild-trigger	pull_request	21598064320	21s	2026-02-02T16:19:20Z
+completed	success	Merge pull request #93 from dieuhanhcongviecxanuicam/ci/rebuild-frontend	Semgrep Scan	main	push	21597400286	22s	2026-02-02T16:01:41Z

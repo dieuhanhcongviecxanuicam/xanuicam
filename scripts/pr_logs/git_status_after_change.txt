@@ -1,4 +1,0 @@
-Everything up-to-date
-branch 'fix/lodash-4.17.23-clean' set up to track 'origin/fix/lodash-4.17.23-clean'.
-Everything up-to-date
-branch 'fix/lodash-4.17.23-clean' set up to track 'origin/fix/lodash-4.17.23-clean'.
