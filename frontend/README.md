@@ -26,4 +26,4 @@ Frontend cho ứng dụng Quản lý công việc, được xây dựng bằng R
 
 - **Chạy ở chế độ phát triển:**
   ```bash
-  npm start
+  npm startci-trigger-2
