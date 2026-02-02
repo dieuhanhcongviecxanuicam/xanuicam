@@ -1,3 +1,0 @@
-Đã kết nối thành công đến cơ sở dữ liệu PostgreSQL!
-Found user: admin id= 1 is_active= false failed_attempts= 8
-Updated: { id: 1, username: 'admin', is_active: true, failed_attempts: 0 }

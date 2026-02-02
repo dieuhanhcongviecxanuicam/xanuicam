@@ -1,0 +1,50 @@
+[
+  {
+    "route": "/",
+    "url": "http://localhost:5000/",
+    "ok": true,
+    "screenshot": "E:\\ubndxanuicam_internet\\frontend\\tmp\\screenshots\\root.png",
+    "console": [
+      {
+        "type": "verbose",
+        "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o"
+      }
+    ]
+  },
+  {
+    "route": "/tasks",
+    "url": "http://localhost:5000/tasks",
+    "ok": true,
+    "screenshot": "E:\\ubndxanuicam_internet\\frontend\\tmp\\screenshots\\_tasks.png",
+    "console": [
+      {
+        "type": "verbose",
+        "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o"
+      }
+    ]
+  },
+  {
+    "route": "/settings/profile",
+    "url": "http://localhost:5000/settings/profile",
+    "ok": true,
+    "screenshot": "E:\\ubndxanuicam_internet\\frontend\\tmp\\screenshots\\_settings_profile.png",
+    "console": [
+      {
+        "type": "verbose",
+        "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o"
+      }
+    ]
+  },
+  {
+    "route": "/audit-log",
+    "url": "http://localhost:5000/audit-log",
+    "ok": true,
+    "screenshot": "E:\\ubndxanuicam_internet\\frontend\\tmp\\screenshots\\_audit-log.png",
+    "console": [
+      {
+        "type": "verbose",
+        "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o"
+      }
+    ]
+  }
+]
