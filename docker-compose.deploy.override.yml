@@ -1,4 +1,0 @@
-services:
-  backend:
-    ports:
-      - "5001:5000"

@@ -1,0 +1,211 @@
+build	Set up job	﻿2026-02-02T16:39:10.9862573Z Current runner version: '2.331.0'
+build	Set up job	2026-02-02T16:39:10.9896936Z ##[group]Runner Image Provisioner
+build	Set up job	2026-02-02T16:39:10.9898114Z Hosted Compute Agent
+build	Set up job	2026-02-02T16:39:10.9898972Z Version: 20260123.484
+build	Set up job	2026-02-02T16:39:10.9899832Z Commit: 6bd6555ca37d84114959e1c76d2c01448ff61c5d
+build	Set up job	2026-02-02T16:39:10.9900803Z Build Date: 2026-01-23T19:41:17Z
+build	Set up job	2026-02-02T16:39:10.9901828Z Worker ID: {0ac7be73-124d-4f99-855f-4a7ebebd9179}
+build	Set up job	2026-02-02T16:39:10.9902827Z Azure Region: westus3
+build	Set up job	2026-02-02T16:39:10.9903545Z ##[endgroup]
+build	Set up job	2026-02-02T16:39:10.9906288Z ##[group]Operating System
+build	Set up job	2026-02-02T16:39:10.9907110Z Ubuntu
+build	Set up job	2026-02-02T16:39:10.9907773Z 24.04.3
+build	Set up job	2026-02-02T16:39:10.9908424Z LTS
+build	Set up job	2026-02-02T16:39:10.9909087Z ##[endgroup]
+build	Set up job	2026-02-02T16:39:10.9909740Z ##[group]Runner Image
+build	Set up job	2026-02-02T16:39:10.9910581Z Image: ubuntu-24.04
+build	Set up job	2026-02-02T16:39:10.9911346Z Version: 20260126.10.1
+build	Set up job	2026-02-02T16:39:10.9912822Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260126.10/images/ubuntu/Ubuntu2404-Readme.md
+build	Set up job	2026-02-02T16:39:10.9915652Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260126.10
+build	Set up job	2026-02-02T16:39:10.9917011Z ##[endgroup]
+build	Set up job	2026-02-02T16:39:10.9918722Z ##[group]GITHUB_TOKEN Permissions
+build	Set up job	2026-02-02T16:39:10.9921213Z Contents: read
+build	Set up job	2026-02-02T16:39:10.9921932Z Metadata: read
+build	Set up job	2026-02-02T16:39:10.9922803Z Packages: read
+build	Set up job	2026-02-02T16:39:10.9923458Z ##[endgroup]
+build	Set up job	2026-02-02T16:39:10.9926718Z Secret source: Actions
+build	Set up job	2026-02-02T16:39:10.9927805Z Prepare workflow directory
+build	Set up job	2026-02-02T16:39:11.0416224Z Prepare all required actions
+build	Set up job	2026-02-02T16:39:11.0535320Z Getting action download info
+build	Set up job	2026-02-02T16:39:11.5231075Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+build	Set up job	2026-02-02T16:39:11.6019289Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+build	Set up job	2026-02-02T16:39:11.6767012Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+build	Set up job	2026-02-02T16:39:11.8593361Z Complete job name: build
+build	Run actions/checkout@v4	﻿2026-02-02T16:39:11.9189623Z ##[group]Run actions/checkout@v4
+build	Run actions/checkout@v4	2026-02-02T16:39:11.9190461Z with:
+build	Run actions/checkout@v4	2026-02-02T16:39:11.9191015Z   repository: dieuhanhcongviecxanuicam/xanuicam
+build	Run actions/checkout@v4	2026-02-02T16:39:11.9191827Z   token: ***
+build	Run actions/checkout@v4	2026-02-02T16:39:11.9192232Z   ssh-strict: true
+build	Run actions/checkout@v4	2026-02-02T16:39:11.9192704Z   ssh-user: git
+build	Run actions/checkout@v4	2026-02-02T16:39:11.9193139Z   persist-credentials: true
+build	Run actions/checkout@v4	2026-02-02T16:39:11.9193580Z   clean: true
+build	Run actions/checkout@v4	2026-02-02T16:39:11.9194038Z   sparse-checkout-cone-mode: true
+build	Run actions/checkout@v4	2026-02-02T16:39:11.9194844Z   fetch-depth: 1
+build	Run actions/checkout@v4	2026-02-02T16:39:11.9195283Z   fetch-tags: false
+build	Run actions/checkout@v4	2026-02-02T16:39:11.9195706Z   show-progress: true
+build	Run actions/checkout@v4	2026-02-02T16:39:11.9196187Z   lfs: false
+build	Run actions/checkout@v4	2026-02-02T16:39:11.9196590Z   submodules: false
+build	Run actions/checkout@v4	2026-02-02T16:39:11.9197011Z   set-safe-directory: true
+build	Run actions/checkout@v4	2026-02-02T16:39:11.9197757Z ##[endgroup]
+build	Run actions/checkout@v4	2026-02-02T16:39:12.0324695Z Syncing repository: dieuhanhcongviecxanuicam/xanuicam
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1238733Z ##[group]Getting Git version info
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1239880Z Working directory is '/home/runner/work/xanuicam/xanuicam'
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1241216Z [command]/usr/bin/git version
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1241643Z git version 2.52.0
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1243001Z ##[endgroup]
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1247937Z Temporarily overriding HOME='/home/runner/work/_temp/56b1f724-65d1-452e-b2a4-341a85d18d4f' before making global git config changes
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1249418Z Adding repository directory to the temporary git global config as a safe directory
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1250352Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/xanuicam/xanuicam
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1252497Z Deleting the contents of '/home/runner/work/xanuicam/xanuicam'
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1254027Z ##[group]Initializing the repository
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1255169Z [command]/usr/bin/git init /home/runner/work/xanuicam/xanuicam
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1256349Z hint: Using 'master' as the name for the initial branch. This default branch name
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1257647Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1259152Z hint: to use in all of your new repositories, which will suppress this warning,
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1260105Z hint: call:
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1260795Z hint:
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1261459Z hint: 	git config --global init.defaultBranch <name>
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1262265Z hint:
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1263040Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1264258Z hint: 'development'. The just-created branch can be renamed via this command:
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1270444Z hint:
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1271077Z hint: 	git branch -m <name>
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1271729Z hint:
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1272625Z hint: Disable this message with "git config set advice.defaultBranchName false"
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1273983Z Initialized empty Git repository in /home/runner/work/xanuicam/xanuicam/.git/
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1276437Z [command]/usr/bin/git remote add origin https://github.com/dieuhanhcongviecxanuicam/xanuicam
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1278858Z ##[endgroup]
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1279821Z ##[group]Disabling automatic garbage collection
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1280726Z [command]/usr/bin/git config --local gc.auto 0
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1282535Z ##[endgroup]
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1283418Z ##[group]Setting up auth
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1284342Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1287497Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1291707Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1316126Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1498936Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1537736Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1723156Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1755127Z ##[endgroup]
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1757136Z ##[group]Fetching the repository
+build	Run actions/checkout@v4	2026-02-02T16:39:12.1765688Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +a3cdc57fd08c17980a90ad08cc30c90f11f0cfca:refs/remotes/origin/main
+build	Run actions/checkout@v4	2026-02-02T16:39:13.6598375Z From https://github.com/dieuhanhcongviecxanuicam/xanuicam
+build	Run actions/checkout@v4	2026-02-02T16:39:13.6600239Z  * [new ref]         a3cdc57fd08c17980a90ad08cc30c90f11f0cfca -> origin/main
+build	Run actions/checkout@v4	2026-02-02T16:39:13.6667811Z ##[endgroup]
+build	Run actions/checkout@v4	2026-02-02T16:39:13.6668995Z ##[group]Determining the checkout info
+build	Run actions/checkout@v4	2026-02-02T16:39:13.6670672Z ##[endgroup]
+build	Run actions/checkout@v4	2026-02-02T16:39:13.6671496Z [command]/usr/bin/git sparse-checkout disable
+build	Run actions/checkout@v4	2026-02-02T16:39:13.6706877Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+build	Run actions/checkout@v4	2026-02-02T16:39:13.6746192Z ##[group]Checking out the ref
+build	Run actions/checkout@v4	2026-02-02T16:39:13.6756844Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+build	Run actions/checkout@v4	2026-02-02T16:39:13.8911352Z Switched to a new branch 'main'
+build	Run actions/checkout@v4	2026-02-02T16:39:13.8913372Z branch 'main' set up to track 'origin/main'.
+build	Run actions/checkout@v4	2026-02-02T16:39:13.8930133Z ##[endgroup]
+build	Run actions/checkout@v4	2026-02-02T16:39:13.8963547Z [command]/usr/bin/git log -1 --format=%H
+build	Run actions/checkout@v4	2026-02-02T16:39:13.8985663Z a3cdc57fd08c17980a90ad08cc30c90f11f0cfca
+build	Use Node.js	﻿2026-02-02T16:39:13.9293495Z ##[group]Run actions/setup-node@v4
+build	Use Node.js	2026-02-02T16:39:13.9294776Z with:
+build	Use Node.js	2026-02-02T16:39:13.9295568Z   node-version: 20
+build	Use Node.js	2026-02-02T16:39:13.9296412Z   cache: npm
+build	Use Node.js	2026-02-02T16:39:13.9297215Z   always-auth: false
+build	Use Node.js	2026-02-02T16:39:13.9298131Z   check-latest: false
+build	Use Node.js	2026-02-02T16:39:13.9299350Z   token: ***
+build	Use Node.js	2026-02-02T16:39:13.9300158Z ##[endgroup]
+build	Use Node.js	2026-02-02T16:39:14.1177224Z Found in cache @ /opt/hostedtoolcache/node/20.20.0/x64
+build	Use Node.js	2026-02-02T16:39:14.1178822Z ##[group]Environment details
+build	Use Node.js	2026-02-02T16:39:14.5755840Z node: v20.20.0
+build	Use Node.js	2026-02-02T16:39:14.5757554Z npm: 10.8.2
+build	Use Node.js	2026-02-02T16:39:14.5757911Z yarn: 1.22.22
+build	Use Node.js	2026-02-02T16:39:14.5758956Z ##[endgroup]
+build	Use Node.js	2026-02-02T16:39:14.5780343Z [command]/opt/hostedtoolcache/node/20.20.0/x64/bin/npm config get cache
+build	Use Node.js	2026-02-02T16:39:14.7572063Z /home/runner/.npm
+build	Use Node.js	2026-02-02T16:39:15.0204307Z Cache hit for: node-cache-Linux-x64-npm-4b8e659421ee62271209edbbd73dd98f0c1d9cdadd5a76bfd4d80a169138c80b
+build	Use Node.js	2026-02-02T16:39:16.2925530Z Received 25165824 of 113589156 (22.2%), 24.0 MBs/sec
+build	Use Node.js	2026-02-02T16:39:16.9826549Z Received 113589156 of 113589156 (100.0%), 64.1 MBs/sec
+build	Use Node.js	2026-02-02T16:39:16.9828750Z Cache Size: ~108 MB (113589156 B)
+build	Use Node.js	2026-02-02T16:39:16.9867985Z [command]/usr/bin/tar -xf /home/runner/work/_temp/91dc851e-8470-40d4-9391-da7529a7f531/cache.tzst -P -C /home/runner/work/xanuicam/xanuicam --use-compress-program unzstd
+build	Use Node.js	2026-02-02T16:39:17.2937877Z Cache restored successfully
+build	Use Node.js	2026-02-02T16:39:17.3094138Z Cache restored from key: node-cache-Linux-x64-npm-4b8e659421ee62271209edbbd73dd98f0c1d9cdadd5a76bfd4d80a169138c80b
+build	Install dependencies (frontend)	﻿2026-02-02T16:39:17.3365589Z ##[group]Run if [ -f frontend/package.json ]; then
+build	Install dependencies (frontend)	2026-02-02T16:39:17.3366149Z [36;1mif [ -f frontend/package.json ]; then[0m
+build	Install dependencies (frontend)	2026-02-02T16:39:17.3366493Z [36;1m  if [ -f frontend/package-lock.json ]; then[0m
+build	Install dependencies (frontend)	2026-02-02T16:39:17.3366842Z [36;1m    npm ci --prefix frontend --legacy-peer-deps[0m
+build	Install dependencies (frontend)	2026-02-02T16:39:17.3367120Z [36;1m  else[0m
+build	Install dependencies (frontend)	2026-02-02T16:39:17.3367375Z [36;1m    npm install --prefix frontend --legacy-peer-deps[0m
+build	Install dependencies (frontend)	2026-02-02T16:39:17.3367663Z [36;1m  fi[0m
+build	Install dependencies (frontend)	2026-02-02T16:39:17.3367845Z [36;1melse[0m
+build	Install dependencies (frontend)	2026-02-02T16:39:17.3368061Z [36;1m  echo "No frontend/package.json, skipping"[0m
+build	Install dependencies (frontend)	2026-02-02T16:39:17.3368325Z [36;1mfi[0m
+build	Install dependencies (frontend)	2026-02-02T16:39:17.3396758Z shell: /usr/bin/bash -e {0}
+build	Install dependencies (frontend)	2026-02-02T16:39:17.3397080Z ##[endgroup]
+build	Install dependencies (frontend)	2026-02-02T16:39:23.0091861Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+build	Install dependencies (frontend)	2026-02-02T16:39:23.0526182Z npm warn deprecated stable@0.1.8: Modern JS already guarantees Array#sort() is a stable sort, so this library is deprecated. See the compatibility table on MDN: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#browser_compatibility
+build	Install dependencies (frontend)	2026-02-02T16:39:23.1050405Z npm warn deprecated @babel/plugin-proposal-private-methods@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-private-methods instead.
+build	Install dependencies (frontend)	2026-02-02T16:39:23.1055596Z npm warn deprecated @babel/plugin-proposal-numeric-separator@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-numeric-separator instead.
+build	Install dependencies (frontend)	2026-02-02T16:39:23.1061401Z npm warn deprecated @babel/plugin-proposal-nullish-coalescing-operator@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-nullish-coalescing-operator instead.
+build	Install dependencies (frontend)	2026-02-02T16:39:23.1068905Z npm warn deprecated @babel/plugin-proposal-class-properties@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-class-properties instead.
+build	Install dependencies (frontend)	2026-02-02T16:39:23.1745658Z npm warn deprecated rollup-plugin-terser@7.0.2: This package has been deprecated and is no longer maintained. Please use @rollup/plugin-terser
+build	Install dependencies (frontend)	2026-02-02T16:39:23.2137487Z npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+build	Install dependencies (frontend)	2026-02-02T16:39:23.2253586Z npm warn deprecated whatwg-encoding@1.0.5: Use @exodus/bytes instead for a more spec-conformant and faster implementation
+build	Install dependencies (frontend)	2026-02-02T16:39:23.2313262Z npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+build	Install dependencies (frontend)	2026-02-02T16:39:23.2530114Z npm warn deprecated abab@2.0.6: Use your platform's native atob() and btoa() methods instead
+build	Install dependencies (frontend)	2026-02-02T16:39:23.2623724Z npm warn deprecated @babel/plugin-proposal-optional-chaining@7.21.0: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-optional-chaining instead.
+build	Install dependencies (frontend)	2026-02-02T16:39:23.2690715Z npm warn deprecated @babel/plugin-proposal-private-property-in-object@7.21.11: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-private-property-in-object instead.
+build	Install dependencies (frontend)	2026-02-02T16:39:23.3875161Z npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+build	Install dependencies (frontend)	2026-02-02T16:39:23.4137517Z npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+build	Install dependencies (frontend)	2026-02-02T16:39:23.4532413Z npm warn deprecated domexception@2.0.1: Use your platform's native DOMException instead
+build	Install dependencies (frontend)	2026-02-02T16:39:23.4754993Z npm warn deprecated w3c-hr-time@1.0.2: Use your platform's native performance.now() and performance.timeOrigin.
+build	Install dependencies (frontend)	2026-02-02T16:39:23.5519474Z npm warn deprecated sourcemap-codec@1.4.8: Please use @jridgewell/sourcemap-codec instead
+build	Install dependencies (frontend)	2026-02-02T16:39:23.9810980Z npm warn deprecated workbox-cacheable-response@6.6.0: workbox-background-sync@6.6.0
+build	Install dependencies (frontend)	2026-02-02T16:39:24.0625634Z npm warn deprecated source-map@0.8.0-beta.0: The work that was done in this beta branch won't be included in future versions
+build	Install dependencies (frontend)	2026-02-02T16:39:24.0650403Z npm warn deprecated workbox-google-analytics@6.6.0: It is not compatible with newer versions of GA starting with v4, as long as you are using GAv3 it should be ok, but the package is not longer being maintained
+build	Install dependencies (frontend)	2026-02-02T16:39:26.9352599Z npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+build	Install dependencies (frontend)	2026-02-02T16:39:35.7556229Z 
+build	Install dependencies (frontend)	2026-02-02T16:39:35.7557543Z added 1488 packages, and audited 1489 packages in 18s
+build	Install dependencies (frontend)	2026-02-02T16:39:35.7558478Z 
+build	Install dependencies (frontend)	2026-02-02T16:39:35.7558970Z 312 packages are looking for funding
+build	Install dependencies (frontend)	2026-02-02T16:39:35.7596383Z   run `npm fund` for details
+build	Install dependencies (frontend)	2026-02-02T16:39:35.7597078Z 
+build	Install dependencies (frontend)	2026-02-02T16:39:35.7605998Z 5 moderate severity vulnerabilities
+build	Install dependencies (frontend)	2026-02-02T16:39:35.7606638Z 
+build	Install dependencies (frontend)	2026-02-02T16:39:35.7607428Z To address issues that do not require attention, run:
+build	Install dependencies (frontend)	2026-02-02T16:39:35.7608191Z   npm audit fix
+build	Install dependencies (frontend)	2026-02-02T16:39:35.7608735Z 
+build	Install dependencies (frontend)	2026-02-02T16:39:35.7610291Z To address all issues (including breaking changes), run:
+build	Install dependencies (frontend)	2026-02-02T16:39:35.7611859Z   npm audit fix --force
+build	Install dependencies (frontend)	2026-02-02T16:39:35.7612824Z 
+build	Install dependencies (frontend)	2026-02-02T16:39:35.7613397Z Run `npm audit` for details.
+build	Build frontend	﻿2026-02-02T16:39:35.8078242Z ##[group]Run if [ -f frontend/package.json ]; then
+build	Build frontend	2026-02-02T16:39:35.8078794Z [36;1mif [ -f frontend/package.json ]; then[0m
+build	Build frontend	2026-02-02T16:39:35.8079252Z [36;1m  npm --prefix frontend run build[0m
+build	Build frontend	2026-02-02T16:39:35.8079672Z [36;1melse[0m
+build	Build frontend	2026-02-02T16:39:35.8079978Z [36;1m  echo "No frontend to build"[0m
+build	Build frontend	2026-02-02T16:39:35.8080346Z [36;1mfi[0m
+build	Build frontend	2026-02-02T16:39:35.8100952Z shell: /usr/bin/bash -e {0}
+build	Build frontend	2026-02-02T16:39:35.8101199Z ##[endgroup]
+build	Build frontend	2026-02-02T16:39:35.9135715Z 
+build	Build frontend	2026-02-02T16:39:35.9137562Z > frontend@0.1.0 build
+build	Build frontend	2026-02-02T16:39:35.9139197Z > react-scripts build
+build	Build frontend	2026-02-02T16:39:35.9140459Z 
+build	Build frontend	2026-02-02T16:39:36.7718197Z Creating an optimized production build...
+build	Build frontend	2026-02-02T16:40:34.9900830Z Failed to compile.
+build	Build frontend	2026-02-02T16:40:34.9902087Z 
+build	Build frontend	2026-02-02T16:40:34.9908541Z Error: It looks like you're trying to use `tailwindcss` directly as a PostCSS plugin. The PostCSS plugin has moved to a separate package, so to continue using Tailwind CSS with PostCSS you'll need to install `@tailwindcss/postcss` and update your PostCSS configuration.
+build	Build frontend	2026-02-02T16:40:34.9910268Z 
+build	Build frontend	2026-02-02T16:40:34.9910317Z 
+build	Build frontend	2026-02-02T16:40:35.0706436Z ##[error]Process completed with exit code 1.
+build	Post Run actions/checkout@v4	﻿2026-02-02T16:40:35.0810968Z Post job cleanup.
+build	Post Run actions/checkout@v4	2026-02-02T16:40:35.1713434Z [command]/usr/bin/git version
+build	Post Run actions/checkout@v4	2026-02-02T16:40:35.1749914Z git version 2.52.0
+build	Post Run actions/checkout@v4	2026-02-02T16:40:35.1790696Z Temporarily overriding HOME='/home/runner/work/_temp/ecfbcbf4-4efc-45ed-af45-f15930783047' before making global git config changes
+build	Post Run actions/checkout@v4	2026-02-02T16:40:35.1792762Z Adding repository directory to the temporary git global config as a safe directory
+build	Post Run actions/checkout@v4	2026-02-02T16:40:35.1797720Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/xanuicam/xanuicam
+build	Post Run actions/checkout@v4	2026-02-02T16:40:35.1841169Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+build	Post Run actions/checkout@v4	2026-02-02T16:40:35.1871882Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+build	Post Run actions/checkout@v4	2026-02-02T16:40:35.2064783Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+build	Post Run actions/checkout@v4	2026-02-02T16:40:35.2085320Z http.https://github.com/.extraheader
+build	Post Run actions/checkout@v4	2026-02-02T16:40:35.2098656Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+build	Post Run actions/checkout@v4	2026-02-02T16:40:35.2127623Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+build	Post Run actions/checkout@v4	2026-02-02T16:40:35.2310092Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+build	Post Run actions/checkout@v4	2026-02-02T16:40:35.2340216Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+build	Complete job	﻿2026-02-02T16:40:35.2620487Z Cleaning up orphan processes
