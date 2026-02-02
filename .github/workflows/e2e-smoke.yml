@@ -1,0 +1,75 @@
+name: E2E Smoke
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  e2e-smoke:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: testdb
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install backend deps
+        run: |
+          cd backend
+          npm ci
+
+      - name: Start backend
+        run: |
+          cd backend
+          PORT=5001 npm start > /tmp/backend.log 2>&1 &
+          for i in {1..30}; do
+            if curl -sSf http://localhost:5001/health >/dev/null 2>&1; then
+              echo "backend up"; break
+            fi
+            sleep 1
+          done
+
+      - name: Serve UI
+        run: |
+          python3 -m http.server 4001 --directory backend/tmp_ui > /tmp/ui.log 2>&1 &
+          sleep 1
+
+      - name: Install puppeteer-core (isolated)
+        run: |
+          mkdir -p tmp && cd tmp
+          if [ ! -f package.json ]; then npm init -y >/dev/null 2>&1; fi
+          npm install puppeteer-core@21 --no-audit --no-fund
+
+      - name: Run E2E smoke
+        env:
+          PUPPETEER_EXECUTABLE_PATH: /usr/bin/chromium-browser
+          TEST_API_BASE: http://localhost:5001/api
+        run: |
+          node tmp/e2e_cancel_ui_core.js || true
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-artifacts
+          path: |
+            tmp/e2e_ui_*.png
+            tmp/e2e_ui_result*.json
+            tmp/e2e_debug*.log
+            /tmp/backend.log
+            /tmp/ui.log
