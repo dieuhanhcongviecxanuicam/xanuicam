@@ -15,11 +15,8 @@ jobs:
       - name: Build frontend
         run: |
           if [ -f frontend/package.json ]; then
-            if [ -f frontend/package-lock.json ]; then
-              npm ci --prefix frontend --legacy-peer-deps
-            else
-              npm install --prefix frontend --legacy-peer-deps
-            fi
+            # Use `npm install` with legacy peer deps to avoid CI failures when lockfile and deps diverge.
+            npm --prefix frontend install --legacy-peer-deps
             npm --prefix frontend run build
           else
             echo "No frontend/package.json, skipping frontend build"
