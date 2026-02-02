@@ -53,8 +53,6 @@ import ComputerConfigsPage from './pages/ComputerConfigsPage';
 
 
 function App() {
-  // Local edit marker for testing hot-reload and commit/push flow
-  if (process.env.NODE_ENV === 'development') console.log('Local UI edit active');
   return (
     <Routes>
       {/* Dev-only preview route available without auth for local testing */}

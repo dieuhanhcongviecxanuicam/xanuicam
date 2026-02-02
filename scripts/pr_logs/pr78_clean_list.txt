@@ -1,1 +1,0 @@
-{"headRefName":"fix/lodash-4.17.23-clean","number":80,"title":"chore: security updates (frontend pins/overrides)","url":"https://github.com/dieuhanhcongviecxanuicam/xanuicam/pull/80"}
