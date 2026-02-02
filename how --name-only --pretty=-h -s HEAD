@@ -1,9 +1,0 @@
-f0ee609 release(frontend): update social preview, OG size, and include recent frontend fixes
-
-frontend/src/components/common/AttachmentViewerModal.jsx
-frontend/src/components/roles/RoleModal.jsx
-frontend/src/pages/DeletedRolesPage.jsx
-frontend/src/pages/DeletedUsersPage.jsx
-frontend/src/pages/RolesPage.jsx
-frontend/src/pages/SettingsPage.jsx
-frontend/src/pages/settings/NotificationsPage.jsx

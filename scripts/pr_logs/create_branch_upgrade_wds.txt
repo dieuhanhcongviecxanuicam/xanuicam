@@ -1,1 +1,0 @@
-Switched to a new branch 'fix/lodash-4.17.23-upgrade-wds'
