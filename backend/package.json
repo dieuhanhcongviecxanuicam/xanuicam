@@ -46,7 +46,7 @@
     "node-fetch": "^3.3.2",
     "pdfkit": "^0.17.2",
     "qrcode": "^1.5.1",
-    "pg": "^8.17.2",
+    "pg": "^8.18.0",
     "mammoth": "^1.4.18",
     "sanitize-html": "^2.11.1",
     "speakeasy": "^2.0.0",
