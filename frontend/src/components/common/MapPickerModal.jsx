@@ -41,7 +41,7 @@ const MapPickerModal = ({ isOpen, onClose, initialPosition = null, onSelect }) =
     if (!LeafletComponents) return null;
     const { MapContainer, TileLayer, Marker, useMapEvents } = LeafletComponents;
     const ClickHandler = ({ setPosLocal }) => {
-      useMapEvents({ click(e) { setPosLocal([e.latlng.lat, e.latlng.lng]); } });
+      useMapEvents({ click: (e) => { setPosLocal([e.latlng.lat, e.latlng.lng]); } });
       return null;
     };
     return (
