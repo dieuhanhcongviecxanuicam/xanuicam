@@ -43,7 +43,7 @@
     "ioredis": "^5.9.2",
     "jsonwebtoken": "^9.0.2",
     "multer": "^2.0.2",
-    "node-fetch": "^2.6.9",
+    "node-fetch": "^3.3.2",
     "pdfkit": "^0.17.2",
     "qrcode": "^1.5.1",
     "pg": "^8.17.2",
