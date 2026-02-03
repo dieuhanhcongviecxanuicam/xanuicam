@@ -1,5 +1,5 @@
 // sentryInit_safe.js — guarded dynamic require without using eval
-function initSentry(dsn, opts = {}) {
+async function initSentry(dsn, opts = {}) {
   if (!dsn) return;
   try {
     // Prefer __non_webpack_require__ when available to avoid bundler static resolution.
@@ -36,6 +36,4 @@ function initSentry(dsn, opts = {}) {
     }
   })();
 
-  export default initSentry;
-
-module.exports = initSentry;
+export default initSentry;
