@@ -5,7 +5,6 @@ import { Users2, ChevronLeft, ChevronRight } from 'lucide-react';
 import { startOfWeek, endOfWeek, eachDayOfInterval, addDays, format, isSameDay } from 'date-fns';
 import { vi } from 'date-fns/locale';
 import apiService from '../services/apiService';
-import useDepartments from '../hooks/useDepartments';
 import Spinner from '../components/common/Spinner';
 // Meeting registration removed here; page is read-only and shows approved room bookings per room
 import MeetingModal from '../components/meetings/MeetingModal';
@@ -22,7 +21,7 @@ const MeetingsPage = () => {
     const [selectedBooking, setSelectedBooking] = useState(null);
     const [hoveredBooking, setHoveredBooking] = useState(null);
     const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
-    const { departmentsMap } = useDepartments();
+    const [departmentsMap, setDepartmentsMap] = useState({});
     const ROOMS = ['Phòng họp lầu 2', 'Hội trường UBND', 'Phòng tiếp công dân'];
     const [selectedRoom, setSelectedRoom] = useState(ROOMS[0]);
     const [notification, setNotification] = useState({ message: '', type: '' });
@@ -59,7 +58,17 @@ const MeetingsPage = () => {
         fetchMeetings();
     }, [fetchMeetings, selectedRoom]);
 
-    // departmentsMap comes from `useDepartments` hook
+    useEffect(() => {
+        let mounted = true;
+        apiService.getDepartments().then(resp => {
+            const list = Array.isArray(resp) ? resp : (resp && resp.data) ? resp.data : [];
+            if (!mounted) return;
+            const map = {};
+            list.forEach(d => { map[d.id] = d.name; });
+            setDepartmentsMap(map);
+        }).catch(() => {});
+        return () => { mounted = false; };
+    }, []);
 
     const handleOpenModal = (day, hour) => {
         const slotStart = new Date(day);
@@ -221,7 +230,7 @@ const MeetingsPage = () => {
                                         <span className="text-sm text-slate-400 ml-2">ngày {new Date(hoveredBooking.created_at || hoveredBooking.start_time).toLocaleDateString()}</span>
                                     </div>
                                     <div className="text-xs mt-2">{hoveredBooking.description}</div>
-                                    <div className="text-xs mt-2">Đơn vị triển khai: {hoveredBooking.department_name || departmentsMap[String(hoveredBooking.department_id)] || '-'}</div>
+                                    <div className="text-xs mt-2">Đơn vị triển khai: {hoveredBooking.department_name || departmentsMap[hoveredBooking.department_id] || '-'}</div>
                                     <div className="text-xs">Số lượng: {hoveredBooking.attendees_count || '-'}</div>
                                     <div className="text-xs">Màn hình LED: {hoveredBooking.has_led ? 'Có' : 'Không'}</div>
                             {hoveredBooking.attachment_path && (

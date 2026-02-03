@@ -1,34 +1,11 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState } from 'react';
 import ModalWrapper from '../common/ModalWrapper';
 import AttachmentViewerModal from '../common/AttachmentViewerModal';
 import { X } from 'lucide-react';
-import useDepartments from '../../hooks/useDepartments';
 
 const MeetingDetailModal = ({ isOpen, onClose, booking, onNotify, departmentsMap = {} }) => {
     const [downloading, setDownloading] = useState(false);
     const [viewerAttachment, setViewerAttachment] = useState(null);
-    const { departmentsMap: hookDepartmentsMap, getDepartmentById } = useDepartments();
-    const [fetchedDepartmentName, setFetchedDepartmentName] = useState(null);
-
-    useEffect(() => {
-        let mounted = true;
-        (async () => {
-            try {
-                if (!booking) return;
-                const depId = booking.department_id || booking.department || booking.departmentId;
-                if (!depId) return;
-                    if (booking.department_name) return; // already present
-                    const effectiveDepartmentsMap = (departmentsMap && Object.keys(departmentsMap).length) ? departmentsMap : hookDepartmentsMap;
-                    if (effectiveDepartmentsMap && effectiveDepartmentsMap[String(depId)]) return; // map already has it
-                const dept = await getDepartmentById(depId).catch(() => null);
-                if (!mounted) return;
-                if (dept) setFetchedDepartmentName(dept.name || dept.department_name || null);
-            } catch (e) {
-                // ignore
-            }
-        })();
-        return () => { mounted = false; };
-    }, [booking, departmentsMap, hookDepartmentsMap, getDepartmentById]);
 
     const backendBase = (process.env.REACT_APP_API_BASE_URL ? process.env.REACT_APP_API_BASE_URL.replace(/\/api\/?$/, '') : (process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : ''));
 
@@ -95,14 +72,7 @@ const MeetingDetailModal = ({ isOpen, onClose, booking, onNotify, departmentsMap
                     <span className="text-cyan-600 text-sm ml-2">{new Date(booking.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} đến {new Date(booking.end_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                     <span className="text-sm text-slate-400 ml-2">ngày {new Date(booking.created_at || booking.start_time).toLocaleDateString()}</span>
                 </div>
-                {
-                    (() => {
-                        const effectiveMap = (departmentsMap && Object.keys(departmentsMap).length) ? departmentsMap : hookDepartmentsMap || {};
-                        const depId = booking.department_id || booking.department || booking.departmentId;
-                        const displayDepartmentName = booking.department_name || (depId != null ? (effectiveMap[String(depId)] || fetchedDepartmentName || String(depId)) : '-') || '-';
-                        return <div><strong>Đơn vị triển khai:</strong> {displayDepartmentName}</div>;
-                    })()
-                }
+                <div><strong>Đơn vị triển khai:</strong> {booking.department_name || departmentsMap[booking.department_id] || booking.department_id || '-'}</div>
                 <div><strong>Số lượng:</strong> {booking.attendees_count || '-'}</div>
                 <div><strong>Màn hình LED:</strong> {booking.has_led ? 'Có' : 'Không'}</div>
                 <div><strong>Nội dung:</strong>

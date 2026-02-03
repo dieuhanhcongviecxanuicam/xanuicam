@@ -18,7 +18,6 @@ import {
   ArcElement,
 } from 'chart.js';
 import { Line, Bar } from 'react-chartjs-2';
-import useDepartments from '../hooks/useDepartments';
 
 ChartJS.register(
   CategoryScale,
@@ -108,8 +107,6 @@ const KpiChartPage = () => {
     });
     return pts;
   }, [kpiData, filters, kpiSort]);
-
-  const { departmentsMap } = useDepartments();
 
   // CSV export helper removed (unused) to satisfy lint
 
@@ -284,7 +281,7 @@ const KpiChartPage = () => {
                 {sortedFiltered.map(p => (
                   <tr key={p.userId || p.id}>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">{p.name}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">{(departmentsMap && departmentsMap[String(p.department_id)]) || p.department_name || (p.department_id != null ? String(p.department_id) : '-') || '-'}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">{p.department_name || p.department_id || '-'}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-right">{p.average !== null && p.average !== undefined ? Number(p.average).toFixed(2) : '-'}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-right">{p.count || 0}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-center">

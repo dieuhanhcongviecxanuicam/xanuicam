@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "axios": "^1.13.2",
+    "bcryptjs": "^3.0.3",
+    "concurrently": "^9.2.1",
+    "cross-env": "^7.0.3",
+    "dotenv": "^17.2.3",
+    "minimist": "^1.2.8",
+    "pg": "^8.17.2",
+    "puppeteer": "^24.34.0",
+    "speakeasy": "^2.0.0"
+  },
+  "scripts": {
+    "dev": "concurrently \"cross-env PORT=5000 npm run dev --prefix backend\" \"cross-env PORT=3000 npm start --prefix frontend\"",
+    "env:setup": "node backend/scripts/setup_env_keys.js",
+    "env:rotate": "node backend/scripts/rotate_audit_key.js",
+    "smoke:test": "node frontend/smoke_user_profile_test.js",
+    "admin:edit-test": "node tmp/admin_edit_test.js",
+    "start-backend": "node backend/server.js",
+    "deploy": "powershell -ExecutionPolicy Bypass -File scripts\\deploy_frontend_and_restart_backend.ps1",
+    "ci:build-frontend": "npm --prefix frontend run build",
+    "e2e:repeat": "node e2e/repeat_create_edit_flow.js"
+  }
+}

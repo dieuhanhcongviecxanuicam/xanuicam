@@ -4,13 +4,12 @@ import apiService from '../../services/apiService';
 import eventBus from '../../utils/eventBus';
 import { format, formatDistanceToNow } from 'date-fns';
 import { vi } from 'date-fns/locale';
-import { X, User, Calendar, Flag, Clock, Check, History, Paperclip, MessageSquare, Edit, Star, Send, UploadCloud, Download, CornerUpLeft, MapPin } from 'lucide-react';
+import { X, User, Calendar, Flag, Clock, Check, History, Paperclip, MessageSquare, Edit, Star, Send, UploadCloud, Download, CornerUpLeft } from 'lucide-react';
 import Spinner from '../common/Spinner';
 import ModalWrapper from '../common/ModalWrapper';
 import AttachmentViewerModal from '../common/AttachmentViewerModal';
 import EditTaskModal from './EditTaskModal';
 import defaultAvatar from '../../assets/images/default-avatar.png';
-import MapPickerModal from '../common/MapPickerModal';
 
 const InfoItem = ({ icon, label, value }) => (
     <div className="flex items-start">
@@ -67,7 +66,6 @@ const TaskDetailModal = ({ task, users, onClose, onUpdate }) => {
     
     const [selectedAttachment, setSelectedAttachment] = useState(null);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-    const [isMapModalOpen, setIsMapModalOpen] = useState(false);
     
     const { user, hasPermission } = useAuth();
     const fileInputRef = useRef(null);
@@ -315,26 +313,12 @@ const TaskDetailModal = ({ task, users, onClose, onUpdate }) => {
 
                     <div className="p-4 border-t bg-slate-50 flex items-center justify-end gap-3 flex-shrink-0">
                         <button type="button" onClick={onClose} className="btn-secondary">Đóng</button>
-                        <MapPickerModal isOpen={isMapModalOpen} onClose={() => setIsMapModalOpen(false)} initialPosition={taskData.location_lat && taskData.location_lng ? [Number(taskData.location_lat), Number(taskData.location_lng)] : null} onSelect={async (coords) => {
-                            try {
-                                const [lat, lng] = coords;
-                                await apiService.updateTask(taskData.id, { location_lat: String(lat), location_lng: String(lng) });
-                                apiService.logEvent({ action: 'task.location.updated', resource_type: 'task', resource_id: taskData.id, details: `lat:${lat},lng:${lng}` }).catch(()=>{});
-                                // refresh details
-                                fetchTaskDetails();
-                                if (typeof onUpdate === 'function') onUpdate();
-                            } catch (e) { console.error('Failed to save location', e); alert('Không thể lưu vị trí.'); }
-                        }} />
                         {isAssignee && (
                             <button type="button" className="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded text-sm" onClick={async () => {
                                 if (!window.confirm('Xác nhận hủy công việc này?')) return;
                                 await handleStatusUpdate('Đã hủy');
                             }}>Xóa công việc</button>
                         )}
-                        {/* Location / check-in */}
-                        <button type="button" onClick={() => setIsMapModalOpen(true)} className="btn-secondary flex items-center px-3 py-2 text-sm">
-                            <MapPin size={14} className="mr-2"/> Định vị
-                        </button>
                         {canAccept && <ActionButton onClick={() => handleStatusUpdate('Tiếp nhận')} text="Tiếp nhận" disabled={actionLoading} />}
                         {canStart && <ActionButton onClick={() => handleStatusUpdate('Đang thực hiện')} text="Bắt đầu" disabled={actionLoading} />}
                         {canReport && <ActionButton onClick={() => handleStatusUpdate('Chờ duyệt')} text="Báo cáo" disabled={actionLoading} />}
