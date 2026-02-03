@@ -7,7 +7,7 @@
     "dotenv": "^17.2.3",
     "minimist": "^1.2.8",
     "pg": "^8.18.0",
-    "puppeteer": "^24.34.0",
+    "puppeteer": "^24.36.1",
     "speakeasy": "^2.0.0"
   },
   "scripts": {
