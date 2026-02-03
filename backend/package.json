@@ -32,36 +32,34 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^1.13.4",
+    "@sentry/node": "^7.28.0",
+    "axios": "^1.13.2",
     "bcryptjs": "^2.4.3",
-    "cors": "^2.8.6",
+    "cors": "^2.8.5",
+    "date-fns": "^2.30.0",
     "dotenv": "^17.2.3",
-    "helmet": "^7.0.0",
-    "express-rate-limit": "^8.2.1",
+    "exceljs": "^4.4.0",
     "express": "^4.19.2",
+    "express-rate-limit": "^7.0.0",
     "express-validator": "^7.2.1",
+    "helmet": "^7.0.0",
     "ioredis": "^5.9.2",
     "jsonwebtoken": "^9.0.2",
+    "mammoth": "^1.4.18",
     "multer": "^2.0.2",
     "node-fetch": "^3.3.2",
     "pdfkit": "^0.17.2",
+    "pg": "^8.17.2",
     "qrcode": "^1.5.1",
-    "pg": "^8.18.0",
-    "mammoth": "^1.4.18",
     "sanitize-html": "^2.11.1",
     "speakeasy": "^2.0.0",
     "ua-parser-js": "^1.0.37"
-    ,
-    "exceljs": "^4.3.0",
-    "date-fns": "^2.30.0"
-    ,"@sentry/node": "^10.38.0"
   },
   "devDependencies": {
     "jest": "^29.6.1",
-    "supertest": "7.2.2",
-    "nodemon": "^3.1.4"
-  }
-  ,
+    "nodemon": "^3.1.4",
+    "supertest": "7.2.2"
+  },
   "overrides": {
     "lodash": ">=4.17.22"
   }

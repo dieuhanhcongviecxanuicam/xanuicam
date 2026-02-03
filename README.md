@@ -8,3 +8,5 @@ This repository contains the backend and frontend for the UBND XANUICAM task man
 - See `README_COMPUTER_CONFIGS.md` for development instructions for the Computer Configs area.
 
 Replace `<OWNER>/<REPO>` in the badge URL above with your GitHub organization/repository to enable the badge.
+
+<!-- ci-trigger: rebuild frontend -->
