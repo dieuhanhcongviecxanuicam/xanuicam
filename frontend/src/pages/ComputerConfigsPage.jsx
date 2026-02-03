@@ -4,8 +4,6 @@ import api from '../api/axios';
 import QuickConfigModal from '../components/computer-configs/QuickConfigModal';
 import AdminExportLogs from '../components/AdminExportLogs';
 import { saveAs } from 'file-saver';
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
 
 // Helpers exported for testing and reuse
 export const isIPv4 = (v) => {
@@ -267,20 +265,14 @@ const ComputerConfigsPage = () => {
 
   const exportPDF = async (user) => {
     try {
-      let cfg = prefetchCache[user.id];
-      if (!cfg) {
-        const r = await api.get(`/computer-configs/user/${user.id}`);
-        cfg = r.data && (r.data.config || r.data) ? (r.data.config || r.data) : {};
+      // Use server-side export to avoid client-side PDF library vulnerabilities.
+      const body = { userIds: [user.id], format: 'pdf' };
+      const out = await api.exportPost('/computer-configs/export', body, {});
+      if (out && out.blob) {
+        downloadBlob(out.blob, out.filename || `xanuicam_computer_${formatTimestamp(new Date()).datetime}.pdf`);
+      } else {
+        if (api && api.showToast) api.showToast('Lỗi khi xuất PDF', 'error'); else alert('Lỗi khi xuất PDF');
       }
-      const ts = formatTimestamp(new Date());
-      const doc = new jsPDF('p', 'pt', 'a4');
-      const title = `Cấu hình máy tính - ${user.full_name}`;
-      doc.setFontSize(12);
-      doc.text(title, 40, 40);
-      const data = Object.entries(cfg).map(([k, v]) => [k, v === null || v === undefined ? '' : String(v)]);
-      // @ts-ignore
-      doc.autoTable({ startY: 60, head: [['Trường', 'Giá trị']], body: data, styles: { fontSize: 10 } });
-      doc.save(`xanuicam_computer_${ts.datetime}.pdf`);
     } catch (e) {
       console.error('exportPDF', e);
       if (api && api.showToast) api.showToast('Lỗi khi xuất PDF', 'error'); else alert('Lỗi khi xuất PDF');
