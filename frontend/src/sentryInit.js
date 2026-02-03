@@ -3,8 +3,8 @@
 try {
   if (process.env.REACT_APP_SENTRY_DSN) {
     // eslint-disable-next-line global-require
-    const Sentry = require('@sentry/react');
-    const { BrowserTracing } = require('@sentry/tracing');
+    const Sentry = eval('require')('@sentry/react');
+    const { BrowserTracing } = eval('require')('@sentry/tracing');
     Sentry.init({
       dsn: process.env.REACT_APP_SENTRY_DSN,
       integrations: [new BrowserTracing()],
