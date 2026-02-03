@@ -1,17 +1,13 @@
-// frontend/src/sentryInit.js
-// Initialize Sentry for the frontend if SENTRY_DSN is provided at build/runtime.
-try {
-  if (process.env.REACT_APP_SENTRY_DSN) {
-    // eslint-disable-next-line global-require
-    const Sentry = eval('require')('@sentry/react');
-    const { BrowserTracing } = eval('require')('@sentry/tracing');
-    Sentry.init({
-      dsn: process.env.REACT_APP_SENTRY_DSN,
-      integrations: [new BrowserTracing()],
-      tracesSampleRate: 0.05,
-    });
-    console.log('Frontend Sentry initialized');
-  }
-} catch (e) {
-  // best-effort
-}
+// sentryInit.js — guarded runtime require to avoid bundler resolution errors
+function initSentry(dsn, opts = {}) {
+  if (!dsn) return;
+  let Sentry, Tracing;
+  try {
+    const req = eval(require);
+    Sentry = req(@sentry/react);
+    Tracing = req(@sentry/tracing);
+  } catch (e) {
+    // Sentry packages not installed — skip initialization in this environment
+    if (process.env.NODE_ENV !== production) {
+      // eslint-disable-next-line no-console
+      console.warn(Sentry
