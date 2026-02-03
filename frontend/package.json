@@ -49,6 +49,10 @@
       "react-app",
       "react-app/jest"
     ]
+    ,
+    "globals": {
+      "__non_webpack_require__": "readonly"
+    }
   },
   "browserslist": {
     "production": [
