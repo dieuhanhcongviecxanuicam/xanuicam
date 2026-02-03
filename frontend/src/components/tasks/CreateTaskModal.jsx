@@ -4,7 +4,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { X } from 'lucide-react';
 import apiService from '../../services/apiService';
-import useDepartments from '../../hooks/useDepartments';
 import ModalWrapper from '../common/ModalWrapper';
 
 const CreateTaskModal = ({ isOpen, onClose, onTaskCreated }) => {
@@ -14,7 +13,7 @@ const CreateTaskModal = ({ isOpen, onClose, onTaskCreated }) => {
   const [dueDate, setDueDate] = useState('');
   const [priority, setPriority] = useState('Trung bình');
   const [users, setUsers] = useState([]);
-  const { departments } = useDepartments();
+  const [departments, setDepartments] = useState([]);
   const [selectedDept, setSelectedDept] = useState('');
   const [error, setError] = useState('');
   const [loadingData, setLoadingData] = useState(true);
@@ -24,8 +23,12 @@ const CreateTaskModal = ({ isOpen, onClose, onTaskCreated }) => {
       const fetchData = async () => {
         setLoadingData(true);
         try {
-          const usersRes = await apiService.getUsers({ limit: 1000 });
+          const [usersRes, deptsRes] = await Promise.all([
+            apiService.getUsers({ limit: 1000 }),      
+            apiService.getDepartments({ limit: 1000 }) 
+          ]);
           setUsers(usersRes.data || []);
+          setDepartments(deptsRes.data || []);
         } catch (err) {
           console.error("Lỗi tải dữ liệu:", err);
           setError("Không thể tải dữ liệu cần thiết cho việc tạo công việc.");
@@ -48,13 +51,13 @@ const CreateTaskModal = ({ isOpen, onClose, onTaskCreated }) => {
 
   const filteredUsers = useMemo(() => {
     if (!selectedDept) return users;
-    return users.filter(user => String(user.department_id) === String(selectedDept));
+    return users.filter(user => user.department_id === parseInt(selectedDept));
   }, [selectedDept, users]);
 
   // NÂNG CẤP: Tự động chọn người phụ trách khi phòng ban thay đổi
   useEffect(() => {
     if (selectedDept) {
-      const department = departments.find(d => String(d.id) === String(selectedDept));
+        const department = departments.find(d => d.id === parseInt(selectedDept));
         if (department && department.manager_id) {
             // Kiểm tra xem manager có trong danh sách user đã lọc không
             const managerExistsInList = filteredUsers.some(u => u.id === department.manager_id);
@@ -112,8 +115,8 @@ const CreateTaskModal = ({ isOpen, onClose, onTaskCreated }) => {
             <div>
                 <label className="block text-sm font-medium text-slate-700">Chọn phòng ban/Đơn vị (để lọc)</label>
                 <select value={selectedDept} onChange={(e) => setSelectedDept(e.target.value)} className="mt-1 input-style">
-                  <option value="">-- Tất cả phòng ban --</option>
-                  {departments.map(dept => <option key={dept.id} value={String(dept.id)}>{dept.name}</option>)}
+                    <option value="">-- Tất cả phòng ban --</option>
+                    {departments.map(dept => <option key={dept.id} value={dept.id}>{dept.name}</option>)}
                 </select>
             </div>
             <div>
@@ -121,7 +124,7 @@ const CreateTaskModal = ({ isOpen, onClose, onTaskCreated }) => {
               <select value={assigneeId} onChange={(e) => setAssigneeId(e.target.value)} required className="mt-1 input-style">
                 {/* NÂNG CẤP: Bổ sung lựa chọn mặc định */}
                 <option value="" disabled>-- Chọn người tiếp nhận --</option>
-                {filteredUsers.map(user => <option key={user.id} value={String(user.id)}>{user.full_name}</option>)}
+                {filteredUsers.map(user => <option key={user.id} value={user.id}>{user.full_name}</option>)}
               </select>
             </div>
             <div className="flex space-x-4">

@@ -1,0 +1,3 @@
+Applying migration: migrations\2025_12_23_add_mfa_columns.sql
+Đã kết nối thành công đến cơ sở dữ liệu PostgreSQL!
+Migration applied successfully.

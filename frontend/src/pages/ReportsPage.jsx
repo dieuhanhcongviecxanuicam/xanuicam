@@ -159,7 +159,7 @@ const ReportsPage = () => {
     // Tối ưu hóa việc lọc danh sách người dùng theo phòng ban đã chọn.
     const availableUsers = useMemo(() => {
         if (!filters.departmentId) return filterOptions.users;
-        return filterOptions.users.filter(user => String(user.department_id) === String(filters.departmentId));
+        return filterOptions.users.filter(user => user.department_id === parseInt(filters.departmentId));
     }, [filters.departmentId, filterOptions.users]);
 
     

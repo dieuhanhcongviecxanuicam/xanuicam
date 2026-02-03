@@ -1,8 +1,6 @@
 import React from 'react';
-import useDepartments from '../../hooks/useDepartments';
 
 const QuickUserSummary = ({ visible, type = 'user', data, onClose, x = 0, y = 0 }) => {
-  const { departmentsMap = {} } = useDepartments();
   if (!visible || !data) return null;
 
   if (type === 'user') {
@@ -25,7 +23,7 @@ const QuickUserSummary = ({ visible, type = 'user', data, onClose, x = 0, y = 0 
           <div><strong>Email:</strong> {u.email || '-'}</div>
           <div><strong>Số điện thoại:</strong> {u.phone_number || '-'}</div>
           <div><strong>Vai trò:</strong> {u.role_name || '-'}</div>
-          <div><strong>Phòng ban/Đơn vị:</strong> {departmentsMap[String(u.department_id)] || u.department_name || '-'}</div>
+          <div><strong>Phòng ban/Đơn vị:</strong> {u.department_name || '-'}</div>
           <div><strong>Người phụ trách:</strong> {u.department_manager_name || u.department_manager || u.manager_name || '-'}</div>
           <div><strong>Ghi chú:</strong> {u.note || u.notes || '-'}</div>
         </div>
