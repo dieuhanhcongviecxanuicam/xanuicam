@@ -202,3 +202,10 @@ e2e/run_upload_test.ps1
 # Local developer / scan artifacts (do not commit)
 .venv-detect/
 tmp-security-scan/
+backend/scripts/run_export_bulk_test.js
+backend/scripts/run_tasks_export_test.js
+backend/scripts/test_export_decrypted.js
+backend/scripts/test_login_admin.js
+backend/test_login_admin.out
+e2e/run_upload_test.ps1
+e2e/run_upload_smoke_test.js
