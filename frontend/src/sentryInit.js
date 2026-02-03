@@ -4,7 +4,9 @@ try {
   if (process.env.REACT_APP_SENTRY_DSN) {
     // eslint-disable-next-line global-require
     const Sentry = require('@sentry/react');
+    // eslint-disable-next-line global-require
     const { BrowserTracing } = require('@sentry/tracing');
+
     Sentry.init({
       dsn: process.env.REACT_APP_SENTRY_DSN,
       integrations: [new BrowserTracing()],
@@ -13,5 +15,5 @@ try {
     console.log('Frontend Sentry initialized');
   }
 } catch (e) {
-  // best-effort
+  // best-effort: swallow errors so Sentry init won't break the app
 }
