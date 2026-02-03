@@ -12,14 +12,7 @@ IMPORTANT: The automated agent attempted to delete deploy keys via the REST API 
    - Compare the public key or fingerprint with the fingerprints provided below.
    - If it matches any fingerprint listed, click `Delete` (trash) and confirm.
 
-Local backup fingerprints (from agent):
-
-```
-cloudflare-origin.pem   sha256:8693ea5a7479b69ab211d9e3a00f697d78855c863728b6ddd8c5d3cf28ce2843
-deploy_xanuicam_private.pem     sha256:d5cb7749b5ec242be1b48ea81a2491fadd4b4379c0201b3dc40a85a895c63b93
-deploy_xanuicam_public.pem      sha256:3f5166d2d957a74c2a36da8ea5a351a5cb85b91039b6798d6b553aa52ea87a8b
-server.key      sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
-```
+Local backup fingerprints have been stored securely by the remediation agent and are NOT published in the repository. If you are an admin and need these fingerprints, retrieve them from the secure backup location on the remediation host: `/home/nttsu/.local/xanuicam-secrets-2026-02-03/`.
 
 If a key in the UI shows the same public key material or the same ssh-keygen fingerprint, delete it immediately.
 
