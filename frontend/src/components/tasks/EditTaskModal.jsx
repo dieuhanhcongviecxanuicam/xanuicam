@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import apiService from '../../services/apiService';
-import useDepartments from '../../hooks/useDepartments';
 import ModalWrapper from '../common/ModalWrapper';
 
 // EditTaskModal: add department filter + dependent assignee list
@@ -13,7 +12,7 @@ const EditTaskModal = ({ isOpen, onClose, onSuccess, task, users }) => {
         priority: 'Trung bình',
         description: ''
     });
-    const { departments } = useDepartments();
+    const [departments, setDepartments] = useState([]);
     const [allUsers, setAllUsers] = useState(Array.isArray(users) ? users : []);
     const [selectedDepartment, setSelectedDepartment] = useState('');
     const [loading, setLoading] = useState(false);
@@ -34,9 +33,10 @@ const EditTaskModal = ({ isOpen, onClose, onSuccess, task, users }) => {
     useEffect(() => {
         let mounted = true;
         const load = async () => {
-            // departments provided by hook; no-op here for departments
             try {
-                // Intentionally left blank
+                const deps = await apiService.getDepartments({ limit: 500 });
+                if (!mounted) return;
+                setDepartments(Array.isArray(deps) ? deps : (deps.data || []));
             } catch (e) { /* ignore */ }
             // if users prop not provided, fetch users list
             try {
@@ -102,14 +102,14 @@ const EditTaskModal = ({ isOpen, onClose, onSuccess, task, users }) => {
                         <label className="block text-sm font-medium text-slate-700">Phòng ban / Đơn vị</label>
                         <select name="department" value={selectedDepartment} onChange={handleDepartmentChange} className="mt-1 input-style no-native-arrows">
                             <option value="">-- Tất cả --</option>
-                            {departments.map(d => <option key={d.id} value={String(d.id)}>{d.name}</option>)}
+                            {departments.map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
                         </select>
                     </div>
                     <div>
                         <label className="block text-sm font-medium text-slate-700">Người thực hiện</label>
                         <select name="assignee_id" value={formData.assignee_id} onChange={handleChange} className="mt-1 input-style no-native-arrows">
                             <option value="">-- Chọn người thực hiện --</option>
-                            {filteredAssignees.map(user => <option key={user.id} value={String(user.id)}>{user.full_name}</option>)}
+                            {filteredAssignees.map(user => <option key={user.id} value={user.id}>{user.full_name}</option>)}
                         </select>
                     </div>
                     <div className="grid grid-cols-2 gap-4">

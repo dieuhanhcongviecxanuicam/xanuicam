@@ -1,0 +1,4 @@
+# CODEOWNERS file: define default reviewers for all changes
+# Set default owner to the repository owner/maintainer
+# Replace or add additional usernames or teams as needed
+*    @dieuhanhcongviecxanuicam

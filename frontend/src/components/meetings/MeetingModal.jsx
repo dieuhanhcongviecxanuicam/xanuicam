@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import apiService from '../../services/apiService';
-import useDepartments from '../../hooks/useDepartments';
 import { X } from 'lucide-react';
 import ModalWrapper from '../common/ModalWrapper';
 
@@ -14,7 +13,7 @@ const MeetingModal = ({ isOpen, onClose, onSuccess, initialDateTime }) => {
         description: ''
     });
     const [allUsers, setAllUsers] = useState([]);
-    const { departments: allDepartments } = useDepartments();
+    const [allDepartments, setAllDepartments] = useState([]);
     const [selectedDept, setSelectedDept] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -23,8 +22,12 @@ const MeetingModal = ({ isOpen, onClose, onSuccess, initialDateTime }) => {
         if (isOpen) {
             const fetchData = async () => {
                 try {
-                    const usersRes = await apiService.getUsers({ limit: 1000 }); // Lấy toàn bộ user
-                        setAllUsers(usersRes.data || []);
+                    const [usersRes, deptsRes] = await Promise.all([
+                        apiService.getUsers({ limit: 1000 }), // Lấy toàn bộ user
+                        apiService.getDepartments({ limit: 1000 }) // Lấy toàn bộ phòng ban
+                    ]);
+                    setAllUsers(usersRes.data);
+                    setAllDepartments(deptsRes.data);
                 } catch (err) {
                     console.error("Lỗi khi tải dữ liệu:", err);
                     setError("Không thể tải dữ liệu cần thiết.");
@@ -51,7 +54,7 @@ const MeetingModal = ({ isOpen, onClose, onSuccess, initialDateTime }) => {
 
     const filteredUsers = useMemo(() => {
         if (!selectedDept) return allUsers;
-        return allUsers.filter(user => String(user.department_id) === String(selectedDept));
+        return allUsers.filter(user => user.department_id === parseInt(selectedDept));
     }, [selectedDept, allUsers]);
 
     const handleChange = (e) => {
@@ -146,7 +149,7 @@ const MeetingModal = ({ isOpen, onClose, onSuccess, initialDateTime }) => {
                         <label className="block text-sm font-medium text-slate-700">Lọc theo phòng ban</label>
                         <select value={selectedDept} onChange={(e) => setSelectedDept(e.target.value)} className="mt-1 input-style">
                             <option value="">-- Tất cả người dùng --</option>
-                            {allDepartments.map(dept => <option key={dept.id} value={String(dept.id)}>{dept.name}</option>)}
+                            {allDepartments.map(dept => <option key={dept.id} value={dept.id}>{dept.name}</option>)}
                         </select>
                     </div>
                      <div>
