@@ -84,6 +84,8 @@ const puppeteer = require('puppeteer-core');
   } catch (err) {
     console.error('E2E_ERR_CORE', err && err.stack || err);
     try{ fs.writeFileSync(path.join(__dirname,'e2e_ui_error_core.log'), String(err.stack||err), 'utf8'); }catch(e){}
+    try{ fs.writeFileSync(path.join(__dirname,'e2e_ui_result_core.json'), JSON.stringify({ error: String(err.stack||err) }, null, 2), 'utf8'); }catch(e){}
+    try{ fs.appendFileSync(path.join(__dirname,'e2e_debug_core.log'), 'ERROR: '+String(err.stack||err)+'\n', 'utf8'); }catch(e){}
     process.exit(2);
   }
 })();
