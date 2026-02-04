@@ -34,6 +34,13 @@ jobs:
           cd backend
           npm ci
 
+      - name: Run DB migrations and seed
+        run: |
+          cd backend
+          # run migrations to create required tables in the test database
+          DB_USER=postgres DB_PASSWORD=postgres DB_DATABASE=testdb DB_HOST=localhost DB_PORT=5432 npm run migrate || true
+          DB_USER=postgres DB_PASSWORD=postgres DB_DATABASE=testdb DB_HOST=localhost DB_PORT=5432 npm run db:seed || true
+
       - name: Start backend
         run: |
           cd backend
