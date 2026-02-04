@@ -1,0 +1,17 @@
+nohup: ignoring input
+
+> backend@2.0.0 start
+> node server.js
+
+[dotenv@17.2.3] injecting env (12) from .env -- tip: 🔑 add access controls to secrets: https://dotenvx.com/ops
+[dotenv@17.2.3] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+Not serving frontend build (NODE_ENV != production and SERVE_FRONTEND != true).
+Session pruner started: will run daily.
+[auditPruner] Starting audit pruner: keep 1000 rows, interval 3600000ms
+deletedUsersPruner started: will run daily and purge archived users older than retention period.
+[deletedRolesPruner] Started: will prune deleted roles older than 7 days every 3600000 ms
+[deletedDepartmentsPruner] Started: will prune deleted departments older than 7 days every 3600000 ms
+soffice not detected (exit null). PDF conversion via native soffice will not be available.
+EXPORT_TMP_DIR: /tmp
+Port 5000 is already in use.
+process: exit event fired with code 1

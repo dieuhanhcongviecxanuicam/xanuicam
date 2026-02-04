@@ -45,9 +45,17 @@ CREATE TABLE IF NOT EXISTS system_settings (
 );
 
 CREATE TABLE IF NOT EXISTS sessions (
+  -- Use the same column names the application expects
   id SERIAL PRIMARY KEY,
+  session_id TEXT UNIQUE NOT NULL,
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
-  created_at TIMESTAMP DEFAULT NOW()
+  user_agent_encrypted TEXT,
+  ua_hash TEXT,
+  ip_encrypted TEXT,
+  ip_hash TEXT,
+  last_seen_at TIMESTAMP DEFAULT NOW(),
+  created_at TIMESTAMP DEFAULT NOW(),
+  is_active BOOLEAN DEFAULT TRUE
 );
 
 CREATE TABLE IF NOT EXISTS audit_logs (

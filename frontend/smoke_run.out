@@ -1,0 +1,8 @@
+TRY_GOTO http://127.0.0.1:3000/#/login
+GOTO_FAIL http://127.0.0.1:3000/#/login net::ERR_CONNECTION_REFUSED at http://127.0.0.1:3000/#/login
+FALLBACK_TO_5000
+TRY_GOTO http://127.0.0.1:5000/#/login
+GOTO_OK http://127.0.0.1:5000/#/login
+WAITING_FOR_IDENTIFIER_SELECTOR
+TEST_ERROR Waiting for selector `#identifier` failed
+WROTE_ARTIFACTS /mnt/e/ubndxanuicam_deploy/frontend/tmp/smoke-error-1770108737772.png
