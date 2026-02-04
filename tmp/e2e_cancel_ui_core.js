@@ -38,8 +38,15 @@ const puppeteer = require('puppeteer-core');
       } catch (e) { dbg('no internal token: '+(e && e.message || e)); }
     }
     if (token) {
-      await page.setExtraHTTPHeaders({ Authorization: 'Bearer ' + token });
-      await page.evaluate(t=>{ window.__TEST_TOKEN__ = t; }, token);
+      // sanitize token and ensure header values are strings
+      try {
+        token = String(token).replace(/\r?\n/g, '').trim();
+        const headers = { authorization: String('Bearer ' + token) };
+        await page.setExtraHTTPHeaders(headers);
+      } catch (e) {
+        dbg('WARN: setExtraHTTPHeaders failed: ' + (e && e.message));
+      }
+      try { await page.evaluate(t=>{ window.__TEST_TOKEN__ = t; }, token); } catch(e) { dbg('WARN: evaluate token failed: '+(e&&e.message)); }
       dbg('token injected and extra headers set');
     } else {
       dbg('no token for injection');
@@ -77,6 +84,8 @@ const puppeteer = require('puppeteer-core');
   } catch (err) {
     console.error('E2E_ERR_CORE', err && err.stack || err);
     try{ fs.writeFileSync(path.join(__dirname,'e2e_ui_error_core.log'), String(err.stack||err), 'utf8'); }catch(e){}
+    try{ fs.writeFileSync(path.join(__dirname,'e2e_ui_result_core.json'), JSON.stringify({ error: String(err.stack||err) }, null, 2), 'utf8'); }catch(e){}
+    try{ fs.appendFileSync(path.join(__dirname,'e2e_debug_core.log'), 'ERROR: '+String(err.stack||err)+'\n', 'utf8'); }catch(e){}
     process.exit(2);
   }
 })();
