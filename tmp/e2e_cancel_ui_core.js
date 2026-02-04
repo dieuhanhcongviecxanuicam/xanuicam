@@ -3,6 +3,11 @@ const path = require('path');
 const puppeteer = require('puppeteer-core');
 
 (async ()=>{
+const fs = require('fs');
+const path = require('path');
+const puppeteer = require('puppeteer-core');
+
+(async ()=>{
   try{
     const tokenPath = '/tmp/admin_token.txt';
     const outDir = path.resolve(__dirname);
@@ -34,6 +39,7 @@ const puppeteer = require('puppeteer-core');
     page.on('console', msg => dbg('PAGE_CONSOLE: ' + msg.text()));
     page.on('requestfailed', req => { try{ const f = req.failure() || {}; dbg('REQ_FAILED: '+req.url()+' - '+(f.errorText||f)); }catch(e){} });
     page.on('response', resp => { try{ dbg('RESP: '+resp.status()+' '+resp.url()); }catch(e){} });
+    page.on('response', async resp => { try{ dbg('RESP: '+resp.status()+' '+resp.url()); if (resp.url().includes('/api/tasks')) { try{ const t = await resp.text(); dbg('RESP_BODY: '+resp.status()+' '+resp.url()+' => '+String(t).slice(0,2000)); }catch(e){ dbg('RESP_BODY_ERR: '+(e&&e.message)); } } }catch(e){} });
     const url = 'http://localhost:4001/cancel_test.html?_cb=' + Date.now();
     dbg('goto '+url);
     await page.setCacheEnabled(false);
@@ -66,12 +72,19 @@ const puppeteer = require('puppeteer-core');
     }
     dbg('click create');
     await page.click('#create');
-    await page.waitForFunction(()=>{
-      const el = document.getElementById('out');
-      if (!el) return false;
-      const t = el.textContent || '';
-      return /Created id=\d+/.test(t) || /Create error:/.test(t) || /Failed to fetch/.test(t);
-    }, { timeout: 15000 });
+    const WAIT_MS = 45000;
+    try {
+      await page.waitForFunction(()=>{
+        const el = document.getElementById('out');
+        if (!el) return false;
+        const t = el.textContent || '';
+        return /Created id=\d+/.test(t) || /Create error:/.test(t) || /Failed to fetch/.test(t);
+      }, { timeout: WAIT_MS });
+    } catch (e) {
+      try { await page.screenshot({ path: path.join(__dirname,'e2e_ui_create_timeout_core.png'), fullPage: true }); }catch(_){}
+      try { const outHtml = await page.evaluate(()=>document.documentElement.outerHTML); fs.writeFileSync(path.join(__dirname,'e2e_ui_create_timeout_core.html'), outHtml, 'utf8'); }catch(_){}
+      throw e;
+    }
     const createdText = await page.$eval('#out', el => el.textContent);
     const idMatch = createdText.match(/Created id=(\d+)/);
     if (!idMatch) {
@@ -85,7 +98,13 @@ const puppeteer = require('puppeteer-core');
     await page.screenshot({ path: beforeShot, fullPage: true });
     dbg('click cancel');
     await page.click('#cancel');
-    await page.waitForFunction(()=>document.getElementById('out') && /Patch result:/.test(document.getElementById('out').textContent), { timeout: 15000 });
+    try {
+      await page.waitForFunction(()=>document.getElementById('out') && /Patch result:/.test(document.getElementById('out').textContent), { timeout: WAIT_MS });
+    } catch (e) {
+      try { await page.screenshot({ path: path.join(__dirname,'e2e_ui_patch_timeout_core.png'), fullPage: true }); }catch(_){}
+      try { const outHtml = await page.evaluate(()=>document.documentElement.outerHTML); fs.writeFileSync(path.join(__dirname,'e2e_ui_patch_timeout_core.html'), outHtml, 'utf8'); }catch(_){}
+      throw e;
+    }
     const afterText = await page.$eval('#out', el => el.textContent);
     const afterShot = path.join(outDir, 'e2e_ui_after_core.png');
     await page.screenshot({ path: afterShot, fullPage: true });
