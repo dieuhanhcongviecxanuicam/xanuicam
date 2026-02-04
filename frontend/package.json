@@ -46,8 +46,7 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
-    ,
+    ],
     "globals": {
       "__non_webpack_require__": "readonly"
     }
@@ -68,6 +67,7 @@
     "@tailwindcss/postcss": "^4.1.13",
     "@testing-library/dom": "^10.4.1",
     "autoprefixer": "^10.4.21",
+    "chokidar-cli": "^3.0.0",
     "cross-env": "^10.1.0",
     "jsdom-testing-mocks": "^1.16.0",
     "postcss": "^8.4.31",
