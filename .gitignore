@@ -209,3 +209,4 @@ backend/scripts/test_login_admin.js
 backend/test_login_admin.out
 e2e/run_upload_test.ps1
 e2e/run_upload_smoke_test.js
+docs/ADMIN_REVOKE_AND_ROTATION.md
