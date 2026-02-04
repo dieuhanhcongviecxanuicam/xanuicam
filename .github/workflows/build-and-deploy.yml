@@ -33,7 +33,7 @@ jobs:
           DEPLOY_PATH: /var/www/xanuicam/frontend/build
         run: |
           # Write deploy SSH key from secret and set tight perms
-          printf '%s' "${{ secrets.PROD_SSH_KEY }}" > gh_deploy_key
+          printf '%s' "${{ secrets.PROD_SSH_KEY }}" | tr -d '\r' > gh_deploy_key
           chmod 600 gh_deploy_key || true
           rsync -avz --delete --exclude='.env' -e "ssh -o StrictHostKeyChecking=no -i gh_deploy_key" frontend/build/ ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}
 
