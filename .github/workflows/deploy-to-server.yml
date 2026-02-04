@@ -22,12 +22,6 @@ jobs:
             echo "No frontend/package.json, skipping frontend build"
           fi
 
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: frontend-build
-          path: frontend/build
-
       - name: Sanitize prod port
         run: |
           p='${{ secrets.PROD_SSH_PORT }}'
@@ -36,27 +30,24 @@ jobs:
           if ! printf '%s' "$p" | grep -E '^[0-9]+$' >/dev/null; then p=22; fi
           echo "SAFE_PROD_PORT=$p" >> $GITHUB_ENV
 
-      - name: Deploy to server via SSH
-        uses: appleboy/scp-action@v1
-        with:
-          host: ${{ secrets.PROD_HOST }}
-          username: ${{ secrets.PROD_USER }}
-          key: ${{ secrets.PROD_SSH_KEY }}
-          port: ${{ env.SAFE_PROD_PORT }}
-          source: "frontend/build/**"
-          target: ${{ secrets.PROD_DEPLOY_PATH }}
+      - name: Prepare deploy SSH key
+        run: |
+          echo "$PROD_SSH_KEY" > /tmp/deploy_rsa
+          chmod 600 /tmp/deploy_rsa
+        env:
+          PROD_SSH_KEY: ${{ secrets.PROD_SSH_KEY }}
 
-      - name: Restart backend service via SSH
-        uses: appleboy/ssh-action@v1.2.5
-        with:
-          host: ${{ secrets.PROD_HOST }}
-          username: ${{ secrets.PROD_USER }}
-          key: ${{ secrets.PROD_SSH_KEY }}
-          port: ${{ env.SAFE_PROD_PORT }}
-          script: |
-            set -e
-            if pm2 describe ubnd-backend > /dev/null 2>&1; then
-              pm2 restart ubnd-backend
-            else
-              cd ${{ secrets.PROD_DEPLOY_PATH }} && npm --prefix backend run prod:start
-            fi
+      - name: Run atomic deploy script
+        env:
+          SSH_USER: ${{ secrets.PROD_USER }}
+          SSH_HOST: ${{ secrets.PROD_HOST }}
+          SSH_KEY: /tmp/deploy_rsa
+          SSH_PORT: ${{ env.SAFE_PROD_PORT }}
+          REMOTE_WEBROOT: ${{ secrets.PROD_DEPLOY_PATH }}
+          REMOTE_BACKEND_BUILD: /root/ubndxanuicam_deploy/frontend/build
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CF_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
+        run: |
+          # Ensure rsync is available and run the atomic deploy script included in the repo
+          sudo apt-get update && sudo apt-get install -y rsync
+          ./scripts/deploy_atomic.sh
