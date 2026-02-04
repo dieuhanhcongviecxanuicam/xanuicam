@@ -37,7 +37,8 @@ jobs:
       - name: Start backend
         run: |
           cd backend
-          PORT=5001 npm start > /tmp/backend.log 2>&1 &
+          # Connect backend to the postgres service started by the job
+          DB_USER=postgres DB_PASSWORD=postgres DB_DATABASE=testdb DB_HOST=localhost DB_PORT=5432 PORT=5001 npm start > /tmp/backend.log 2>&1 &
           for i in {1..30}; do
             if curl -sSf http://localhost:5001/health >/dev/null 2>&1; then
               echo "backend up"; break
