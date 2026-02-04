@@ -8,11 +8,21 @@ frontend/build/
 backend/build/
 
 # Environment files
+
+# Ignore real env files and backups (keep examples tracked)
 .env
 .env.*
 backend/.env
 backend/.env.*
 frontend/.env*
+
+# Keep example files tracked (do not ignore)
+!.env.example
+!backend/.env.example
+!backend/.env.production.example
+!frontend/.env
+!frontend/.env.development
+!frontend/.env.production
 	.env
 	*.env
 	.env.*
@@ -197,6 +207,27 @@ backend/scripts/test_export_decrypted.js
 backend/scripts/test_login_admin.js
 backend/test_login_admin.out
 e2e/run_upload_smoke_test.js
+
+# Ensure example env files are tracked even if generic env patterns exist above
+!.env.example
+!backend/.env.example
+!backend/.env.production.example
+!frontend/.env.development
+!frontend/.env.production
+
+
+# Protect local backups, bundles and generated artifacts
+/xanuicam-backups/
+*.bundle
+
+# Local secret-store used by remediation scripts (outside repo by default)
+.local/
+
+# Explicitly ignore any env files or backups that may contain secrets
+*.env
+*.env.*.bak
+*.env.bak
+
 e2e/run_upload_test.ps1
 
 # Local developer / scan artifacts (do not commit)
