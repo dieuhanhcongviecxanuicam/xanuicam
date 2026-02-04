@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@sentry/react": "^10.38.0",
+    "@sentry/tracing": "^7.120.4",
     "@babel/parser": "^7.28.5",
     "@fingerprintjs/fingerprintjs": "^5.0.1",
     "@headlessui/react": "^2.2.7",
