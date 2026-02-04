@@ -12,9 +12,22 @@ const puppeteer = require('puppeteer-core');
     try { token = fs.readFileSync(tokenPath,'utf8').trim(); } catch(_) { dbg('no token file at '+tokenPath); }
     const tmpDir = path.join(outDir, 'puppeteer_tmp');
     try { fs.mkdirSync(tmpDir, { recursive: true }); } catch(_) {}
-    const exe = process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/chromium-browser';
-    dbg('launching browser, tmpDir='+tmpDir+' exe='+exe);
-    const browser = await puppeteer.launch({ args:['--no-sandbox','--disable-setuid-sandbox'], userDataDir: tmpDir, executablePath: exe });
+    const candidates = [process.env.PUPPETEER_EXECUTABLE_PATH, '/usr/bin/chromium-browser', '/usr/bin/chromium', '/usr/bin/google-chrome', '/usr/bin/google-chrome-stable'].filter(Boolean);
+    let exe = candidates.find(p => { try { return fs.existsSync(p); } catch(e){ return false; } }) || (process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/chromium-browser');
+    dbg('launching browser, tmpDir='+tmpDir+' exe='+exe+' candidates='+JSON.stringify(candidates));
+    let browser = null;
+    const launchArgs = ['--no-sandbox','--disable-setuid-sandbox','--disable-dev-shm-usage','--disable-gpu','--no-zygote'];
+    for (const candidate of [exe].concat(candidates)) {
+      try {
+        dbg('attempt launch with ' + candidate);
+        browser = await puppeteer.launch({ args: launchArgs, userDataDir: tmpDir, executablePath: candidate, timeout: 60000, headless: true });
+        dbg('browser launched with ' + candidate);
+        break;
+      } catch (e) {
+        dbg('launch failed for ' + candidate + ' : ' + (e && e.message));
+      }
+    }
+    if (!browser) throw new Error('Failed to launch Chromium with any candidate: ' + JSON.stringify(candidates));
     dbg('browser launched');
     const page = await browser.newPage();
     page.setDefaultTimeout(30000);

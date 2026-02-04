@@ -135,9 +135,12 @@ exports.updateTaskStatus = async (req, res) => {
         let notificationMessage = '';
         let notificationRecipientId = null;
 
+        // Allow cancel ('Đã hủy') for the creator or users with edit/delete permission
+        const canEdit = permissions.includes('edit_delete_task');
         const canPerformAction = 
             (['Tiếp nhận', 'Đang thực hiện', 'Chờ duyệt'].includes(status) && isAssignee) ||
-            (['Yêu cầu làm lại', 'Hoàn thành'].includes(status) && (isCreator || canApprove));
+            (['Yêu cầu làm lại', 'Hoàn thành'].includes(status) && (isCreator || canApprove)) ||
+            (status === 'Đã hủy' && (isCreator || canEdit));
 
         if (!canPerformAction) {
             await client.query('ROLLBACK');

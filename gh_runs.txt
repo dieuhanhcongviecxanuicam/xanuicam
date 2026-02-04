@@ -1,0 +1,10 @@
+completed	success	CI - Backend & Frontend Check	CI - Backend & Frontend Check	develop	push	21623692658	1m57s	2026-02-03T08:58:52Z
+completed	success	Backend Tests	Backend Tests	develop	push	21623692636	35s	2026-02-03T08:58:52Z
+completed	failure	Rebuild Frontend	Rebuild Frontend	ci/rebuild-frontend	push	21623692624	1m57s	2026-02-03T08:58:52Z
+completed	success	Secret scan (gitleaks)	Secret scan (gitleaks)	develop	push	21623692611	10s	2026-02-03T08:58:52Z
+completed	failure	Build and Deploy Frontend	Build and Deploy Frontend	ci/rebuild-frontend	push	21623692572	2m2s	2026-02-03T08:58:52Z
+completed	failure	CI Deploy — Build, Push, and Remote Deploy	CI Deploy — Build, Push, and Remote Deploy	ci/deploy-workflow	push	21623692317	3m22s	2026-02-03T08:58:51Z
+completed	failure	chore(security): ignore local scan artifacts; add history-purge scrip…	Deploy to Production	main	push	21623692187	17s	2026-02-03T08:58:51Z
+completed	success	chore(security): ignore local scan artifacts; add history-purge scrip…	Semgrep Scan	main	push	21623692172	25s	2026-02-03T08:58:51Z
+completed	failure	chore(security): ignore local scan artifacts; add history-purge scrip…	E2E Dashboard Export	main	push	21623692159	34s	2026-02-03T08:58:51Z
+completed	failure	chore(security): ignore local scan artifacts; add history-purge scrip…	Deploy to Server via SSH	main	push	21623692153	6s	2026-02-03T08:58:51Z
