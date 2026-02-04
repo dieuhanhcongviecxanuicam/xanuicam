@@ -33,8 +33,12 @@ jobs:
           DEPLOY_PATH: /var/www/xanuicam/frontend/build
         run: |
           # Write deploy SSH key from secret and set tight perms
-          printf '%s' "${{ secrets.PROD_SSH_KEY }}" > gh_deploy_key
+          printf '%s' "${{ secrets.PROD_SSH_KEY }}" | tr -d '\r' > gh_deploy_key
           chmod 600 gh_deploy_key || true
+          # Convert OpenSSH new-format private key to PEM if needed (avoids libcrypto errors)
+          if command -v ssh-keygen >/dev/null 2>&1; then
+            ssh-keygen -p -m PEM -f gh_deploy_key -P "" -N "" || true
+          fi
           rsync -avz --delete --exclude='.env' -e "ssh -o StrictHostKeyChecking=no -i gh_deploy_key" frontend/build/ ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}
 
       - name: Remote restart backend

@@ -1,0 +1,40 @@
+name: Add Deploy Public Key to Server
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  add-key:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Write setup SSH key
+        run: |
+          printf '%s' "${{ secrets.SETUP_SSH_KEY }}" | tr -d '\r' > setup_key
+          chmod 600 setup_key
+
+      - name: Write new deploy private key
+        run: |
+          printf '%s' "${{ secrets.PROD_SSH_KEY }}" | tr -d '\r' > new_deploy_key
+          chmod 600 new_deploy_key
+
+      - name: Generate public key from new deploy key
+        run: |
+          ssh-keygen -y -f new_deploy_key > new_deploy_key.pub
+          echo "Public key generated:" && sed -n '1p' new_deploy_key.pub || true
+
+      - name: Append public key to root authorized_keys via setup user
+        env:
+          SETUP_USER: ${{ secrets.SETUP_USER }}
+          SETUP_HOST: ${{ secrets.SETUP_HOST }}
+        run: |
+          cat new_deploy_key.pub | ssh -o StrictHostKeyChecking=no -i setup_key ${SETUP_USER}@${SETUP_HOST} 'sudo mkdir -p /root/.ssh && sudo sh -c "cat >> /root/.ssh/authorized_keys" && sudo chmod 600 /root/.ssh/authorized_keys'
+
+      - name: Test root SSH with new key
+        env:
+          DEPLOY_HOST: 27.71.29.69
+        run: |
+          chmod 600 new_deploy_key || true
+          ssh -i new_deploy_key -o StrictHostKeyChecking=no root@${DEPLOY_HOST} 'echo ROOT_OK' || echo ROOT_FAIL
