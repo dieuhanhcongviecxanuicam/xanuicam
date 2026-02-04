@@ -61,59 +61,8 @@ tests/**
 # IDE and OS
 .vscode/
 .idea/
-.DS_Store
-Thumbs.db
-
-# Keys and certificates
-*.pem
-*.key
-*.p12
-*.jks
-server.key
-server.pem
-*.pfx
-
-# Cloudflared and tunnel files
-.cloudflared/
-my-tunnel-config.json
-
-# Deploy keys
-gh_deploy_key
-gh_deploy_key.pub
-gh_deploy_key.pub.pub
-
-# Misc
-.cache/
-dist/
-vendor/
-bin/
-obj/
-
-# Protect local backups, bundles and generated artifacts
-/xanuicam-backups/
-*.bundle
-
-# Local secret-store used by remediation scripts (outside repo by default)
-.local/
-
-# Explicitly ignore any env files or backups that may contain secrets
-*.env
-*.env.*.bak
-*.env.bak
-
-# Local developer / scan artifacts (do not commit)
-.venv-detect/
-tmp-security-scan/
-backend/scripts/run_export_bulk_test.js
-backend/scripts/run_tasks_export_test.js
-backend/scripts/test_export_decrypted.js
-backend/scripts/test_login_admin.js
-backend/test_login_admin.out
-e2e/run_upload_test.ps1
-e2e/run_upload_smoke_test.js
-
 # End of .gitignore
-<<<<<<< HEAD
+
 # Root .gitignore for ubndxanuicam_internet
 
 # Node modules
@@ -126,13 +75,18 @@ frontend/build/
 backend/build/
 
 # Environment files
+# Ignore real env files and backups (keep example files tracked)
 .env
 .env.*
-.env.local
-.env.production
 backend/.env
 backend/.env.*
 frontend/.env*
+
+# Keep example env files tracked (do not ignore)
+!.env.example
+!backend/.env.example
+!backend/.env.production.example
+!frontend/.env.development.example
 
 # Secrets and credentials (never commit)
 .secrets/
@@ -188,7 +142,7 @@ server.pem
 .cloudflared/
 my-tunnel-config.json
 
-# Deploy keys
+# Deploy keys (local temporary keys)
 gh_deploy_key
 gh_deploy_key.pub
 gh_deploy_key.pub.pub
@@ -199,179 +153,41 @@ dist/
 vendor/
 bin/
 obj/
-=======
-# Root .gitignore for ubndxanuicam_internet
 
-# Node
-node_modules/
+# Protect local backups, bundles and generated artifacts
+/xanuicam-backups/
+*.bundle
 
-# Build artifacts
-frontend/build/
-backend/build/
+# Local secret-store used by remediation scripts (outside repo by default)
+.local/
 
-# Environment files
+# Explicitly ignore any env backup files that may contain secrets
+*.env.*.bak
+*.env.bak
 
-# Ignore real env files and backups (keep examples tracked)
-.env
-.env.*
-backend/.env
-backend/.env.*
-frontend/.env*
+# Local developer / scan artifacts (do not commit)
+.venv-detect/
+tmp-security-scan/
+backend/scripts/run_export_bulk_test.js
+backend/scripts/run_tasks_export_test.js
+backend/scripts/test_export_decrypted.js
+backend/scripts/test_login_admin.js
+backend/test_login_admin.out
+e2e/run_upload_test.ps1
+e2e/run_upload_smoke_test.js
 
-# Keep example files tracked (do not ignore)
-!.env.example
-!backend/.env.example
-!backend/.env.production.example
-!frontend/.env
-!frontend/.env.development
-!frontend/.env.production
-	.env
-	*.env
-	.env.*
-	backend/.env
-	frontend/build/
-	frontend/node_modules/
-	backend/node_modules/
-	/.DS_Store
-	npm-debug.log*
-	yarn-debug.log*
-	yarn-error.log*
-	pnpm-debug.log*
-	logs/
-	tmp/
-	tmp/*
-	uploads/
-	export_decrypted_test.csv
-	export_decrypted_test*.csv
-	*.tgz
-	*.log
-	e2e/
-	e2e/**
-	tests/
-	tests/**
-	.vscode/
-	.idea/
-	.env.local
-	.env.production
-	.secret
-	.secrets
-
-# Logs and runtime files
-logs/
-*.log
-backend_*.log
-server_run*.log
-
-# Uploads and user content
-uploads/
-
-# Database dumps / backups
-*.sql
-*.backup
-
-# Temporary and test artifacts
-tmp/
-TEST/
-
-# IDE and OS files
-.vscode/
-.idea/
-.DS_Store
-Thumbs.db
-
-# Misc
-node-debug.log
-.cache/
-dist/
-
-# Sensitive keys and certificates
-*.pem
-*.key
-*.p12
-*.jks
-
-# Explicit server key/certificate patterns
-server.key
-server.pem
-*.pfx
-*.p12
-
-# Private SSH keys
+# Private SSH keys and sensitive local folders
 .ssh/
-
-# Certificates and PKI
 certs/
 private/
 
-# Cloudflare origin certificate
-cloudflare-origin.pem
-
-# Cloudflared credentials and config
-.cloudflared/
-.cloudflared/*
-# Local secrets folder (do not commit API tokens)
-.secrets/
-.secrets/*
-my-tunnel-config.json
-
-# Temporary local deploy keys (do NOT commit)
-gh_deploy_key
-gh_deploy_key.pub
-gh_deploy_key.pub.pub
-
-# Ignore local DNS upsert helper (may be used with tokens)
-e2e/upsert_two_records.js
-e2e/upsert*.js
-
-# API keys, tokens, secrets
-*.secret
-*.token
-secrets.*
-**/secrets.*
-**/*credentials*
-**/*credential*
-
-# Environment and CI
-.env.local
-.env.production
-.env.test
-*.crt
-*.pem.key
-
-# Misc sensitive files
-key.pem
-origin.pem
-private.key
+# Additional sensitive filenames sometimes produced by tooling
 id_rsa
 id_rsa.pub
 id_ed25519
 id_ed25519.pub
 
-# Sensitive / test artifacts (project-specific additions)
-# End-to-end artifacts and temporary test outputs
-e2e/output/
-e2e/get_token_user_output.txt
-e2e/*.log
-
-# Exported CSVs / sample exports
-*.csv
-export_decrypted_test.csv
-
-# Local secrets and backups
-*.bak
-*.backup
-*.sqlite
-*.tar.gz
-
-# Local .env variants (explicit)
-frontend/.env*
-backend/.env*
-.env.local
-.env.production
-
-# Build artifacts (already listed but ensure coverage)
-frontend/build/
-backend/build/
+# End of file
 
 # Test artifacts
 TEST/
