@@ -8,6 +8,7 @@ const path = require('path');
 const fs = require('fs');
 const dotenv = require('dotenv');
 const crypto = require('crypto');
+const compression = require('compression');
 // Load .env from the backend directory explicitly so envs are consistent
 try {
   const envPath = path.resolve(__dirname, '.env');
@@ -109,6 +110,10 @@ try {
 }
 
 const app = express();
+
+// Use gzip/deflate compression for responses to improve payload sizes.
+// Keep this early so static assets and API responses are compressed where appropriate.
+try { app.use(compression()); } catch (e) { console.warn('compression middleware failed to initialize', e && (e.message || e)); }
 
 // Use Helmet to set safe HTTP headers. Content-Security-Policy is enabled
 // in report-only mode initially so we can monitor violations without
@@ -427,6 +432,8 @@ app.get('/favicon-v2.ico', (req, res) => {
             else if (ext === '.svg') res.setHeader('Content-Type', 'image/svg+xml');
             // prevent content sniffing
             res.setHeader('X-Content-Type-Options', 'nosniff');
+            // indicate responses vary by Accept-Encoding for caches/CDNs
+            res.setHeader('Vary', 'Accept-Encoding');
             // allow caching for static assets
             res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
           } catch (e) {
