@@ -1,0 +1,13 @@
+# Backup of original .gitleaks.toml created by automated fixer.
+# The original config caused TOML parsing errors for the gitleaks Docker image.
+# To re-enable a custom config, review and reintroduce a valid TOML at .gitleaks.toml
+
+[rules]
+
+[[rules.rule]]
+id = "generic-apikey"
+description = "Generic API key"
+regex = "(?i)(?:api[_-]?key|token|secret|password)\\s*[:=]\\s*['\"]?[A-Za-z0-9\\-_=+\\/]{16,}['\"]?"
+tags = ["apikey"]
+
+

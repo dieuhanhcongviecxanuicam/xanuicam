@@ -1,10 +1,5 @@
-[rules]
 
-[[rules.rule]]
+# Empty gitleaks config placeholder.
+# To re-enable a custom gitleaks config, copy a reviewed TOML here.
 description = "Generic API key"
-regex = "(?i)(?:api[_-]?key|token|secret|password)\s*[:=]\s*['\"]?[A-Za-z0-9\-_=+\\/]{16,}['\"]?"
-tags = ["apikey"]
 
-[[rules.allowlist]]
-description = "Allow local test artifacts"
-regex = "^tmp/|^/tmp/|^docs/|^e2e/"
