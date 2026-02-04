@@ -264,13 +264,23 @@ try {
   const earlyBuildPath = path.resolve(__dirname, '../frontend/build');
   const earlyIndex = path.join(earlyBuildPath, 'index.html');
   const serveFrontendEarly = (process.env.NODE_ENV === 'production') || (process.env.SERVE_FRONTEND === 'true');
-  if (serveFrontendEarly && fs.existsSync(earlyIndex)) {
+    if (serveFrontendEarly && fs.existsSync(earlyIndex)) {
     console.log('Serving frontend build (early) from', earlyBuildPath);
     app.use(express.static(earlyBuildPath, {
       setHeaders: (res, filePath) => {
         try {
           res.setHeader('X-Content-Type-Options', 'nosniff');
-          res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+          // Serve long-lived immutable cache for static assets, but ensure
+          // the SPA entry (`index.html`) is always served with no-cache so
+          // CDNs and browsers will revalidate on deploys.
+          const base = path.basename(filePath || '');
+          if (base === 'index.html') {
+            res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+            res.setHeader('Pragma', 'no-cache');
+            res.setHeader('Expires', '0');
+          } else {
+            res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+          }
         } catch (e) {}
       }
     }));
