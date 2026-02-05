@@ -8,6 +8,7 @@ const logActivity = require('../utils/auditLogger');
 const { createNotification } = require('../utils/notificationHelper');
 const bcrypt = require('bcryptjs');
 const ExcelJS = require('exceljs');
+const logger = require('../utils/logger');
 
 /**
  * @description Xóa tệp một cách an toàn.
@@ -116,7 +117,12 @@ exports.createTask = async (req, res) => {
 exports.updateTaskStatus = async (req, res) => {
     const { id } = req.params;
     const { status, details } = req.body;
-    const { id: userId, fullName, permissions } = req.user;
+    const { id: rawUserId, fullName, permissions: rawPermissions } = req.user || {};
+    // normalize user id and permissions so checks are type-safe
+    const userId = Number.isInteger(rawUserId) ? rawUserId : (rawUserId ? parseInt(rawUserId, 10) : null);
+    const permissions = Array.isArray(rawPermissions)
+        ? rawPermissions
+        : (typeof rawPermissions === 'string' ? rawPermissions.split(',').map(s => s.trim()).filter(Boolean) : []);
     const client = await pool.connect();
     try {
         await client.query('BEGIN');
@@ -127,6 +133,20 @@ exports.updateTaskStatus = async (req, res) => {
         }
         
         const task = taskRes.rows[0];
+
+        // Debug logging: capture user and task context to diagnose permission rejections
+        try {
+            logger.info({
+                event: 'task_status_permission_check',
+                user: { id: userId, fullName, permissions },
+                task: { id: task.id, creator_id: task.creator_id, assignee_id: task.assignee_id, status: task.status }
+            });
+            // fallback console log so pm2 shows the permission check even if structured logger fails
+            console.warn('[PERM-DBG] task_status_permission_check', { userId, fullName, permissions, taskId: task.id, taskStatus: task.status });
+        } catch (e) {
+            console.warn('Could not write permission debug log:', e && e.message ? e.message : e);
+        }
+
         const isAssignee = task.assignee_id === userId;
         const isCreator = task.creator_id === userId;
         const canApprove = permissions.includes('approve_task');
@@ -141,6 +161,24 @@ exports.updateTaskStatus = async (req, res) => {
             (['Tiếp nhận', 'Đang thực hiện', 'Chờ duyệt'].includes(status) && isAssignee) ||
             (['Yêu cầu làm lại', 'Hoàn thành'].includes(status) && (isCreator || canApprove)) ||
             (status === 'Đã hủy' && (isCreator || canEdit));
+
+        // Log evaluation result for troubleshooting
+        try {
+            logger.info({
+                event: 'task_status_permission_eval',
+                taskId: id,
+                requestedStatus: status,
+                isAssignee,
+                isCreator,
+                canApprove,
+                canEdit,
+                canPerformAction
+            });
+            // fallback console log for pm2 visibility
+            console.warn('[PERM-DBG] task_status_permission_eval', { taskId: id, requestedStatus: status, isAssignee, isCreator, canApprove, canEdit, canPerformAction });
+        } catch (e) {
+            console.warn('Could not write permission eval log:', e && e.message ? e.message : e);
+        }
 
         if (!canPerformAction) {
             await client.query('ROLLBACK');

@@ -19,7 +19,7 @@ const Header = ({ setSidebarOpen }) => {
   const [loadingNotifs, setLoadingNotifs] = useState(true);
   const [broadcast, setBroadcast] = useState(null);
   const [showBroadcast, setShowBroadcast] = useState(false);
-  const BACKEND_URL = process.env.REACT_APP_API_BASE_URL.replace('/api', '');
+  const BACKEND_URL = (process.env.REACT_APP_API_BASE_URL || window.location.origin).replace(/\/api\/?$/, '');
 
   const fetchNotifications = useCallback(async () => {
       setLoadingNotifs(true);
@@ -167,11 +167,19 @@ const Header = ({ setSidebarOpen }) => {
           </div>
           <div className="relative">
             <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="flex items-center space-x-2">
-              <img className="w-8 h-8 rounded-full object-cover" src={user.avatar ? `${BACKEND_URL}/${user.avatar}` : defaultAvatar} alt="User avatar"/>
-              <div className="hidden md:block">
-                <div className="text-sm font-semibold text-slate-800">{user.fullName}</div>
-                <div className="text-xs text-slate-500">{user.role}</div>
-              </div>
+              {(() => {
+                const safeUser = user || {};
+                const avatarSrc = safeUser.avatar ? `${BACKEND_URL}/${safeUser.avatar}` : defaultAvatar;
+                return (
+                  <>
+                    <img className="w-8 h-8 rounded-full object-cover" src={avatarSrc} alt="User avatar"/>
+                    <div className="hidden md:block">
+                      <div className="text-sm font-semibold text-slate-800">{safeUser.fullName || ''}</div>
+                      <div className="text-xs text-slate-500">{safeUser.role || ''}</div>
+                    </div>
+                  </>
+                );
+              })()}
               <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform ${isMenuOpen ? 'rotate-180' : ''}`} />
             </button>
             {isMenuOpen && (

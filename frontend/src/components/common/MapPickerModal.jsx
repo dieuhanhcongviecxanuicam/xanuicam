@@ -37,6 +37,16 @@ const MapPickerModal = ({ isOpen, onClose, initialPosition = null, onSelect }) =
     onClose();
   };
 
+  const handleLatChange = (e) => {
+    const v = e.target.value || '';
+    setPos([v, pos ? pos[1] : '']);
+  };
+
+  const handleLngChange = (e) => {
+    const v = e.target.value || '';
+    setPos([pos ? pos[0] : '', v]);
+  };
+
   const LeafletView = () => {
     if (!LeafletComponents) return null;
     const { MapContainer, TileLayer, Marker, useMapEvents } = LeafletComponents;
@@ -95,8 +105,8 @@ const MapPickerModal = ({ isOpen, onClose, initialPosition = null, onSelect }) =
           <p className="text-sm text-slate-600">Google Maps is selected as the provider but no `REACT_APP_GOOGLE_MAPS_API_KEY` is configured.</p>
           <p className="text-sm text-slate-600">To enable Google Maps: add your API key to `frontend/.env.local` as `REACT_APP_GOOGLE_MAPS_API_KEY=YOUR_KEY` and restart the frontend.</p>
           <div className="mt-3 grid grid-cols-2 gap-3">
-            <input placeholder="Lat" value={pos ? pos[0] : ''} onChange={(e) => setPos([(e.target.value || '') , pos ? pos[1] : ''])} className="input-style" />
-            <input placeholder="Lng" value={pos ? pos[1] : ''} onChange={(e) => setPos([pos ? pos[0] : '', (e.target.value || '')])} className="input-style" />
+              <input placeholder="Lat" value={pos ? pos[0] : ''} onChange={handleLatChange} className="input-style" />
+              <input placeholder="Lng" value={pos ? pos[1] : ''} onChange={handleLngChange} className="input-style" />
           </div>
         </div>
       );
@@ -107,10 +117,10 @@ const MapPickerModal = ({ isOpen, onClose, initialPosition = null, onSelect }) =
     mapContent = (leafletLoaded ? <LeafletView /> : (
       <div className="p-4">
         <p className="text-sm text-slate-600">Trình duyệt thử nghiệm không hỗ trợ bản đồ tương tác; vui lòng nhập tọa độ thủ công hoặc dùng vị trí hiện tại.</p>
-        <div className="mt-3 grid grid-cols-2 gap-3">
-          <input placeholder="Lat" value={pos ? pos[0] : ''} onChange={(e) => setPos([(e.target.value || '') , pos ? pos[1] : ''])} className="input-style" />
-          <input placeholder="Lng" value={pos ? pos[1] : ''} onChange={(e) => setPos([pos ? pos[0] : '', (e.target.value || '')])} className="input-style" />
-        </div>
+          <div className="mt-3 grid grid-cols-2 gap-3">
+            <input placeholder="Lat" value={pos ? pos[0] : ''} onChange={handleLatChange} className="input-style" />
+            <input placeholder="Lng" value={pos ? pos[1] : ''} onChange={handleLngChange} className="input-style" />
+          </div>
       </div>
     ));
 
