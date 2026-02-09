@@ -1,0 +1,45 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Sanitize deploy port
+        run: |
+          p='${{ secrets.DEPLOY_PORT }}'
+          p="${p//\"/}"
+          p="${p//\\/}"
+          if ! printf '%s' "$p" | grep -E '^[0-9]+$' >/dev/null; then p=22; fi
+          echo "SAFE_DEPLOY_PORT=$p" >> $GITHUB_ENV
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          port: ${{ env.SAFE_DEPLOY_PORT }}
+          script: |
+            set -e
+            cd ${{ secrets.DEPLOY_PATH }} || exit 1
+            # Ensure the server has the repo cloned and configured to pull from origin
+            git fetch --all
+            git reset --hard origin/main
+            npm ci --production
+            # Example restart command; adapt to your process manager (pm2/systemd)
+            if command -v pm2 >/dev/null 2>&1; then
+              pm2 reload ecosystem.config.js --env production || pm2 restart all || true
+            else
+              echo "Please restart your node process manually or configure PM2/systemd"
+            fi
+
+      - name: Notify deploy (optional)
+        if: always()
+        run: echo "Deploy job finished"

@@ -1,0 +1,44 @@
+name: Deploy Frontend to GitHub Pages
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install frontend deps
+        run: |
+          if [ -f frontend/package.json ]; then
+            if [ -f frontend/package-lock.json ]; then
+              npm ci --prefix frontend
+            else
+              npm install --prefix frontend
+            fi
+          else
+            echo "No frontend/package.json, skipping"
+          fi
+
+      - name: Build frontend
+        run: |
+          if [ -f frontend/package.json ]; then
+            npm --prefix frontend run build
+          else
+            echo "No frontend to build"
+          fi
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          publish_dir: ./frontend/build
+          publish_branch: gh-pages
+          github_token: ${{ secrets.GH_PAGES_TOKEN || secrets.GITHUB_TOKEN }}

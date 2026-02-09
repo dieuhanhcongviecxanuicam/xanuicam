@@ -1,0 +1,117 @@
+/* ubndxanuicam/frontend/src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Inter', sans-serif; 
+  background-color: #f1f5f9; /* slate-100 */
+}
+
+/* Background animation moved to Tailwind plugin (login-wrapper pseudo-element). */
+
+/* Custom scrollbar for device details lists */
+.device-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,0,0,0.22) transparent;
+}
+.device-scroll::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+.device-scroll::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.18);
+  border-radius: 8px;
+}
+.device-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Input select consistent caret to match export dropdown */
+.input-style {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding-right: 2.25rem; /* space for caret */
+  background-repeat: no-repeat;
+  background-position: right 0.6rem center;
+  background-size: 1rem;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23343A40'><path d='M6 8l4 4 4-4' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+}
+.input-style::-ms-expand { display: none; }
+
+/* LED checkbox small compact style */
+.led-checkbox {
+  width: 1.05rem;
+  height: 1.05rem;
+  cursor: pointer;
+}
+
+/* Small helper to make select dropdowns not overflow on narrow inputs */
+.input-style.small-select {
+  max-width: 220px;
+}
+
+/* Utility to remove native browser arrows / calendar icons for specific fields */
+.no-native-arrows {
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  background-image: none !important;
+  padding-right: 0.75rem !important;
+}
+.no-native-arrows::-webkit-outer-spin-button,
+.no-native-arrows::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0;
+}
+
+/* Ensure small numeric inputs in modals shrink nicely and don't overflow their containers */
+.input-style { box-sizing: border-box; }
+.min-w-0 { min-width: 0; }
+
+/* input error styles */
+.input-error { border-color: #dc2626 !important; box-shadow: 0 0 0 1px rgba(220,38,38,0.1); }
+.field-error { color: #b91c1c; font-size: 12px; margin-top: 4px; }
+/* Hide date picker icon in webkit browsers */
+.no-native-arrows::-webkit-calendar-picker-indicator { display: none !important; }
+
+/* Modal portal container tweaks */
+.modal-portal-container { }
+.modal-portal-container .mobile-full { border-radius: 0 !important; }
+
+/* Gradient fade animation and pulse hint */
+@keyframes gradientPulse {
+  0% { opacity: 1; transform: translateY(0); }
+  50% { opacity: 0.55; transform: translateY(2px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.scroll-gradient-anim { animation: gradientPulse 1.2s ease-in-out 1; }
+
+/* Animated gradient for ongoing bookings */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+ 100% { background-position: 200% 50%; }
+}
+.animated-booking {
+  background: linear-gradient(90deg, #06b6d4 0%, #0ea5e9 35%, #7c3aed 100%);
+  background-size: 400% 100%;
+  background-repeat: no-repeat;
+  background-clip: padding-box;
+  -webkit-background-clip: padding-box;
+  animation: gradientShift 6s linear infinite;
+  color: white !important;
+  box-shadow: 0 1px 6px rgba(15,23,42,0.06);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+/* Meeting grid responsive adjustments */
+.meeting-grid { grid-template-columns: 120px repeat(7, 1fr); }
+@media (max-width: 640px) {
+  .meeting-grid { grid-template-columns: 72px repeat(7, minmax(0,1fr)); }
+  .meeting-grid .room-name { writing-mode: vertical-rl; transform: rotate(180deg); font-size: 12px; padding: 0.5rem 0; }
+  /* reduce container paddings on very small screens */
+  .bg-white.p-4.rounded-lg.shadow-lg.overflow-x-auto { padding-left: 0.5rem !important; padding-right: 0.5rem !important; }
+}
+
+

@@ -1,0 +1,53 @@
+name: Deploy to Server via SSH
+
+on:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build frontend
+        run: |
+          if [ -f frontend/package.json ]; then
+            # Use `npm install` with legacy peer deps to avoid CI failures when lockfile and deps diverge.
+            npm --prefix frontend install --legacy-peer-deps
+            npm --prefix frontend run build
+          else
+            echo "No frontend/package.json, skipping frontend build"
+          fi
+
+      - name: Sanitize prod port
+        run: |
+          p='${{ secrets.PROD_SSH_PORT }}'
+          p="${p//\"/}"
+          p="${p//\\/}"
+          if ! printf '%s' "$p" | grep -E '^[0-9]+$' >/dev/null; then p=22; fi
+          echo "SAFE_PROD_PORT=$p" >> $GITHUB_ENV
+
+      - name: Prepare deploy SSH key
+        run: |
+          echo "$PROD_SSH_KEY" > /tmp/deploy_rsa
+          chmod 600 /tmp/deploy_rsa
+        env:
+          PROD_SSH_KEY: ${{ secrets.PROD_SSH_KEY }}
+
+      - name: Run atomic deploy script
+        env:
+          SSH_USER: ${{ secrets.PROD_USER }}
+          SSH_HOST: ${{ secrets.PROD_HOST }}
+          SSH_KEY: /tmp/deploy_rsa
+          SSH_PORT: ${{ env.SAFE_PROD_PORT }}
+          REMOTE_WEBROOT: ${{ secrets.PROD_DEPLOY_PATH }}
+          REMOTE_BACKEND_BUILD: /root/ubndxanuicam_deploy/frontend/build
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CF_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
+        run: |
+          # Ensure rsync is available and run the atomic deploy script included in the repo
+          sudo apt-get update && sudo apt-get install -y rsync
+          ./scripts/deploy_atomic.sh

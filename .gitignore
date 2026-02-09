@@ -1,0 +1,272 @@
+node_modules/
+.env
+backend/node_modules/
+frontend/node_modules/
+frontend/build/
+.DS_Store
+/.vscode/
+logs/
+*.log
+pgdata/
+docker-compose.override.yml
+dist/# Root .gitignore for ubndxanuicam_internet
+
+# Node modules
+node_modules/
+frontend/node_modules/
+backend/node_modules/
+
+# Build artifacts
+frontend/build/
+backend/build/
+
+# Ignore real env files and backups (keep examples tracked)
+.env
+.env.*
+backend/.env
+backend/.env.*
+frontend/.env*
+
+# Keep example files tracked (do not ignore)
+!.env.example
+!backend/.env.example
+!backend/.env.production.example
+!frontend/.env.development
+!frontend/.env.production
+
+# Secrets and credentials (never commit)
+.secrets/
+.secrets/*
+.secret
+*.secret
+*.token
+**/*credentials*
+
+# Logs and runtime files
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Uploads and user content
+uploads/
+tmp/
+tmp/*
+
+# Exported samples
+export_decrypted_test.csv
+*.csv
+
+# Database dumps / backups
+*.sql
+*.backup
+
+# Test and e2e artifacts
+e2e/
+e2e/**
+tests/
+tests/**
+
+# IDE and OS
+.vscode/
+.idea/
+# End of .gitignore
+
+# Root .gitignore for ubndxanuicam_internet
+
+# Node modules
+node_modules/
+frontend/node_modules/
+backend/node_modules/
+
+# Build artifacts
+frontend/build/
+backend/build/
+
+# Environment files
+# Ignore real env files and backups (keep example files tracked)
+.env
+.env.*
+backend/.env
+backend/.env.*
+frontend/.env*
+
+# Keep example env files tracked (do not ignore)
+!.env.example
+!backend/.env.example
+!backend/.env.production.example
+!frontend/.env.development.example
+
+# Secrets and credentials (never commit)
+.secrets/
+.secrets/*
+.secret
+*.secret
+*.token
+**/*credentials*
+
+# Logs and runtime files
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Uploads and user content
+uploads/
+tmp/
+tmp/*
+
+# Exported samples
+export_decrypted_test.csv
+*.csv
+
+# Database dumps / backups
+*.sql
+*.backup
+
+# Test and e2e artifacts
+e2e/
+e2e/**
+tests/
+tests/**
+
+# IDE and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Keys and certificates
+*.pem
+*.key
+*.p12
+*.jks
+server.key
+server.pem
+*.pfx
+
+# Cloudflared and tunnel files
+.cloudflared/
+my-tunnel-config.json
+
+# Deploy keys (local temporary keys)
+gh_deploy_key
+gh_deploy_key.pub
+gh_deploy_key.pub.pub
+
+# Misc
+.cache/
+dist/
+vendor/
+bin/
+obj/
+
+# Protect local backups, bundles and generated artifacts
+/xanuicam-backups/
+*.bundle
+
+# Local secret-store used by remediation scripts (outside repo by default)
+.local/
+
+# Explicitly ignore any env backup files that may contain secrets
+*.env.*.bak
+*.env.bak
+
+# Local developer / scan artifacts (do not commit)
+.venv-detect/
+tmp-security-scan/
+backend/scripts/run_export_bulk_test.js
+backend/scripts/run_tasks_export_test.js
+backend/scripts/test_export_decrypted.js
+backend/scripts/test_login_admin.js
+backend/test_login_admin.out
+e2e/run_upload_test.ps1
+e2e/run_upload_smoke_test.js
+
+# Private SSH keys and sensitive local folders
+.ssh/
+certs/
+private/
+
+# Additional sensitive filenames sometimes produced by tooling
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
+
+# End of file
+
+# Test artifacts
+TEST/
+tmp/
+
+# Ensure uploads (user files) are ignored
+uploads/
+
+# Additional environment patterns
+.env.*.local
+config.json
+credentials.xml
+
+# Additional IDE / editor files
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Third-party libraries / build outputs
+bin/
+obj/
+vendor/
+
+# More log patterns
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*backend.tgz
+
+# ignore removed secret test files
+backend/scripts/run_export_bulk_test.js
+backend/scripts/run_tasks_export_test.js
+backend/scripts/test_export_decrypted.js
+backend/scripts/test_login_admin.js
+backend/test_login_admin.out
+e2e/run_upload_smoke_test.js
+
+# Ensure example env files are tracked even if generic env patterns exist above
+!.env.example
+!backend/.env.example
+!backend/.env.production.example
+!frontend/.env.development
+!frontend/.env.production
+
+
+# Protect local backups, bundles and generated artifacts
+/xanuicam-backups/
+*.bundle
+
+# Local secret-store used by remediation scripts (outside repo by default)
+.local/
+
+# Explicitly ignore any env files or backups that may contain secrets
+*.env
+*.env.*.bak
+*.env.bak
+
+e2e/run_upload_test.ps1
+
+# Local developer / scan artifacts (do not commit)
+.venv-detect/
+tmp-security-scan/
+backend/scripts/run_export_bulk_test.js
+backend/scripts/run_tasks_export_test.js
+backend/scripts/test_export_decrypted.js
+backend/scripts/test_login_admin.js
+backend/test_login_admin.out
+e2e/run_upload_test.ps1
+e2e/run_upload_smoke_test.js
+>>>>>>> feature/ui-upgrade-20260204

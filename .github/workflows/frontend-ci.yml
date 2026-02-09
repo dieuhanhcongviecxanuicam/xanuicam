@@ -1,0 +1,47 @@
+name: CI - Build Frontend
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies (frontend)
+        run: |
+          if [ -f frontend/package.json ]; then
+            if [ -f frontend/package-lock.json ]; then
+              npm ci --prefix frontend --legacy-peer-deps
+            else
+              npm install --prefix frontend --legacy-peer-deps
+            fi
+          else
+            echo "No frontend/package.json, skipping"
+          fi
+
+      - name: Build frontend
+        run: |
+          if [ -f frontend/package.json ]; then
+            npm --prefix frontend run build
+          else
+            echo "No frontend to build"
+          fi
+
+      - name: Upload frontend build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-build
+          path: frontend/build

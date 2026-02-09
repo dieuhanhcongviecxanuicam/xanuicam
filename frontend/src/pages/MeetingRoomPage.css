@@ -1,0 +1,52 @@
+.meeting-grid{grid-template-columns:120px repeat(7,1fr);} 
+
+.booking-bar{position:absolute;border-radius:8px;min-height:40px;padding:8px 12px;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;overflow:hidden;color:#fff;left:var(--left,0%);width:var(--width,10%);top:var(--top,12px);z-index:var(--z,10);background:var(--bg,linear-gradient(90deg,#06b6d4,#0891b2));box-shadow:0 2px 6px rgba(2,6,23,0.08);font-size:13px}
+
+.moving-gradient{background-size:200% 100%;animation:moveGradient 6s linear infinite;}
+
+@keyframes moveGradient{0%{background-position:0% 50%}100%{background-position:100% 50%}}
+
+.room-name{min-width:120px}
+
+/* allow booking bars to expand vertically when content wraps */
+.booking-bar p { margin: 0; }
+.booking-bar .flex-1 { padding-right: 8px; }
+
+/* ensure cell has enough height for stacked bars */
+.cell-with-bars{min-height:140px;position:relative;padding:0}
+.cell-inner{position:relative;padding:0.5rem;height:100%}
+/* ensure booking bars have some breathing room and don't overflow the cell */
+.booking-bar{box-sizing:border-box;max-width:100%}
+.booking-bar p{line-height:1.05}
+.booking-popover{max-width:360px}
+
+/* Title + count inside booking bar */
+.bar-title-row{display:flex;align-items:center;gap:8px}
+.bar-title{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600}
+.bar-count{flex:0 0 auto;background:rgba(255,255,255,0.15);padding:2px 8px;border-radius:6px;font-size:12px}
+
+/* popover improvements */
+.booking-popover{max-width:460px;word-break:break-word}
+.booking-popover .font-semibold{font-size:16px}
+
+/* Basis badges in popover */
+.basis-super-badge{background:#ef4444;color:#fff;padding:4px 8px;border-radius:8px;font-size:12px;line-height:1;box-shadow:0 1px 2px rgba(0,0,0,0.06)}
+.basis-commune-badge{background:#2563eb;color:#fff;padding:4px 8px;border-radius:8px;font-size:12px;line-height:1;box-shadow:0 1px 2px rgba(0,0,0,0.06)}
+
+.popover-attendees strong{font-weight:700;color:#2563eb} /* blue for attendee count emphasis */
+
+/* Khung giờ time selector modern style */
+.time-range .time-select{
+	appearance: none;
+	-webkit-appearance: none;
+	border: none;
+	padding: 0.5rem 0.75rem;
+	min-width: 84px;
+	background: transparent;
+	font-size: 0.875rem;
+}
+.time-range .time-select:focus{
+	outline: none;
+}
+.time-range .time-select + .time-select { border-left: 1px solid rgba(15,23,42,0.06); }
+.time-range .time-select option{ color: #111827; }
