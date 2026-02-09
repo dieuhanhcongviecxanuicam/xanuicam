@@ -17,6 +17,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Repo diagnostic
+        run: |
+          echo "PWD: $(pwd)"
+          echo "Top-level files:"
+          ls -la || true
+          echo "backend exists:"; ls -la backend || true
+          echo "frontend exists:"; ls -la frontend || true
 
       - name: Set up QEMU and Buildx
         uses: docker/setup-buildx-action@v2
@@ -68,10 +79,3 @@ jobs:
             cert-backend.pem
             signature-frontend.sig
             cert-frontend.pem
-
-# Notes:
-# - This workflow demonstrates keyless cosign signing using GitHub Actions OIDC.
-# - No long-lived signing key is required; sigstore's Fulcio and Rekor are used.
-# - Ensure `GITHUB_TOKEN` has `packages: write` permission (set above). For
-#   advanced signing policies, consider using separate ephemeral keys stored in
-#   a secret manager.
