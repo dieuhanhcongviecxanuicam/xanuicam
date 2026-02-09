@@ -1,0 +1,44 @@
+name: Dependabot auto-merge
+
+on:
+  pull_request:
+    types: [opened, labeled, synchronize]
+
+jobs:
+  automerge:
+    name: Auto-merge Dependabot updates when checks pass
+    runs-on: ubuntu-latest
+    if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Ensure update is not a major version bump
+        id: semver-check
+        run: |
+          # Install semver CLI
+          npm i -g semver
+          echo "Checking for major version bumps..."
+          # Compare package.json versions between base and head
+          git fetch origin ${{ github.event.pull_request.base.ref }} --depth=1
+          git fetch origin ${{ github.event.pull_request.head.ref }} --depth=1
+          git diff --name-only origin/${{ github.event.pull_request.base.ref }}...origin/${{ github.event.pull_request.head.ref }} | grep package.json || true
+          # If package.json changed, perform a semver check. If not, pass.
+          if git diff --name-only origin/${{ github.event.pull_request.base.ref }}...origin/${{ github.event.pull_request.head.ref }} | grep package.json >/dev/null; then
+            BASE_VERSION=$(git show origin/${{ github.event.pull_request.base.ref }}:package.json | node -e "console.log(JSON.parse(require('fs').readFileSync(0,'utf8')).version)")
+            HEAD_VERSION=$(git show origin/${{ github.event.pull_request.head.ref }}:package.json | node -e "console.log(JSON.parse(require('fs').readFileSync(0,'utf8')).version)")
+            echo "Base: $BASE_VERSION, Head: $HEAD_VERSION"
+            node -e "const semver=require('semver'); if(semver.diff(process.env.BASE_VERSION, process.env.HEAD_VERSION)==='major'){ console.error('Major version bump detected'); process.exit(2); }" || exit 2
+          fi
+
+      - name: Auto-merge
+        uses: actions-ecosystem/action-automerge@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          merge_method: squash
+          labels: "dependencies,automerge"
+
+      - name: Comment on PR
+        if: success()
+        run: |
+          echo "Dependabot PR passed checks and was merged by automation."

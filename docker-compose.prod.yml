@@ -1,0 +1,36 @@
+version: '3.8'
+
+# Production compose template — use your CI to build and push images,
+# then deploy with environment values injected from a secret manager.
+
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  backend:
+    image: ghcr.io/${GITHUB_OWNER}/xanuicam-backend:latest
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: ${DATABASE_URL}
+      JWT_SECRET: ${JWT_SECRET}
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+  frontend:
+    image: ghcr.io/${GITHUB_OWNER}/xanuicam-frontend:latest
+    ports:
+      - "80:80"
+    restart: unless-stopped
+
+volumes:
+  pgdata:
