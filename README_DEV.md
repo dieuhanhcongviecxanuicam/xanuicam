@@ -40,3 +40,4 @@ Security notes:
 If you want a fully containerized development environment (frontend + backend
 built into containers), I can extend `docker-compose.yml` to tune volumes and
 hot-reload settings — tell me if you want that next.
+\nAutomated: prepare PR for docker-compose and CI helpers.
