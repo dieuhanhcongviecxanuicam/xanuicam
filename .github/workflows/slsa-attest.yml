@@ -157,10 +157,25 @@ jobs:
             echo "Sign attempt $attempt failed, sleeping and retrying"
             sleep $((attempt * 3))
           done
-          if [ ! -f signature-backend.sig ]; then
-            echo "Backend signature not produced" >&2
-            ls -la || true
-            exit 2
+          # Verify signature: prefer public key verify (ephemeral), else try keyless verify
+          if [ -f cosign.pub ]; then
+            echo "Verifying backend image with ephemeral public key"
+            if cosign verify --key cosign.pub "$IMAGE"; then
+              echo "Backend image verified with cosign.pub"
+            else
+              echo "Verification with cosign.pub failed" >&2
+              ls -la || true
+              exit 2
+            fi
+          else
+            echo "No cosign.pub found; trying keyless verify"
+            if cosign verify --keyless "$IMAGE"; then
+              echo "Backend image verified keyless"
+            else
+              echo "Keyless verification failed" >&2
+              ls -la || true
+              exit 2
+            fi
           fi
 
       - name: List generated signing files after backend sign
@@ -199,10 +214,25 @@ jobs:
             echo "Sign attempt $attempt failed, sleeping and retrying"
             sleep $((attempt * 3))
           done
-          if [ ! -f signature-frontend.sig ]; then
-            echo "Frontend signature not produced" >&2
-            ls -la || true
-            exit 2
+          # Verify signature: prefer public key verify (ephemeral), else try keyless verify
+          if [ -f cosign.pub ]; then
+            echo "Verifying frontend image with ephemeral public key"
+            if cosign verify --key cosign.pub "$IMAGE"; then
+              echo "Frontend image verified with cosign.pub"
+            else
+              echo "Verification with cosign.pub failed" >&2
+              ls -la || true
+              exit 2
+            fi
+          else
+            echo "No cosign.pub found; trying keyless verify"
+            if cosign verify --keyless "$IMAGE"; then
+              echo "Frontend image verified keyless"
+            else
+              echo "Keyless verification failed" >&2
+              ls -la || true
+              exit 2
+            fi
           fi
 
       - name: List generated signing files after frontend sign
