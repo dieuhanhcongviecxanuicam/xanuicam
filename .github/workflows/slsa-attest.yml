@@ -148,7 +148,7 @@ jobs:
             else
               echo "--keyless unsupported; generating ephemeral keypair and signing (attempt $attempt)"
               rm -f cosign.key cosign.pub || true
-              cosign generate-key-pair cosign || true
+              cosign generate-key-pair || true
               if cosign sign --key cosign.key --output-signature signature-backend.sig --output-certificate cert-backend.pem "$IMAGE"; then
                 echo "Signed with ephemeral key successfully"
                 break
@@ -190,7 +190,7 @@ jobs:
             else
               echo "--keyless unsupported; generating ephemeral keypair and signing (attempt $attempt)"
               rm -f cosign.key cosign.pub || true
-              cosign generate-key-pair cosign || true
+              cosign generate-key-pair || true
               if cosign sign --key cosign.key --output-signature signature-frontend.sig --output-certificate cert-frontend.pem "$IMAGE"; then
                 echo "Signed with ephemeral key successfully"
                 break
