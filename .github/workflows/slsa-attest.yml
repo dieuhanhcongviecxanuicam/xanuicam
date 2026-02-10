@@ -116,25 +116,45 @@ jobs:
             docker pull "$image" || docker manifest inspect "$image" || true
           done
 
-      - name: Sign backend image (keyless, GitHub OIDC)
+
+      - name: Sign backend image (try keyless, fallback to ephemeral key)
         env:
           COSIGN_EXPERIMENTAL: "1"
         run: |
           set -euxo pipefail
-          # Keyless signing via OIDC; requires GitHub Actions OIDC support (enabled by default)
-          cosign sign --output-signature signature-backend.sig --output-certificate cert-backend.pem --keyless ghcr.io/${{ github.repository_owner }}/xanuicam-backend:${{ github.sha }}
+          IMAGE=ghcr.io/${{ github.repository_owner }}/xanuicam-backend:${{ github.sha }}
+          # Prefer keyless when supported
+          if cosign sign --help 2>&1 | grep -q -- '--keyless'; then
+            echo "Attempting keyless sign"
+            cosign sign --output-signature signature-backend.sig --output-certificate cert-backend.pem --keyless "$IMAGE"
+          else
+            echo "--keyless unsupported; generating ephemeral keypair and signing"
+            rm -f cosign.key cosign.pub || true
+            cosign generate-key-pair cosign || true
+            cosign sign --key cosign.key --output-signature signature-backend.sig --output-certificate cert-backend.pem "$IMAGE"
+          fi
 
       - name: List generated signing files after backend sign
         run: |
           set -eux
           ls -la signature-backend.sig cert-backend.pem || true
 
-      - name: Sign frontend image (keyless, GitHub OIDC)
+
+      - name: Sign frontend image (try keyless, fallback to ephemeral key)
         env:
           COSIGN_EXPERIMENTAL: "1"
         run: |
           set -euxo pipefail
-          cosign sign --output-signature signature-frontend.sig --output-certificate cert-frontend.pem --keyless ghcr.io/${{ github.repository_owner }}/xanuicam-frontend:${{ github.sha }}
+          IMAGE=ghcr.io/${{ github.repository_owner }}/xanuicam-frontend:${{ github.sha }}
+          if cosign sign --help 2>&1 | grep -q -- '--keyless'; then
+            echo "Attempting keyless sign"
+            cosign sign --output-signature signature-frontend.sig --output-certificate cert-frontend.pem --keyless "$IMAGE"
+          else
+            echo "--keyless unsupported; generating ephemeral keypair and signing"
+            rm -f cosign.key cosign.pub || true
+            cosign generate-key-pair cosign || true
+            cosign sign --key cosign.key --output-signature signature-frontend.sig --output-certificate cert-frontend.pem "$IMAGE"
+          fi
 
       - name: List generated signing files after frontend sign
         run: |
