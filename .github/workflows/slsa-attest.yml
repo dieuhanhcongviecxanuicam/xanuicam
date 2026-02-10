@@ -117,21 +117,50 @@ jobs:
           done
 
 
-      - name: Sign backend image (try keyless, fallback to ephemeral key)
+      - name: Signing environment & metadata diagnostics
+        run: |
+          set -eux
+          echo "Environment variables relevant to signing:"
+          env | grep -E 'GITHUB|COSIGN|ID_TOKEN|OIDC' || true
+          echo "cosign binary info:"; command -v cosign || true; cosign version || true
+          echo "List /tmp and workspace for build metadata and provenance files:"; ls -la /tmp || true; find . -maxdepth 4 -type f -name '*metadata*' -o -name '*provenance*' -o -name '*.att' -o -name '*.sbom*' -print || true
+          echo "Docker images present locally:"; docker images || true
+
+
+      - name: Sign backend image (try keyless, fallback to ephemeral key, retry)
         env:
           COSIGN_EXPERIMENTAL: "1"
         run: |
           set -euxo pipefail
           IMAGE=ghcr.io/${{ github.repository_owner }}/xanuicam-backend:${{ github.sha }}
-          # Prefer keyless when supported
-          if cosign sign --help 2>&1 | grep -q -- '--keyless'; then
-            echo "Attempting keyless sign"
-            cosign sign --output-signature signature-backend.sig --output-certificate cert-backend.pem --keyless "$IMAGE"
-          else
-            echo "--keyless unsupported; generating ephemeral keypair and signing"
-            rm -f cosign.key cosign.pub || true
-            cosign generate-key-pair cosign || true
-            cosign sign --key cosign.key --output-signature signature-backend.sig --output-certificate cert-backend.pem "$IMAGE"
+          attempt=0
+          max=3
+          until [ "$attempt" -ge "$max" ]
+          do
+            attempt=$((attempt+1))
+            echo "Sign attempt $attempt/$max for $IMAGE"
+            if cosign sign --help 2>&1 | grep -q -- '--keyless'; then
+              echo "Attempting keyless sign (attempt $attempt)"
+              if cosign sign --output-signature signature-backend.sig --output-certificate cert-backend.pem --keyless "$IMAGE"; then
+                echo "Signed keyless successfully"
+                break
+              fi
+            else
+              echo "--keyless unsupported; generating ephemeral keypair and signing (attempt $attempt)"
+              rm -f cosign.key cosign.pub || true
+              cosign generate-key-pair cosign || true
+              if cosign sign --key cosign.key --output-signature signature-backend.sig --output-certificate cert-backend.pem "$IMAGE"; then
+                echo "Signed with ephemeral key successfully"
+                break
+              fi
+            fi
+            echo "Sign attempt $attempt failed, sleeping and retrying"
+            sleep $((attempt * 3))
+          done
+          if [ ! -f signature-backend.sig ]; then
+            echo "Backend signature not produced" >&2
+            ls -la || true
+            exit 2
           fi
 
       - name: List generated signing files after backend sign
@@ -140,20 +169,40 @@ jobs:
           ls -la signature-backend.sig cert-backend.pem || true
 
 
-      - name: Sign frontend image (try keyless, fallback to ephemeral key)
+      - name: Sign frontend image (try keyless, fallback to ephemeral key, retry)
         env:
           COSIGN_EXPERIMENTAL: "1"
         run: |
           set -euxo pipefail
           IMAGE=ghcr.io/${{ github.repository_owner }}/xanuicam-frontend:${{ github.sha }}
-          if cosign sign --help 2>&1 | grep -q -- '--keyless'; then
-            echo "Attempting keyless sign"
-            cosign sign --output-signature signature-frontend.sig --output-certificate cert-frontend.pem --keyless "$IMAGE"
-          else
-            echo "--keyless unsupported; generating ephemeral keypair and signing"
-            rm -f cosign.key cosign.pub || true
-            cosign generate-key-pair cosign || true
-            cosign sign --key cosign.key --output-signature signature-frontend.sig --output-certificate cert-frontend.pem "$IMAGE"
+          attempt=0
+          max=3
+          until [ "$attempt" -ge "$max" ]
+          do
+            attempt=$((attempt+1))
+            echo "Sign attempt $attempt/$max for $IMAGE"
+            if cosign sign --help 2>&1 | grep -q -- '--keyless'; then
+              echo "Attempting keyless sign (attempt $attempt)"
+              if cosign sign --output-signature signature-frontend.sig --output-certificate cert-frontend.pem --keyless "$IMAGE"; then
+                echo "Signed keyless successfully"
+                break
+              fi
+            else
+              echo "--keyless unsupported; generating ephemeral keypair and signing (attempt $attempt)"
+              rm -f cosign.key cosign.pub || true
+              cosign generate-key-pair cosign || true
+              if cosign sign --key cosign.key --output-signature signature-frontend.sig --output-certificate cert-frontend.pem "$IMAGE"; then
+                echo "Signed with ephemeral key successfully"
+                break
+              fi
+            fi
+            echo "Sign attempt $attempt failed, sleeping and retrying"
+            sleep $((attempt * 3))
+          done
+          if [ ! -f signature-frontend.sig ]; then
+            echo "Frontend signature not produced" >&2
+            ls -la || true
+            exit 2
           fi
 
       - name: List generated signing files after frontend sign
