@@ -43,7 +43,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          dockerfile: ./backend/Dockerfile
+          file: backend/Dockerfile
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/xanuicam-backend:${{ github.sha }}
 
@@ -51,7 +51,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          dockerfile: ./frontend/Dockerfile
+          file: frontend/Dockerfile
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/xanuicam-frontend:${{ github.sha }}
 
