@@ -53,3 +53,21 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i gh_deploy_key ${DEPLOY_USER}@${DEPLOY_HOST} '
             pm2 restart ubnd-backend || pm2 start /var/www/xanuicam/backend/ecosystem.config.js --env production || sudo systemctl restart ubnd-backend || true
           '
+
+      - name: Verify deployed files
+        env:
+          DEPLOY_HOST: 27.71.29.69
+          DEPLOY_USER: root
+          DEPLOY_PATH: /var/www/xanuicam/frontend/build
+        run: |
+          echo "Remote ls and checksums:"
+          ssh -o StrictHostKeyChecking=no -i gh_deploy_key ${DEPLOY_USER}@${DEPLOY_HOST} "ls -la ${DEPLOY_PATH} || true; echo '--- checksums ---'; find ${DEPLOY_PATH} -type f -maxdepth 2 -exec sha256sum {} + || true"
+          echo "Remote index head:"
+          ssh -o StrictHostKeyChecking=no -i gh_deploy_key ${DEPLOY_USER}@${DEPLOY_HOST} "head -n 20 ${DEPLOY_PATH}/index.html || true"
+          echo "Remote js files:"
+          ssh -o StrictHostKeyChecking=no -i gh_deploy_key ${DEPLOY_USER}@${DEPLOY_HOST} "ls -la ${DEPLOY_PATH}/static/js || true"
+          echo "Fetch live site index and show first lines:"
+          curl -sS https://www.xanuicam.vn | head -n 40 || true
+          echo "Local built js files:"
+          ls -la frontend/build/static/js || true
+          echo "Verification complete."
