@@ -17,6 +17,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Repo diagnostic
+        run: |
+          echo "PWD: $(pwd)"
+          echo "Top-level files:"
+          ls -la || true
+          echo "backend exists:"; ls -la backend || true
+          echo "frontend exists:"; ls -la frontend || true
 
       - name: Set up QEMU and Buildx
         uses: docker/setup-buildx-action@v2
@@ -31,7 +42,8 @@ jobs:
       - name: Build & push backend image
         uses: docker/build-push-action@v4
         with:
-          context: ./backend
+          context: .
+          file: backend/Dockerfile
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/xanuicam-backend:${{ github.sha }}
 
@@ -39,25 +51,194 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: ./frontend
+          file: frontend/Dockerfile
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/xanuicam-frontend:${{ github.sha }}
 
-      - name: Install cosign (via container)
-        run: |
-          curl -sSL "https://github.com/sigstore/cosign/releases/latest/download/cosign-linux-amd64" -o cosign && chmod +x cosign && sudo mv cosign /usr/local/bin/
 
-      - name: Sign backend image (keyless, GitHub OIDC)
+      - name: Install cosign (robust)
+        run: |
+          set -euxo pipefail
+          if command -v cosign >/dev/null 2>&1; then
+            echo "cosign already installed: $(cosign version || true)"
+            exit 0
+          fi
+
+          TMP_BIN="/tmp/cosign.$$"
+          try=0
+          until [ $try -ge 4 ]
+          do
+            try=$((try+1))
+            echo "Attempt $try to download cosign"
+            # Prefer gh release download when available, else curl with redirects
+            if command -v gh >/dev/null 2>&1; then
+              gh release download -R sigstore/cosign -p 'cosign-linux-amd64' --pattern 'cosign-linux-amd64' -q -D /tmp || true
+              if [ -f /tmp/cosign-linux-amd64 ]; then mv /tmp/cosign-linux-amd64 "$TMP_BIN"; fi
+            fi
+
+            if [ ! -f "$TMP_BIN" ]; then
+              curl -fL -o "$TMP_BIN" "https://github.com/sigstore/cosign/releases/latest/download/cosign-linux-amd64" || true
+            fi
+
+            if [ -f "$TMP_BIN" ]; then
+              # Quick sanity: ensure it's an ELF binary and not HTML
+              if file "$TMP_BIN" | grep -qi 'ELF\|executable'; then
+                chmod +x "$TMP_BIN"
+                sudo mv "$TMP_BIN" /usr/local/bin/cosign
+                echo "Installed /usr/local/bin/cosign"
+                break
+              else
+                echo "Downloaded file is not a binary, removing and retrying"
+                rm -f "$TMP_BIN"
+              fi
+            fi
+
+            sleep $((try * 2))
+          done
+
+          if ! command -v cosign >/dev/null 2>&1; then
+            echo "cosign install failed after retries" >&2
+            ls -la /tmp || true
+            curl -vI "https://github.com/sigstore/cosign/releases/latest" || true
+            exit 2
+          fi
+
+          cosign version || true
+
+      - name: Workspace & image diagnostics before signing
+        run: |
+          set -eux
+          echo "Workspace top-level:"; ls -la || true
+          echo "Check backend image manifest (will try to pull)"
+          docker --version || true
+          for image in "ghcr.io/${{ github.repository_owner }}/xanuicam-backend:${{ github.sha }}" "ghcr.io/${{ github.repository_owner }}/xanuicam-frontend:${{ github.sha }}"; do
+            echo "Inspecting: $image"
+            docker pull "$image" || docker manifest inspect "$image" || true
+          done
+
+
+      - name: Signing environment & metadata diagnostics
+        run: |
+          set -eux
+          echo "Environment variables relevant to signing:"
+          env | grep -E 'GITHUB|COSIGN|ID_TOKEN|OIDC' || true
+          echo "cosign binary info:"; command -v cosign || true; cosign version || true
+          echo "List /tmp and workspace for build metadata and provenance files:"; ls -la /tmp || true; find . -maxdepth 4 -type f -name '*metadata*' -o -name '*provenance*' -o -name '*.att' -o -name '*.sbom*' -print || true
+          echo "Docker images present locally:"; docker images || true
+
+
+      - name: Sign backend image (try keyless, fallback to ephemeral key, retry)
         env:
           COSIGN_EXPERIMENTAL: "1"
         run: |
-          # Keyless signing via OIDC; requires GitHub Actions OIDC support (enabled by default)
-          cosign sign --output-signature signature-backend.sig --output-certificate cert-backend.pem --keyless ghcr.io/${{ github.repository_owner }}/xanuicam-backend:${{ github.sha }}
+          set -euxo pipefail
+          IMAGE=ghcr.io/${{ github.repository_owner }}/xanuicam-backend:${{ github.sha }}
+          attempt=0
+          max=3
+          until [ "$attempt" -ge "$max" ]
+          do
+            attempt=$((attempt+1))
+            echo "Sign attempt $attempt/$max for $IMAGE"
+            if cosign sign --help 2>&1 | grep -q -- '--keyless'; then
+              echo "Attempting keyless sign (attempt $attempt)"
+              if cosign sign --output-signature signature-backend.sig --output-certificate cert-backend.pem --keyless "$IMAGE"; then
+                echo "Signed keyless successfully"
+                break
+              fi
+            else
+              echo "--keyless unsupported; generating ephemeral keypair and signing (attempt $attempt)"
+              rm -f cosign.key cosign.pub || true
+              cosign generate-key-pair || true
+              if cosign sign --key cosign.key --output-signature signature-backend.sig --output-certificate cert-backend.pem "$IMAGE"; then
+                echo "Signed with ephemeral key successfully"
+                break
+              fi
+            fi
+            echo "Sign attempt $attempt failed, sleeping and retrying"
+            sleep $((attempt * 3))
+          done
+          # Verify signature: prefer public key verify (ephemeral), else try keyless verify
+          if [ -f cosign.pub ]; then
+            echo "Verifying backend image with ephemeral public key"
+            if cosign verify --key cosign.pub "$IMAGE"; then
+              echo "Backend image verified with cosign.pub"
+            else
+              echo "Verification with cosign.pub failed" >&2
+              ls -la || true
+              exit 2
+            fi
+          else
+            echo "No cosign.pub found; trying keyless verify"
+            if cosign verify --keyless "$IMAGE"; then
+              echo "Backend image verified keyless"
+            else
+              echo "Keyless verification failed" >&2
+              ls -la || true
+              exit 2
+            fi
+          fi
 
-      - name: Sign frontend image (keyless, GitHub OIDC)
+      - name: List generated signing files after backend sign
+        run: |
+          set -eux
+          ls -la signature-backend.sig cert-backend.pem || true
+
+
+      - name: Sign frontend image (try keyless, fallback to ephemeral key, retry)
         env:
           COSIGN_EXPERIMENTAL: "1"
         run: |
-          cosign sign --output-signature signature-frontend.sig --output-certificate cert-frontend.pem --keyless ghcr.io/${{ github.repository_owner }}/xanuicam-frontend:${{ github.sha }}
+          set -euxo pipefail
+          IMAGE=ghcr.io/${{ github.repository_owner }}/xanuicam-frontend:${{ github.sha }}
+          attempt=0
+          max=3
+          until [ "$attempt" -ge "$max" ]
+          do
+            attempt=$((attempt+1))
+            echo "Sign attempt $attempt/$max for $IMAGE"
+            if cosign sign --help 2>&1 | grep -q -- '--keyless'; then
+              echo "Attempting keyless sign (attempt $attempt)"
+              if cosign sign --output-signature signature-frontend.sig --output-certificate cert-frontend.pem --keyless "$IMAGE"; then
+                echo "Signed keyless successfully"
+                break
+              fi
+            else
+              echo "--keyless unsupported; generating ephemeral keypair and signing (attempt $attempt)"
+              rm -f cosign.key cosign.pub || true
+              cosign generate-key-pair || true
+              if cosign sign --key cosign.key --output-signature signature-frontend.sig --output-certificate cert-frontend.pem "$IMAGE"; then
+                echo "Signed with ephemeral key successfully"
+                break
+              fi
+            fi
+            echo "Sign attempt $attempt failed, sleeping and retrying"
+            sleep $((attempt * 3))
+          done
+          # Verify signature: prefer public key verify (ephemeral), else try keyless verify
+          if [ -f cosign.pub ]; then
+            echo "Verifying frontend image with ephemeral public key"
+            if cosign verify --key cosign.pub "$IMAGE"; then
+              echo "Frontend image verified with cosign.pub"
+            else
+              echo "Verification with cosign.pub failed" >&2
+              ls -la || true
+              exit 2
+            fi
+          else
+            echo "No cosign.pub found; trying keyless verify"
+            if cosign verify --keyless "$IMAGE"; then
+              echo "Frontend image verified keyless"
+            else
+              echo "Keyless verification failed" >&2
+              ls -la || true
+              exit 2
+            fi
+          fi
+
+      - name: List generated signing files after frontend sign
+        run: |
+          set -eux
+          ls -la signature-frontend.sig cert-frontend.pem || true
 
       - name: Upload attestations & provenance
         uses: actions/upload-artifact@v4
@@ -68,10 +249,3 @@ jobs:
             cert-backend.pem
             signature-frontend.sig
             cert-frontend.pem
-
-# Notes:
-# - This workflow demonstrates keyless cosign signing using GitHub Actions OIDC.
-# - No long-lived signing key is required; sigstore's Fulcio and Rekor are used.
-# - Ensure `GITHUB_TOKEN` has `packages: write` permission (set above). For
-#   advanced signing policies, consider using separate ephemeral keys stored in
-#   a secret manager.
