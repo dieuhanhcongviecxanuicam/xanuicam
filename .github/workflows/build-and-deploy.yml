@@ -39,7 +39,9 @@ jobs:
           if command -v ssh-keygen >/dev/null 2>&1; then
             ssh-keygen -p -m PEM -f gh_deploy_key -P "" -N "" || true
           fi
-          rsync -avz --delete --exclude='.env' -e "ssh -o StrictHostKeyChecking=no -i gh_deploy_key" frontend/build/ ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}
+          rsync -avz --delete --exclude='.env' -e "ssh -o StrictHostKeyChecking=no -i gh_deploy_key" \
+            --rsync-path="mkdir -p ${DEPLOY_PATH} && rsync" \
+            frontend/build/ ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}
 
       - name: Remote restart backend
         env:
