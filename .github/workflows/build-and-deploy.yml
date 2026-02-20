@@ -39,6 +39,8 @@ jobs:
           if command -v ssh-keygen >/dev/null 2>&1; then
             ssh-keygen -p -m PEM -f gh_deploy_key -P "" -N "" || true
           fi
+          # Ensure deploy directory exists and is writable (create on remote)
+          ssh -o StrictHostKeyChecking=no -i gh_deploy_key ${DEPLOY_USER}@${DEPLOY_HOST} "mkdir -p ${DEPLOY_PATH} || true"
           rsync -avz --delete --exclude='.env' -e "ssh -o StrictHostKeyChecking=no -i gh_deploy_key" \
             --rsync-path="mkdir -p ${DEPLOY_PATH} && rsync" \
             frontend/build/ ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}
