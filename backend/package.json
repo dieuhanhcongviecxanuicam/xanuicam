@@ -54,7 +54,7 @@
     "qrcode": "^1.5.1",
     "sanitize-html": "^2.11.1",
     "speakeasy": "^2.0.0",
-    "ua-parser-js": "^1.0.37"
+    "ua-parser-js": "^2.0.9"
   },
   "dependenciesMeta": {
     "helmet": {
