@@ -22,7 +22,7 @@
     "jwt-decode": "^4.0.0",
     "leaflet": "^1.9.4",
     "lodash": "^4.17.21",
-    "lucide-react": "^0.543.0",
+    "lucide-react": "^0.575.0",
     "mammoth": "^1.4.23",
     "puppeteer": "^24.37.3",
     "react": "^19.2.4",
