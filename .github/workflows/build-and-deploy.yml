@@ -83,3 +83,11 @@ jobs:
             -H "Authorization: Bearer ${CF_TOKEN}" \
             -H "Content-Type: application/json" \
             --data '{"purge_everything":true}' | jq -r '.' || true
+
+        - name: Check origin HTTP from server
+          env:
+            DEPLOY_HOST: 27.71.29.69
+            DEPLOY_USER: root
+          run: |
+            echo "Checking origin HTTP response from the server (localhost):"
+            ssh -o StrictHostKeyChecking=no -i gh_deploy_key ${DEPLOY_USER}@${DEPLOY_HOST} "curl -sS -D - -H 'Host: www.xanuicam.vn' http://127.0.0.1/ || curl -sS -D - -H 'Host: www.xanuicam.vn' http://localhost/ || true"
