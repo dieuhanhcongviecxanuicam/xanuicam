@@ -39,7 +39,11 @@ jobs:
           if command -v ssh-keygen >/dev/null 2>&1; then
             ssh-keygen -p -m PEM -f gh_deploy_key -P "" -N "" || true
           fi
-          rsync -avz --delete --exclude='.env' -e "ssh -o StrictHostKeyChecking=no -i gh_deploy_key" frontend/build/ ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}
+          # Ensure deploy directory exists and is writable (create on remote)
+          ssh -o StrictHostKeyChecking=no -i gh_deploy_key ${DEPLOY_USER}@${DEPLOY_HOST} "mkdir -p ${DEPLOY_PATH} || true"
+          rsync -avz --delete --exclude='.env' -e "ssh -o StrictHostKeyChecking=no -i gh_deploy_key" \
+            --rsync-path="mkdir -p ${DEPLOY_PATH} && rsync" \
+            frontend/build/ ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}
 
       - name: Remote restart backend
         env:
@@ -49,3 +53,41 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i gh_deploy_key ${DEPLOY_USER}@${DEPLOY_HOST} '
             pm2 restart ubnd-backend || pm2 start /var/www/xanuicam/backend/ecosystem.config.js --env production || sudo systemctl restart ubnd-backend || true
           '
+
+      - name: Verify deployed files
+        env:
+          DEPLOY_HOST: 27.71.29.69
+          DEPLOY_USER: root
+          DEPLOY_PATH: /var/www/xanuicam/frontend/build
+        run: |
+          echo "Remote ls and checksums:"
+          ssh -o StrictHostKeyChecking=no -i gh_deploy_key ${DEPLOY_USER}@${DEPLOY_HOST} "ls -la ${DEPLOY_PATH} || true; echo '--- checksums ---'; find ${DEPLOY_PATH} -type f -maxdepth 2 -exec sha256sum {} + || true"
+          echo "Remote index head:"
+          ssh -o StrictHostKeyChecking=no -i gh_deploy_key ${DEPLOY_USER}@${DEPLOY_HOST} "head -n 20 ${DEPLOY_PATH}/index.html || true"
+          echo "Remote js files:"
+          ssh -o StrictHostKeyChecking=no -i gh_deploy_key ${DEPLOY_USER}@${DEPLOY_HOST} "ls -la ${DEPLOY_PATH}/static/js || true"
+          echo "Fetch live site index and show first lines:"
+          curl -sS https://www.xanuicam.vn | head -n 40 || true
+          echo "Local built js files:"
+          ls -la frontend/build/static/js || true
+          echo "Verification complete."
+
+      - name: Purge Cloudflare cache
+        if: always()
+        env:
+          CF_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+          CF_TOKEN: ${{ secrets.CLOUDFLARE_PURGE_TOKEN }}
+        run: |
+          echo "Purging Cloudflare cache for zone $CF_ZONE_ID"
+          curl -sS -X POST "https://api.cloudflare.com/client/v4/zones/${CF_ZONE_ID}/purge_cache" \
+            -H "Authorization: Bearer ${CF_TOKEN}" \
+            -H "Content-Type: application/json" \
+            --data '{"purge_everything":true}' | jq -r '.' || true
+
+        - name: Check origin HTTP from server
+          env:
+            DEPLOY_HOST: 27.71.29.69
+            DEPLOY_USER: root
+          run: |
+            echo "Checking origin HTTP response from the server (localhost):"
+            ssh -o StrictHostKeyChecking=no -i gh_deploy_key ${DEPLOY_USER}@${DEPLOY_HOST} "curl -sS -D - -H 'Host: www.xanuicam.vn' http://127.0.0.1/ || curl -sS -D - -H 'Host: www.xanuicam.vn' http://localhost/ || true"
