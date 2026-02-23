@@ -1,0 +1,42 @@
+name: Origin Diagnostics
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  diagnose-origin:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare SSH key
+        run: |
+          printf '%s' "${{ secrets.PROD_SSH_KEY }}" | tr -d '\r' > gh_deploy_key
+          chmod 600 gh_deploy_key || true
+
+      - name: Run origin diagnostics via SSH
+        env:
+          DEPLOY_HOST: 27.71.29.69
+          DEPLOY_USER: root
+        run: |
+          echo 'Listening sockets:'
+          ssh -o StrictHostKeyChecking=no -i gh_deploy_key ${DEPLOY_USER}@${DEPLOY_HOST} 'ss -ltnp || netstat -ltnp || true'
+
+          echo '\nProcesses (nginx/apache/caddy/node/pm2):'
+          ssh -o StrictHostKeyChecking=no -i gh_deploy_key ${DEPLOY_USER}@${DEPLOY_HOST} "ps aux | egrep 'nginx|apache|httpd|caddy|node|pm2' || true"
+
+          echo '\nnginx status and test:'
+          ssh -o StrictHostKeyChecking=no -i gh_deploy_key ${DEPLOY_USER}@${DEPLOY_HOST} "sudo systemctl status nginx --no-pager || true; sudo nginx -t || true"
+
+          echo '\nTry curl to localhost:80 and public IP (Host header www.xanuicam.vn):'
+          ssh -o StrictHostKeyChecking=no -i gh_deploy_key ${DEPLOY_USER}@${DEPLOY_HOST} "curl -sS -D - -H 'Host: www.xanuicam.vn' http://127.0.0.1:80/ -m 10 || true"
+          ssh -o StrictHostKeyChecking=no -i gh_deploy_key ${DEPLOY_USER}@${DEPLOY_HOST} "curl -sS -D - -H 'Host: www.xanuicam.vn' http://0.0.0.0:80/ -m 10 || true"
+          ssh -o StrictHostKeyChecking=no -i gh_deploy_key ${DEPLOY_USER}@${DEPLOY_HOST} "curl -sS -D - -H 'Host: www.xanuicam.vn' http://127.0.0.1:8080/ -m 10 || true"
+          ssh -o StrictHostKeyChecking=no -i gh_deploy_key ${DEPLOY_USER}@${DEPLOY_HOST} "curl -sS -D - -H 'Host: www.xanuicam.vn' http://27.71.29.69:80/ -m 10 || true"
+
+          echo '\nJournal for nginx (last 200 lines):'
+          ssh -o StrictHostKeyChecking=no -i gh_deploy_key ${DEPLOY_USER}@${DEPLOY_HOST} "sudo journalctl -u nginx -n 200 --no-pager || true"
+
+          echo '\nCheck webroot owner and index HTML head:'
+          ssh -o StrictHostKeyChecking=no -i gh_deploy_key ${DEPLOY_USER}@${DEPLOY_HOST} "ls -la /var/www/xanuicam/frontend/build || true; head -n 40 /var/www/xanuicam/frontend/build/index.html || true"
